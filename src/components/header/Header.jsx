@@ -1,12 +1,18 @@
 import { Link, useNavigate } from "react-router-dom";
-import { WrapDiv } from "../common";
-import { GnbUl, HeaderDiv } from "./headerStyle";
+// import { WrapDiv } from "../common";
+import {
+  GnbUl,
+  HeaderDiv,
+  HeaderWrapDiv,
+  LoginDiv,
+  LoginOutDiv,
+} from "./headerStyle";
 
 const Header = () => {
   const navigate = useNavigate();
   return (
     <HeaderDiv>
-      <WrapDiv>
+      <HeaderWrapDiv>
         <div className="left">
           <Link to={"/"} className="logo">
             로고
@@ -27,8 +33,10 @@ const Header = () => {
           </GnbUl>
         </div>
         <div className="right">
-          <div className="logout">
-            <Link to={"/board"}>회원가입</Link>
+          <LoginOutDiv>
+            <Link to={"/board"} className="signup-btn">
+              회원가입
+            </Link>
             <button
               onClick={() => {
                 navigate("/auth");
@@ -36,8 +44,8 @@ const Header = () => {
             >
               로그인
             </button>
-          </div>
-          <div className="login">
+          </LoginOutDiv>
+          <LoginDiv>
             <a href="">마이페이지</a>
             <ul>
               <li>
@@ -56,9 +64,9 @@ const Header = () => {
                 </button>
               </li>
             </ul>
-          </div>
+          </LoginDiv>
         </div>
-      </WrapDiv>
+      </HeaderWrapDiv>
     </HeaderDiv>
   );
 };
