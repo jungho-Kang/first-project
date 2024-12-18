@@ -1,8 +1,6 @@
 import styled from "@emotion/styled";
-import Input from "./Input";
-import Button from "../button/Button";
 
-const Inputbtn = () => {
+const Inputbtn = ({ label, type, btntxt }) => {
   //   const CodeInputDiv = styled.div`
   //     border: 1px solid #000;
   //   `;
@@ -44,9 +42,9 @@ const Inputbtn = () => {
   `;
   return (
     <InputBtnArea>
-      <label htmlFor="">코드인증</label>
+      <label htmlFor="">{label}</label>
       <div>
-        <input type="text" /> <button>인증</button>
+        <input type={type} /> <button>{btntxt}</button>
       </div>
     </InputBtnArea>
   );

@@ -53,10 +53,24 @@ export const LayerDiv = styled.div`
     padding: 10px 0 40px;
     color: #777;
   }
+  h3 {
+    margin: 10px 0;
+    font-size: 20px;
+    font-weight: 500;
+  }
+  span {
+    color: #777;
+    font-size: 14px;
+    margin: 0 0 10px;
+    display: block;
+    line-height: 1.4em;
+    word-break: keep-all;
+  }
 `;
 
 export const JoinDiv = styled.div`
-  text-align: center;
+  display: flex;
+  justify-content: center;
   margin: 30px 0;
   font-size: 14px;
   span {
@@ -72,7 +86,6 @@ export const FindPwDiv = styled.div`
   width: 100%;
   display: flex;
   justify-content: end;
-  margin-bottom: 50px;
   font-size: 14px;
   color: #999;
 `;

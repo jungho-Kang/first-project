@@ -11,6 +11,7 @@ const BtnBasic = styled.button`
   background-color: #5469d4;
   transition: all 0.3s;
   border: 1px solid transparent;
+  margin-top: 40px;
   :hover {
     opacity: 0.8;
   }

@@ -33,7 +33,7 @@ function Index() {
 
         {/* 회원가입 링크 */}
         <JoinDiv>
-          <span>아직 회원이 아니신가요?</span>{" "}
+          <span>아직 회원이 아니신가요?</span>
           <Link to={"/auth/signup"}>회원가입</Link>
         </JoinDiv>
       </LayerDiv>
