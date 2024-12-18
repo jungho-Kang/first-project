@@ -1,48 +1,42 @@
-import styled from "@emotion/styled";
+// import styled from "@emotion/styled";
+// import LoginLayer from "../../components/layer/LoginLayer";
+import {
+  FindPwDiv,
+  JoinDiv,
+  LayerDiv,
+  LoginDiv,
+} from "../../components/common";
+import Button from "../../components/button/Button";
+import Input from "../../components/input/Input";
 import { Link } from "react-router-dom";
 
-const LoginDiv = styled.div`
-  background-color: #fff;
-  position: fixed;
-  z-index: 99;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100vh;
-`;
+import LayerLogo from "../../components/layer/LayerLogo";
+
 function Index() {
   return (
     <LoginDiv>
-      <div className="layer">
-        <Link to={"/"}>다녀올로고</Link>
-        <p>다녀올 여행지 플랜너, 다녀ALL</p>
+      <LayerDiv>
+        {/* 로고 */}
+        <LayerLogo />
 
-        <div className="text-form">
-          <label htmlFor="">
-            <p>Email</p>
-            <input type="text" />
-          </label>
-        </div>
-        <div className="text-form">
-          <label htmlFor="">
-            <p>Password</p>
-            <input type="text" />
-          </label>
-        </div>
+        {/* input 태그 */}
+        <Input label={"Email"} type={"text"}></Input>
+        <Input label={"Password"} type={"password"}></Input>
 
-        <div className="user-state">
-          <div className="auto-login">
-            <input type="checkbox" name="" id="" />
-            <em></em>
-            자동로그인
-          </div>
-          <Link to={"/"}>비밀번호 찾기</Link>
-        </div>
-        <div className="btn-login">로그인</div>
-        <div className="join">
-          아직 회원이 아니신가요? <Link to={"/"}></Link>
-        </div>
-      </div>
+        {/* 비밀번호찾기 - 링크 */}
+        <FindPwDiv>
+          <Link to={"/auth/findpw"}>비밀번호 찾기</Link>
+        </FindPwDiv>
+
+        {/* 로그인 버튼  홈화면 아니면 틀렸다는 창 띄우기*/}
+        <Button btnname={"로그인"}></Button>
+
+        {/* 회원가입 링크 */}
+        <JoinDiv>
+          <span>아직 회원이 아니신가요?</span>{" "}
+          <Link to={"/auth/signup"}>회원가입</Link>
+        </JoinDiv>
+      </LayerDiv>
     </LoginDiv>
   );
 }
