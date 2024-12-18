@@ -1,4 +1,5 @@
-import { WrapDiv } from "../../components/common";
+import { Link, useNavigate } from "react-router-dom";
+import { TitleDiv, WrapDiv } from "../../components/common";
 import {
   ActionButton,
   ButtonDiv,
@@ -12,18 +13,21 @@ import {
 } from "../planning/plan";
 
 function Index() {
+  const navigate = useNavigate();
   return (
     <WrapDiv>
-      <h1>여행로그</h1>
+      <TitleDiv>여행로그</TitleDiv>
       <PostUl>
-        <PostLi>
-          <PostImg>지역 이미지</PostImg>
-          <PostTitle>게시글 제목</PostTitle>
-          <FlexDiv>
-            <PostDate>2024.12.18</PostDate>
-            <PostCity>부산</PostCity>
-          </FlexDiv>
-        </PostLi>
+        <Link to={navigate("/board/detail")}>
+          <PostLi>
+            <PostImg>지역 이미지</PostImg>
+            <PostTitle>게시글 제목</PostTitle>
+            <FlexDiv>
+              <PostDate>2024.12.18</PostDate>
+              <PostCity>부산</PostCity>
+            </FlexDiv>
+          </PostLi>
+        </Link>
         <PostLi>
           <PostImg>지역 이미지</PostImg>
           <PostTitle>게시글 제목</PostTitle>
@@ -118,7 +122,9 @@ function Index() {
         </PostLi>
       </PostUl>
       <ButtonDiv>
-        <ActionButton>글쓰기</ActionButton>
+        <Link to={"/board/writepost"}>
+          <ActionButton>글쓰기</ActionButton>
+        </Link>
       </ButtonDiv>
     </WrapDiv>
   );

@@ -55,7 +55,10 @@ export const PostCity = styled.div`
   height: 20px;
   font-size: 14px;
   border-radius: 5px;
-  background-color: #0f5;
+  background-color: #6666ff;
+  color: #fff;
+  display: flex;
+  justify-content: center;
   align-items: center;
   text-align: center;
 `;
