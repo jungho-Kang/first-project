@@ -1,8 +1,6 @@
 import styled from "@emotion/styled";
 
 export const WrapDiv = styled.div`
-  display: flex;
-  justify-content: space-between;
   align-items: center;
   margin: 0 auto;
   max-width: 1440px;
