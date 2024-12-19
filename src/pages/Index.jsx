@@ -147,7 +147,7 @@ function Index() {
           </div>
 
           <Swiper
-            slidesPerView={3}
+            slidesPerView={4}
             autoplay={{
               delay: 3000,
               disableOnInteraction: false,

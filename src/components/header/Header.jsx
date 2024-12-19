@@ -34,7 +34,7 @@ const Header = () => {
         </div>
         <div className="right">
           <LoginOutDiv>
-            <Link to={"/board"} className="signup-btn">
+            <Link to={"/"} className="signup-btn">
               회원가입
             </Link>
             <button

@@ -8,6 +8,7 @@ const Footer = () => {
         <Link to={"/"}>홈 /</Link>
         <Link to={"/auth"}> 로그인 /</Link>
         <Link to={"/auth/findpw"}> 비밀번호찾기 /</Link>
+        <Link to={"/auth/resetpw"}> 비밀번호재설정/</Link>
         <Link to={"/auth/signup"}> 회원가입 /</Link>
         <Link to={"/about"}> 소개 /</Link>
         <Link to={"/guide"}> 이용방법 /</Link>
