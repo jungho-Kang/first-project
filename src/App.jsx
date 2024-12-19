@@ -1,26 +1,26 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
 import Layout from "./components/Layout";
-
-import Home from "./pages/Index";
-import NotFound from "./pages/NotFound";
-import Guide from "./pages/about/Guide";
-import AboutIndex from "./pages/about/Index";
-import FindPw from "./pages/auth/FindPw";
-import AuthIndex from "./pages/auth/Index";
-import Signup from "./pages/auth/signup";
-import DeleteMember from "./pages/mypage/my-info/DeleteMember";
-import EditProfile from "./pages/mypage/my-info/EditProfile";
-import MyInfoIndex from "./pages/mypage/my-info/Index";
-import UpdatePw from "./pages/mypage/my-info/UpdatePw";
-import BoardDetail from "./pages/travel-board/Detail";
-import BoardIndex from "./pages/travel-board/Index";
-import WritePost from "./pages/travel-board/WritePost";
-import MyPlanList from "./pages/mypage/plan-list/MyPlanList";
-import MyPlanDetail from "./pages/mypage/plan-list/MyPlanDetail";
-import City from "./pages/planning/City";
-import CalendarPicker from "./pages/planning/CalendarPicker";
-import MakePlanner from "./pages/planning/MakePlanner";
+import Home from "./pages/IndexPage";
+import NotFound from "./pages/NotFoundPage";
+import Guide from "./pages/about/GuidePage";
+import AboutIndex from "./pages/about/IndexPage";
+import FindPw from "./pages/auth/FindPwPage";
+import AuthIndex from "./pages/auth/IndexPage";
+import Signup from "./pages/auth/SignupPage";
+import DeleteMember from "./pages/mypage/my-info/DeleteMemberPage";
+import EditProfile from "./pages/mypage/my-info/EditProfilePage";
+import MyInfoIndex from "./pages/mypage/my-info/IndexPage";
+import UpdatePw from "./pages/mypage/my-info/UpdatePwPage";
+import BoardDetail from "./pages/travel-board/DetailPage";
+import BoardIndex from "./pages/travel-board/IndexPage";
+import WritePost from "./pages/travel-board/WritePostPage";
+import MyPlanList from "./pages/mypage/plan-list/MyPlanListPage";
+import MyPlanDetail from "./pages/mypage/plan-list/MyPlanDetailPage";
+import City from "./pages/planning/CityPage";
+import CalendarPicker from "./pages/planning/CalendarPickerPage";
+import MakePlanner from "./pages/planning/MakePlannerPage";
+import ResetPw from "./pages/auth/ResetPwPage";
 
 function App() {
   return (
@@ -34,6 +34,7 @@ function App() {
           <Route path="auth">
             <Route index element={<AuthIndex />} />
             <Route path="findpw" element={<FindPw />} />
+            <Route path="resetpw" element={<ResetPw />} />
             <Route path="signup" element={<Signup />} />
           </Route>
 

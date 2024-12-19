@@ -8,7 +8,7 @@ import "swiper/css/pagination";
 // import required modules
 import { Autoplay } from "swiper/modules";
 
-function Index() {
+function IndexPage() {
   const MainWrapDiv = styled(WrapDiv)`
     /* border: 1px solid #333; */
     padding: 40px 0 120px;
@@ -147,7 +147,7 @@ function Index() {
           </div>
 
           <Swiper
-            slidesPerView={3}
+            slidesPerView={4}
             autoplay={{
               delay: 3000,
               disableOnInteraction: false,
@@ -208,4 +208,4 @@ function Index() {
   );
 }
 
-export default Index;
+export default IndexPage;

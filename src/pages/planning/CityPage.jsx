@@ -1,16 +1,17 @@
-import { useNavigate } from "react-router-dom";
-import { WrapDiv } from "../../components/common";
+import { Link, useNavigate } from "react-router-dom";
+import { TitleDiv, WrapDiv } from "../../components/common";
 import { ImgLi, ImgUl } from "./plan";
 
-function City() {
+function CityPage() {
   const navigate = useNavigate();
-  navigate("/planning/schedule");
 
   return (
     <WrapDiv>
-      <h1>일정 계획</h1>
+      <TitleDiv>일정 계획</TitleDiv>
       <ImgUl>
-        <ImgLi>서울 이미지</ImgLi>
+        <Link to={navigate("/planning/schedule")}>
+          <ImgLi>서울 이미지</ImgLi>
+        </Link>
         <ImgLi>서울 이미지</ImgLi>
         <ImgLi>서울 이미지</ImgLi>
       </ImgUl>
@@ -32,4 +33,4 @@ function City() {
     </WrapDiv>
   );
 }
-export default City;
+export default CityPage;
