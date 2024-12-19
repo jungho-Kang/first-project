@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { TitleDiv, WrapDiv } from "../../components/common";
 import { ImgLi, ImgUl } from "./plan";
 
-function City() {
+function CityPage() {
   const navigate = useNavigate();
 
   return (
@@ -33,4 +33,4 @@ function City() {
     </WrapDiv>
   );
 }
-export default City;
+export default CityPage;

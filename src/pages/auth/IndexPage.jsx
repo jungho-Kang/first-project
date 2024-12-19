@@ -6,13 +6,13 @@ import {
   LayerDiv,
   LoginDiv,
 } from "../../components/common";
-import Button from "../../components/button/Button";
-import Input from "../../components/input/Input";
+import BasicBtn from "../../components/button/BasicBtn";
+import CustomInput from "../../components/input/CustomInput";
 import { Link } from "react-router-dom";
 
 import LayerLogo from "../../components/layer/LayerLogo";
 
-function Index() {
+function IndexPage() {
   return (
     <LoginDiv>
       <LayerDiv>
@@ -20,8 +20,8 @@ function Index() {
         <LayerLogo />
 
         {/* input 태그 */}
-        <Input label={"Email"} type={"text"}></Input>
-        <Input label={"Password"} type={"password"}></Input>
+        <CustomInput label={"Email"} type={"text"}></CustomInput>
+        <CustomInput label={"Password"} type={"password"}></CustomInput>
 
         {/* 비밀번호찾기 - 링크 */}
         <FindPwDiv>
@@ -29,7 +29,7 @@ function Index() {
         </FindPwDiv>
 
         {/* 로그인 버튼  홈화면 아니면 틀렸다는 창 띄우기*/}
-        <Button btnname={"로그인"}></Button>
+        <BasicBtn btnname={"로그인"}></BasicBtn>
 
         {/* 회원가입 링크 */}
         <JoinDiv>
@@ -41,4 +41,4 @@ function Index() {
   );
 }
 
-export default Index;
+export default IndexPage;

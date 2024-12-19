@@ -3,7 +3,7 @@ import PlanListResult from "../../components/list-result/PlanListResult";
 import { PostCity } from "../planning/plan";
 import { FlexLayoutDiv, SubTitleDiv } from "./board";
 
-function Detail() {
+function DetailPage() {
   return (
     <WrapDiv>
       <TitleDiv>여행로그</TitleDiv>
@@ -17,4 +17,4 @@ function Detail() {
   );
 }
 
-export default Detail;
+export default DetailPage;

@@ -12,7 +12,7 @@ import {
   PostUl,
 } from "../planning/plan";
 
-function Index() {
+function IndexPage() {
   const navigate = useNavigate();
   return (
     <WrapDiv>
@@ -130,4 +130,4 @@ function Index() {
   );
 }
 
-export default Index;
+export default IndexPage;

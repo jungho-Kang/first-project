@@ -15,7 +15,7 @@ const TextForm = styled.div`
   }
 `;
 
-function Input({ label, type }) {
+function CustomInput({ label, type }) {
   return (
     <TextForm>
       <label htmlFor="">
@@ -25,4 +25,4 @@ function Input({ label, type }) {
     </TextForm>
   );
 }
-export default Input;
+export default CustomInput;

@@ -23,7 +23,7 @@ const CheckBoxDiv = styled.div`
   }
 `;
 
-const Checkbox = ({ label, text }) => {
+const CustomCheck = ({ label, text }) => {
   return (
     <CheckBoxDiv>
       <label htmlFor={label}>
@@ -37,4 +37,4 @@ const Checkbox = ({ label, text }) => {
   );
 };
 
-export default Checkbox;
+export default CustomCheck;
