@@ -6,6 +6,8 @@ export const SubTitleDiv = styled.div`
 `;
 
 export const FlexLayoutDiv = styled.div`
+  margin: 0 auto;
+  max-width: 1200px;
   display: flex;
   align-items: center;
   gap: 10px;
