@@ -11,7 +11,6 @@ export const MainDiv = styled.main`
   /* padding: 80px 0px 160px; */
 `;
 
-
 // 로그인 페이지
 export const LoginDiv = styled.div`
   background-color: #fff;
@@ -89,7 +88,7 @@ export const FindPwDiv = styled.div`
   justify-content: end;
   font-size: 14px;
   color: #999;
-  `;
+`;
 export const TitleDiv = styled.div`
   margin-top: 60px;
   font-size: 38px;

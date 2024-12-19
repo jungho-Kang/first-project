@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { WrapDiv } from "../../components/common";
 
 export const FlexDiv = styled.div`
   display: flex;
@@ -76,4 +77,10 @@ export const ActionButton = styled.button`
   background-color: #b8d8e4;
   color: #fff;
   border: none;
+`;
+
+export const PickDateDiv = styled(WrapDiv)`
+  text-align: center;
+  padding-top: 30px;
+  padding-bottom: 30px;
 `;
