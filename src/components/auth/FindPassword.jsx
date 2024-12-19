@@ -1,12 +1,8 @@
-import { useState } from "react";
 import Button from "../button/Button";
 import Inputbtn from "../input/Inputbtn";
-import ResetPw from "./ResetPassword";
 
 const FindPassword = () => {
-  const handleClickUpdatePw = () => {
-    setFormUi(<ResetPw />);
-  };
+  const handleClickUpdatePw = () => {};
 
   return (
     <>
