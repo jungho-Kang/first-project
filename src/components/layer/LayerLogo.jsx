@@ -22,7 +22,7 @@ const FormLogo = styled.div`
 `;
 const LayerLogo = () => {
   return (
-    <FormLogo>
+    <FormLogo Link to={"/"}>
       <div className="logo">
         <Link to={"/"}>다녀올로고</Link>
       </div>

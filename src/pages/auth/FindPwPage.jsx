@@ -14,7 +14,7 @@ function FindPwPage() {
         <FindPw></FindPw>
 
         <JoinDiv>
-          <Link to={"/auth/signup"}>로그인화면 가기</Link>
+          <Link to={"/auth"}>로그인화면 가기</Link>
         </JoinDiv>
       </LayerDiv>
     </LoginDiv>

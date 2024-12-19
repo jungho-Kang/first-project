@@ -14,7 +14,7 @@ const CheckBoxDiv = styled.div`
     margin-right: 10px;
   }
   input:checked + em {
-    color: #3450da;
+    color: #ff0062;
   }
   b {
     font-weight: 600;
@@ -23,11 +23,17 @@ const CheckBoxDiv = styled.div`
   }
 `;
 
-const CustomCheck = ({ label, text }) => {
+const CustomCheck = ({ label, text, checked, onChange }) => {
   return (
     <CheckBoxDiv>
       <label htmlFor={label}>
-        <input type="checkbox" name="" id={label} />
+        <input
+          type="checkbox"
+          name=""
+          id={label}
+          checked={checked}
+          onChange={onChange}
+        />
         <em>
           <FaCheck />
         </em>

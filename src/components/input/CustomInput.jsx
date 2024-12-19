@@ -21,8 +21,8 @@ function CustomInput({ label, type, name, register, errors }) {
     <TextForm>
       <label htmlFor="">
         <p>{label}</p>
-        <input type={type} {...register(name)} />
-        {errors[name] && <p>{errors[name].message}</p>}
+        <input type={type} {...register?.(name)} />
+        {errors?.[name] && <p>{errors[name]?.message}</p>}
       </label>
     </TextForm>
   );

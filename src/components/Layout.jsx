@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 
 const Layout = ({ children }) => {
   const { pathname } = useLocation();
-  console.log(pathname);
+  // console.log(pathname);
   return (
     <div>
       {pathname === "/auth" ||

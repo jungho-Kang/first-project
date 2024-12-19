@@ -40,14 +40,14 @@ const CustomInputBtn = ({ label, type, btntxt, name, register, errors }) => {
       outline: transparent;
     }
   `;
-  console.log(register);
+  // console.log(register);
   return (
     <InputBtnArea>
       <label htmlFor="">{label}</label>
       <div>
-        <input type={type} {...register(name)} /> <button>{btntxt}</button>
+        <input type={type} {...register?.(name)} /> <button>{btntxt}</button>
       </div>
-      {errors[name] && <p>{errors[name].message}</p>}
+      {errors?.[name] && <p>{errors[name]?.message}</p>}
     </InputBtnArea>
   );
 };

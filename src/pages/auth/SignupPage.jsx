@@ -10,8 +10,14 @@ import { Link } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 const schema = yup.object({
+  nickname: yup
+    .string()
+    .required("닉네임은 필수입니다.")
+    .min(3, "닉네임은 최소 3자 이상이어야 합니다")
+    .max(20, "닉네임은 최대 20자까지 입력할 수 있습니다"),
   name: yup
     .string()
     .required("이름은 필수입니다.")
@@ -61,12 +67,36 @@ const AgreementDocumentDiv = styled.div`
 `;
 
 function SignupPage() {
+  const [agreeChecked, setAgreeChecked] = useState({
+    agree01: false,
+    agree02: false,
+    agree03: false,
+  });
+  const [isAgreementStep, setIsAgreementStep] = useState(true);
+
+  const handleAllAgree = e => {
+    e.preventDefault();
+    setAgreeChecked({
+      agree01: !agreeChecked.agree01,
+      agree02: !agreeChecked.agree02,
+      agree03: !agreeChecked.agree03,
+    });
+  };
+  const handleCheckboxChange = label => {
+    setAgreeChecked(prev => ({
+      ...prev,
+      [label]: !prev[label],
+    }));
+  };
+  const isAllChecked =
+    agreeChecked.agree01 && agreeChecked.agree02 && agreeChecked.agree03;
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValue: {
+      nickname: "",
       name: "",
       email: "",
       pw: "",
@@ -88,99 +118,135 @@ function SignupPage() {
     //   console.log("회원가입 실패", error);
     // }
   };
+  const handleNext = () => {
+    if (isAllChecked) {
+      setIsAgreementStep(false);
+    } else {
+      alert("모든항목에 동의해주세요.");
+    }
+  };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <WrapDiv>
         {/* 동의서 */}
-        {/* <AgreementDiv>
-          <LayerLogo />
-          <h2>다녀올 회원약관동의</h2>
+        {isAgreementStep && (
+          <AgreementDiv>
+            <LayerLogo />
+            <h2>다녀올 회원약관동의</h2>
 
-          <BasicBtn
-            btnname={"네 모두 동의 합니다."}
-            Bg={"#eee"}
-            color={"#777"}
-            mt={"20px"}
-          />
-          <CustomCheck label={"agree01"} text={"본인은 만 14세 이상입니다"} />
-          <CustomCheck label={"agree02"} text={"개인정보 수집에 동의합니다"} />
-          <AgreementDocumentDiv>
-            <p>Lorem ipsum dolor sit amet.</p>
-            <span>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sed
-              nesciunt similique veritatis. Facilis non nihil aperiam reiciendis
-              perferendis veritatis deserunt optio blanditiis. Nobis distinctio
-              fuga consequuntur velit quasi. Magni, eaque.
-            </span>
-          </AgreementDocumentDiv>
-          <CustomCheck label={"agree03"} text={"이용약관에 동의합니다"} />
-          <AgreementDocumentDiv>
-            <p>Lorem ipsum dolor sit amet.</p>
-            <span>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sed
-              nesciunt similique veritatis. Facilis non nihil aperiam reiciendis
-              perferendis veritatis deserunt optio blanditiis. Nobis distinctio
-              fuga consequuntur velit quasi. Magni, eaque.
-            </span>
-          </AgreementDocumentDiv>
-          <BasicBtn btnname={"다음"} />
-        </AgreementDiv> */}
-
+            <BasicBtn
+              btnname={"네 모두 동의 합니다."}
+              Bg={isAllChecked ? "#5469d4" : "#eee"}
+              color={isAllChecked ? "#fff" : "#777"}
+              mt={"20px"}
+              onClick={e => {
+                handleAllAgree(e);
+              }}
+            />
+            <CustomCheck
+              label={"agree01"}
+              text={"본인은 만 14세 이상입니다"}
+              checked={agreeChecked.agree01}
+              onChange={() => handleCheckboxChange("agree01")}
+            />
+            <CustomCheck
+              label={"agree02"}
+              text={"개인정보 수집에 동의합니다"}
+              checked={agreeChecked.agree02}
+              onChange={() => handleCheckboxChange("agree02")}
+            />
+            <AgreementDocumentDiv>
+              <p>Lorem ipsum dolor sit amet.</p>
+              <span>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sed
+                nesciunt similique veritatis. Facilis non nihil aperiam
+                reiciendis perferendis veritatis deserunt optio blanditiis.
+                Nobis distinctio fuga consequuntur velit quasi. Magni, eaque.
+              </span>
+            </AgreementDocumentDiv>
+            <CustomCheck
+              label={"agree03"}
+              text={"이용약관에 동의합니다"}
+              checked={agreeChecked.agree03}
+              onChange={() => handleCheckboxChange("agree03")}
+            />
+            <AgreementDocumentDiv>
+              <p>Lorem ipsum dolor sit amet.</p>
+              <span>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sed
+                nesciunt similique veritatis. Facilis non nihil aperiam
+                reiciendis perferendis veritatis deserunt optio blanditiis.
+                Nobis distinctio fuga consequuntur velit quasi. Magni, eaque.
+              </span>
+            </AgreementDocumentDiv>
+            <BasicBtn
+              type={"button"}
+              btnname={"다음"}
+              Bg={isAllChecked ? "#5469d4" : "#eee"}
+              color={isAllChecked ? "#fff" : "#777"}
+              onClick={() => {
+                handleNext();
+              }}
+            />
+          </AgreementDiv>
+        )}
         {/* 회원가입 */}
-        <AgreementDiv style={{ padding: "60px 200px 100px" }}>
-          <LayerLogo />
-          <h2>회원가입</h2>
-          <div className="form">
-            <CustomInput
-              label={"NickName"}
-              type={"text"}
-              name={"nickname"}
-              register={register}
-              errors={errors}
-            />
-            <CustomInput
-              label={"Name"}
-              type={"text"}
-              name={"name"}
-              errors={errors}
-              register={register}
-            />
-            <CustomInputBtn
-              label={"Email"}
-              type={"email"}
-              btntxt={"인증번호"}
-              name={"email"}
-              register={register}
-              errors={errors}
-            />
-            <CustomInputBtn
-              name={"emailassign"}
-              label={"인증코드"}
-              type={"text"}
-              btntxt={"확인"}
-              register={register}
-              errors={errors}
-            />
-            <CustomInput
-              label={"Password"}
-              type={"password"}
-              name={"pw"}
-              register={register}
-              errors={errors}
-            />
-            <CustomInput
-              label={"Password 확인"}
-              type={"password"}
-              name={"pwconfirm"}
-              register={register}
-              errors={errors}
-            />
-            <BasicBtn btnname={"확인"} />
-            <JoinDiv>
-              <Link to={"/auth"}>로그인화면 이동</Link>
-            </JoinDiv>
-          </div>
-        </AgreementDiv>
+        {!isAgreementStep && (
+          <AgreementDiv style={{ padding: "30px 200px 100px" }}>
+            <LayerLogo />
+            <h2>회원가입</h2>
+            <div className="form">
+              <CustomInput
+                label={"NickName"}
+                type={"text"}
+                name={"nickname"}
+                register={register}
+                errors={errors}
+              />
+              <CustomInput
+                label={"Name"}
+                type={"text"}
+                name={"name"}
+                errors={errors}
+                register={register}
+              />
+              <CustomInputBtn
+                label={"Email"}
+                type={"email"}
+                btntxt={"인증번호"}
+                name={"email"}
+                register={register}
+                errors={errors}
+              />
+              <CustomInputBtn
+                name={"emailassign"}
+                label={"인증코드"}
+                type={"text"}
+                btntxt={"확인"}
+                register={register}
+                errors={errors}
+              />
+              <CustomInput
+                label={"Password"}
+                type={"password"}
+                name={"pw"}
+                register={register}
+                errors={errors}
+              />
+              <CustomInput
+                label={"Password 확인"}
+                type={"password"}
+                name={"pwconfirm"}
+                register={register}
+                errors={errors}
+              />
+              <BasicBtn btnname={"확인"} />
+              <JoinDiv>
+                <Link to={"/auth"}>로그인화면 이동</Link>
+              </JoinDiv>
+            </div>
+          </AgreementDiv>
+        )}
       </WrapDiv>
     </form>
   );
