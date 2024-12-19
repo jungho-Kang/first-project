@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-const Inputbtn = ({ label, type, btntxt }) => {
+const CustomInputBtn = ({ label, type, btntxt, name, register, errors }) => {
   //   const CodeInputDiv = styled.div`
   //     border: 1px solid #000;
   //   `;
@@ -40,13 +40,15 @@ const Inputbtn = ({ label, type, btntxt }) => {
       outline: transparent;
     }
   `;
+  console.log(register);
   return (
     <InputBtnArea>
       <label htmlFor="">{label}</label>
       <div>
-        <input type={type} /> <button>{btntxt}</button>
+        <input type={type} {...register(name)} /> <button>{btntxt}</button>
       </div>
+      {errors[name] && <p>{errors[name].message}</p>}
     </InputBtnArea>
   );
 };
-export default Inputbtn;
+export default CustomInputBtn;

@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+
 const TextForm = styled.div`
   padding: 10px 0;
   label {
@@ -15,12 +16,13 @@ const TextForm = styled.div`
   }
 `;
 
-function CustomInput({ label, type }) {
+function CustomInput({ label, type, name, register, errors }) {
   return (
     <TextForm>
       <label htmlFor="">
         <p>{label}</p>
-        <input type={type} />
+        <input type={type} {...register(name)} />
+        {errors[name] && <p>{errors[name].message}</p>}
       </label>
     </TextForm>
   );

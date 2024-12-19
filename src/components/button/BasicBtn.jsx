@@ -16,7 +16,15 @@ const BtnBasic = styled.button`
     opacity: 0.8;
   }
 `;
-const Button = ({ btnname }) => {
-  return <BtnBasic>{btnname}</BtnBasic>;
+const Button = ({ btnname, onClick, Bg, color, mt, type }) => {
+  return (
+    <BtnBasic
+      onClick={onClick}
+      type={type}
+      style={{ backgroundColor: Bg, color: color, marginTop: mt }}
+    >
+      {btnname}
+    </BtnBasic>
+  );
 };
 export default Button;
