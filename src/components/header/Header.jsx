@@ -34,7 +34,7 @@ const Header = () => {
         </div>
         <div className="right">
           <LoginOutDiv>
-            <Link to={"/"} className="signup-btn">
+            <Link to={"/auth/signup"} className="signup-btn">
               회원가입
             </Link>
             <button
@@ -46,18 +46,18 @@ const Header = () => {
             </button>
           </LoginOutDiv>
           <LoginDiv>
-            <a href="">마이페이지</a>
+            <Link to={"/myinfo"}>마이페이지</Link>
             <ul>
               <li>
-                <Link to={"/myinfo"}>내일정</Link>
+                <Link to={"/myplanlist"}>내일정</Link>
               </li>
               <li>
-                <Link to={"/myinfo/editprofile"}>내정보</Link>
+                <Link to={"/myinfo"}>내정보</Link>
               </li>
               <li>
                 <button
                   onClick={() => {
-                    navigate("/auth");
+                    navigate("/");
                   }}
                 >
                   로그아웃

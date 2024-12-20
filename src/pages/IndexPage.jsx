@@ -53,7 +53,7 @@ function IndexPage() {
     .mySwiper {
       padding: 60px 0;
       .mcont {
-        height: 500px;
+        height: 320px;
         border: 1px solid #eee;
         border-radius: 12px;
       }
@@ -168,7 +168,7 @@ function IndexPage() {
           </Swiper>
 
           <div className="btn-area">
-            <a href="">여행로그 바로가기</a>
+            <Link to={"/board"}>여행로그 바로가기</Link>
           </div>
         </ProvideDiv>
         {/* 메인 컨텐츠2 - 링크 버튼 */}

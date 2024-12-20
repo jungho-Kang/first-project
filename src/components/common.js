@@ -35,28 +35,10 @@ export const LayerDiv = styled.div`
     0 3px 6px rgba(0, 0, 0, 0.12),
     0 7px 14px rgba(0, 0, 0, 0.12);
 
-  .logo {
-    display: flex;
-    justify-content: center;
-    a {
-      display: block;
-      width: 140px;
-      height: 40px;
-      line-height: 40px;
-      background-color: #eee;
-      text-align: center;
-    }
-  }
-
-  > p {
-    text-align: center;
-    padding: 10px 0 40px;
-    color: #777;
-  }
   h3 {
     margin: 10px 0;
     font-size: 20px;
-    font-weight: 500;
+    font-weight: 600;
   }
   span {
     color: #777;
