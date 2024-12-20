@@ -880,6 +880,7 @@ h2.react-datepicker__current-month {
   vertical-align: -0.125em;
 }
 
+/* 지우지마 */
 /* 강제로 색상을 지정함. */
 .react-datepicker__year-text--selected,
 .react-datepicker__day--range-end {
@@ -950,4 +951,83 @@ h2.react-datepicker__current-month {
 .react-datepicker__day--selected {
   background-color: #007bff; /* 선택된 날짜 배경 */
   color: white; /* 선택된 날짜 글자 색 */
+}
+
+/* 여기서 부터에요.. */
+/* 달력의 너비, 높이를 조절함 */
+.react-datepicker {
+  width: 80%;
+  margin: 0 auto;
+}
+.react-datepicker__month-container {
+  width: 100%;
+}
+/* 월 헤더 스타일 */
+.react-datepicker__header {
+  background-color: #11ce85 !important;
+}
+h2.react-datepicker__current-month {
+  font-size: 20px;
+  margin: 10px 0;
+  color: #ff6803;
+}
+/* 요일 헤더 스타일 */
+.react-datepicker__day-name {
+  width: calc(100% / 7);
+  margin: 0;
+  background-color: #cbd50d;
+}
+.react-datepicker__day-name[aria-label*="Saturday"] {
+  color: orange;
+}
+.react-datepicker__day-name[aria-label*="Sunday"] {
+  color: red;
+}
+
+/* height랑 line-height 똑같이 설정해야함 */
+/* 날짜 버튼 스타일 */
+.react-datepicker__day {
+  font-size: 20px;
+  height: 80px;
+  line-height: 80px;
+  text-align: center;
+  border-radius: 8px;
+  margin: 5px;
+  cursor: pointer;
+}
+.react-datepicker__day,
+.react-datepicker__day--001,
+.react-datepicker__day--disabled,
+.react-datepicker__day--weekend {
+  width: calc(100% / 7);
+  margin: 0;
+}
+
+/* 비활성화 날짜 스타일 */
+.react-datepicker__day--disabled[aria-disabled="true"] {
+  color: #ccc;
+}
+
+/* 주말 날짜 스타일 */
+.react-datepicker__day--weekend[aria-label*="Saturday"] {
+  color: orange;
+}
+/* 일요일 날짜 스타일 */
+.react-datepicker__day--weekend[aria-label*="Sunday"] {
+  color: red;
+}
+/* 중간 날짜 스타일 */
+.react-datepicker__day--in-range {
+  background-color: hotpink;
+  color: red !important;
+}
+/* 선택된 날짜 스타일 */
+.react-datepicker__day--selected {
+  background-color: red;
+  color: white !important;
+}
+/* 끝 날짜 스타일 */
+.react-datepicker__day--range-end {
+  background-color: blue !important;
+  color: white !important;
 }
