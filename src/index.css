@@ -174,3 +174,19 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+/* 전체 스크롤바 스타일링 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* 스크롤 막대(thumb) 스타일링 */
+::-webkit-scrollbar-thumb {
+  background-color: #808080;
+  border-radius: 10px;
+}
+
+/* 스크롤바의 배경 스타일링 */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
