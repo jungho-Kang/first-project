@@ -16,7 +16,7 @@ const BtnBasic = styled.button`
     opacity: 0.8;
   }
 `;
-const Button = ({ btnname, onClick, Bg, color, mt, type }) => {
+const BasicBtn = ({ btnname, onClick, Bg, color, mt, type }) => {
   return (
     <BtnBasic
       onClick={onClick}
@@ -27,4 +27,4 @@ const Button = ({ btnname, onClick, Bg, color, mt, type }) => {
     </BtnBasic>
   );
 };
-export default Button;
+export default BasicBtn;

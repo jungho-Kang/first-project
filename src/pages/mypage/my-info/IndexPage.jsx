@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { WrapDiv } from "../../../components/common";
+import FormItem from "../../../components/layer/FormItem";
+import BasicBtn from "../../../components/button/BasicBtn";
 
 const MyPageTopDiv = styled.div`
   width: 100%;
@@ -41,12 +43,12 @@ const MyPageTopDiv = styled.div`
   }
 `;
 const MyPageWrapDiv = styled(WrapDiv)`
-  padding: 50px 0 120px;
+  padding: 50px 0 160px;
+  max-width: 1024px;
 `;
 const TabMenuDiv = styled.div`
   ul.tabs {
     margin: 0 auto;
-    max-width: 1024px;
     border-radius: 4px;
     overflow: hidden;
     display: flex;
@@ -69,7 +71,31 @@ const TabMenuDiv = styled.div`
     color: #fff;
   }
 `;
+
+const FormDiv = styled.div`
+  /* border: 1px solid #eee; */
+  display: flex;
+  justify-content: center;
+`;
+const FormInnerDiv = styled.div`
+  /* border: 1px solid; */
+  max-width: 480px;
+  width: 100%;
+  h3 {
+    font-weight: 600;
+    font-size: 28px;
+    text-align: center;
+    padding: 80px 0 40px;
+  }
+`;
+
+const BtnAreaDiv = styled.div`
+  display: flex;
+  gap: 15px;
+`;
+
 function IndexPage() {
+  const navigate = useNavigate();
   return (
     <div>
       <MyPageTopDiv>
@@ -86,13 +112,37 @@ function IndexPage() {
         <TabMenuDiv>
           <ul className="tabs">
             <li>
-              <Link to={"/"}>내 일정</Link>
+              <Link to={"/myplanlist"}>내 일정</Link>
             </li>
             <li className="active">
-              <Link to={"/"}>내 정보</Link>
+              <Link to={"/myinfo"}>내 정보</Link>
             </li>
           </ul>
         </TabMenuDiv>
+        <FormDiv>
+          <FormInnerDiv>
+            <h3>프로필</h3>
+            <FormItem label={"name"} userName={"홍길동"} />
+            <FormItem label={"닉네임"} userName={"크롱오이"} />
+            <FormItem label={"Email"} userName={"aa@gmail.com"} />
+            <FormItem label={"ID"} userName={"tngus52"} />
+            <BtnAreaDiv>
+              <BasicBtn
+                btnname={"비밀번호 변경"}
+                Bg={"#232a4f"}
+                onClick={() => {
+                  navigate("/myinfo/updatepw");
+                }}
+              />
+              <BasicBtn
+                btnname={"회원정보 수정"}
+                onClick={() => {
+                  navigate("/myinfo/editprofile");
+                }}
+              />
+            </BtnAreaDiv>
+          </FormInnerDiv>
+        </FormDiv>
       </MyPageWrapDiv>
     </div>
   );
