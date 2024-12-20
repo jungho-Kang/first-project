@@ -87,6 +87,7 @@ export const PickDateDiv = styled(WrapDiv)`
 
 export const LayoutDiv = styled.div`
   max-width: 100%;
-  background-color: black;
+  background-color: #000;
   height: 100vh;
+  display: flex;
 `;
