@@ -84,3 +84,9 @@ export const PickDateDiv = styled(WrapDiv)`
   padding-top: 30px;
   padding-bottom: 30px;
 `;
+
+export const LayoutDiv = styled.div`
+  max-width: 100%;
+  background-color: black;
+  height: 100vh;
+`;
