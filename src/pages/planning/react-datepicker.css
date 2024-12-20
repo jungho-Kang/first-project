@@ -1005,7 +1005,7 @@ h2.react-datepicker__current-month {
 
 /* 비활성화 날짜 스타일 */
 .react-datepicker__day--disabled[aria-disabled="true"] {
-  color: #ccc;
+  color: #ccc !important;
 }
 
 /* 주말 날짜 스타일 */
@@ -1030,4 +1030,9 @@ h2.react-datepicker__current-month {
 .react-datepicker__day--range-end {
   background-color: blue !important;
   color: white !important;
+}
+
+.react-datepicker__current-month {
+  word-spacing: 100vw; /* "12월"과 "2024" 사이의 간격을 1000px로 설정 */
+  line-height: 30px;
 }
