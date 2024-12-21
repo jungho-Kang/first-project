@@ -25,14 +25,15 @@ const CustomInputBtn = ({ label, type, btntxt, name, register, errors }) => {
         transition: all 0.3s;
         border: 1px solid transparent;
 
-        padding: 0px 10px;
-        height: 40px;
-        line-height: 38px;
-        width: 100px;
+        padding: 0px 15px;
+        height: 45px;
+        line-height: 45px;
       }
     }
     input {
-      width: calc(100%);
+      width: calc(70%);
+      height: 45px;
+      line-height: 45px;
       margin-top: 8px;
       padding: 10px 5px;
       border-radius: 4px;
@@ -45,7 +46,8 @@ const CustomInputBtn = ({ label, type, btntxt, name, register, errors }) => {
     <InputBtnArea>
       <label htmlFor="">{label}</label>
       <div>
-        <input type={type} {...register?.(name)} /> <button>{btntxt}</button>
+        <input type={type} {...register?.(name)} />
+        <button>{btntxt}</button>
       </div>
       {errors?.[name] && <p>{errors[name]?.message}</p>}
     </InputBtnArea>

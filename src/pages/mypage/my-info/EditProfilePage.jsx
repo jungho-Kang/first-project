@@ -131,23 +131,39 @@ function EditProfilePage() {
               type={"Email"}
               userName={"aa@gmail.com"}
             />
-            <CustomInputBtn label={"비밀번호"} btntxt={"비밀번호 변경"} />
+            <CustomInputBtn
+              type={"password"}
+              label={"비밀번호"}
+              btntxt={"비밀번호변경"}
+            />
 
             <BtnAreaDiv>
               <BasicBtn
-                btnname={"비밀번호 변경"}
-                Bg={"#232a4f"}
+                mt={"25px"}
+                btnname={"뒤로가기"}
+                Bg={"#EEEEEE"}
+                color={"#555"}
                 onClick={() => {
-                  navigate("/myinfo/updatepw");
+                  navigate("/myinfo");
                 }}
               />
               <BasicBtn
-                btnname={"회원정보 수정"}
+                mt={"25px"}
+                btnname={"회원탈퇴"}
+                Bg={"#FF5757"}
+                color={"#fff"}
                 onClick={() => {
-                  navigate("/myinfo/editprofile");
+                  navigate("/myinfo/deletemember");
                 }}
               />
             </BtnAreaDiv>
+            <BasicBtn
+              btnname={"저장"}
+              mt={"25px"}
+              onClick={() => {
+                navigate("/myinfo");
+              }}
+            />
           </FormInnerDiv>
         </FormDiv>
       </MyPageWrapDiv>
