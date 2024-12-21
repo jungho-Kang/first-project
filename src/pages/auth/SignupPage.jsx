@@ -1,16 +1,16 @@
 import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
 import BasicBtn from "../../components/button/BasicBtn";
 import { JoinDiv, WrapDiv } from "../../components/common";
 import CustomCheck from "../../components/input/CustomCheck";
-import LayerLogo from "../../components/layer/LayerLogo";
 import CustomInput from "../../components/input/CustomInput";
 import CustomInputBtn from "../../components/input/CustomInputBtn";
-import { Link } from "react-router-dom";
+import LayerLogo from "../../components/layer/LayerLogo";
 
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
 
 const schema = yup.object({
   nickname: yup
@@ -75,13 +75,23 @@ function SignupPage() {
   const [isAgreementStep, setIsAgreementStep] = useState(true);
 
   const handleAllAgree = e => {
-    e.preventDefault();
-    setAgreeChecked({
-      agree01: true,
-      agree02: true,
-      agree03: true,
-    });
+    const { checked } = e.target;
+
+    if (checked) {
+      setAgreeChecked({
+        agree01: true,
+        agree02: true,
+        agree03: true,
+      });
+    } else {
+      setAgreeChecked({
+        agree01: false,
+        agree02: false,
+        agree03: false,
+      });
+    }
   };
+
   const handleCheckboxChange = label => {
     setAgreeChecked(prev => ({
       ...prev,
@@ -172,10 +182,8 @@ function SignupPage() {
             </AgreementDocumentDiv>
             <CustomCheck
               text={"전체약관 동의를 모두 읽었으며, 위내용에 모두 동의합니다."}
-              Bg={isAllChecked ? "#5469d4" : "#eee"}
-              color={isAllChecked ? "#fff" : "#777"}
               mt={"20px"}
-              onClick={e => {
+              onChange={e => {
                 handleAllAgree(e);
               }}
             />

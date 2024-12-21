@@ -18,13 +18,32 @@ const TextForm = styled.div`
   }
 `;
 
-function CustomInput({ label, type, name, register, errors }) {
+const ErrorP = styled.p`
+  display: block;
+  margin-top: 5px;
+  line-height: 1.3em;
+  font-weight: 400;
+  color: #ff0000;
+`;
+const InitMessageP = styled.p`
+  display: block;
+  margin-top: 5px;
+  line-height: 1.3em;
+  font-weight: 400;
+  color: #999;
+`;
+
+function CustomInput({ label, type, name, register, errors, initmessage }) {
   return (
     <TextForm>
       <label htmlFor="">
         <p>{label}</p>
         <input type={type} {...register?.(name)} />
-        {errors?.[name] && <p>{errors[name]?.message}</p>}
+        {errors?.[name] ? (
+          <ErrorP>{errors[name]?.message}</ErrorP>
+        ) : (
+          <InitMessageP>{initmessage}</InitMessageP>
+        )}
       </label>
     </TextForm>
   );

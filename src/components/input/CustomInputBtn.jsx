@@ -1,10 +1,14 @@
 import styled from "@emotion/styled";
 
-const CustomInputBtn = ({ label, type, btntxt, name, register, errors }) => {
-  //   const CodeInputDiv = styled.div`
-  //     border: 1px solid #000;
-  //   `;
-
+const CustomInputBtn = ({
+  label,
+  type,
+  btntxt,
+  name,
+  register,
+  errors,
+  onClick,
+}) => {
   const InputBtnArea = styled.div`
     padding: 10px 0;
     label {
@@ -16,6 +20,7 @@ const CustomInputBtn = ({ label, type, btntxt, name, register, errors }) => {
       align-items: end;
       gap: 10px;
       button {
+        min-width: 100px;
         font-size: 16px;
         font-weight: 600;
         border-radius: 5px;
@@ -24,14 +29,13 @@ const CustomInputBtn = ({ label, type, btntxt, name, register, errors }) => {
         background-color: #5469d4;
         transition: all 0.3s;
         border: 1px solid transparent;
-
         padding: 0px 15px;
         height: 45px;
         line-height: 45px;
       }
     }
     input {
-      width: calc(70%);
+      width: 100%;
       height: 45px;
       line-height: 45px;
       margin-top: 8px;
@@ -41,13 +45,14 @@ const CustomInputBtn = ({ label, type, btntxt, name, register, errors }) => {
       outline: transparent;
     }
   `;
+
   // console.log(register);
   return (
     <InputBtnArea>
       <label htmlFor="">{label}</label>
       <div>
         <input type={type} {...register?.(name)} />
-        <button>{btntxt}</button>
+        <button onClick={onClick}>{btntxt}</button>
       </div>
       {errors?.[name] && <p>{errors[name]?.message}</p>}
     </InputBtnArea>

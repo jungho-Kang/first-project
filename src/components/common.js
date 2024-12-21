@@ -55,6 +55,7 @@ export const JoinDiv = styled.div`
   justify-content: center;
   margin: 30px 0;
   font-size: 14px;
+
   span {
     color: #777;
     text-decoration: underline;
@@ -62,6 +63,7 @@ export const JoinDiv = styled.div`
   a {
     font-weight: bold;
     color: #5469d4;
+    transform: translate(4px, 2px);
   }
 `;
 export const FindPwDiv = styled.div`
