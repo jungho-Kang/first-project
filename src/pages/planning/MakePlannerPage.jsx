@@ -3,14 +3,21 @@ import { Link } from "react-router-dom";
 import { LayoutDiv } from "./plan";
 import { useEffect, useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
+
 import Logo from "../../components/Logo";
+import { FaChevronRight } from "react-icons/fa6";
+import PlanTab from "../../components/plantabs/PlanTop";
+import PlanTop from "../../components/plantabs/PlanTop";
+import PlanTabs from "../../components/plantabs/PlanTabs";
+import OfferItem from "../../components/plantabs/OfferItem";
+
 
 const MenuDiv = styled.div`
   width: 125px;
-  height: 100vh;
+  height: 100%;
   background-color: #fff;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  border-right: 1px solid #eee;
+  padding: 32px 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -42,23 +49,53 @@ const MapLayoutDiv = styled.div`
 `;
 const MenuLayoutDiv = styled.div`
   max-width: 100%;
-  height: 100vh;
+  height: 100%;
   position: relative;
   display: flex;
 `;
 const AddScheduleDiv = styled.div`
-  width: 520px;
-  height: 100vh;
+  width: 480px;
+  height: 100%;
   background-color: #fff;
   z-index: 5;
   position: absolute;
-  left: 125px;
+  transition: all 0.3s;
+  box-shadow: 0 4px 8px 4px rgba(0, 0, 0, 0.15);
+  left: ${({ isSlide }) => (isSlide ? "-355px" : "125px")};
+
+  .slide-btn {
+    position: absolute;
+    top: 50%;
+    right: -20px;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0 5px 5px 0;
+    border: 1px solid #eee;
+    border-left-color: #fff;
+    background-color: #fff;
+  }
+  .inner {
+    padding: 32px 24px;
+  }
 `;
+
+const OfferListDiv = styled.div`
+  max-height: 620px;
+  height: 100%;
+  padding: 0 10px;
+  overflow-y: auto;
+`;
+
 function MakePlannerPage() {
   // 지도의 로딩 상태를 관리하는 state를 선언합니다
   const [isMapLoaded, setIsMapLoaded] = useState(false);
   // 현재 위치를 저장할 상태
   const [location, setLoacation] = useState(null);
+  const [isSlide, setIsSlide] = useState(false);
 
   // 위치 성공
   const successHandler = response => {
@@ -121,7 +158,30 @@ function MakePlannerPage() {
             <EventBtn>저장</EventBtn>
           </BtnSortDiv>
         </MenuDiv>
-        <AddScheduleDiv></AddScheduleDiv>
+        <AddScheduleDiv isSlide={isSlide}>
+          <div className="inner">
+            <PlanTop />
+            <PlanTabs />
+            <OfferListDiv>
+              <OfferItem />
+              <OfferItem />
+              <OfferItem />
+              <OfferItem />
+              <OfferItem />
+              <OfferItem />
+              <OfferItem />
+              <OfferItem />
+            </OfferListDiv>
+          </div>
+          <button
+            className="slide-btn"
+            onClick={() => {
+              setIsSlide(prev => !prev);
+            }}
+          >
+            <FaChevronRight />
+          </button>
+        </AddScheduleDiv>
       </MenuLayoutDiv>
       <MapLayoutDiv>
         {location && (
