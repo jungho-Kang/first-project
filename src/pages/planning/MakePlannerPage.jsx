@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { LayoutDiv } from "./plan";
 import { useEffect, useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
+import Logo from "../../components/Logo";
 
 const MenuDiv = styled.div`
   width: 125px;
@@ -15,12 +16,7 @@ const MenuDiv = styled.div`
   justify-content: space-between;
   z-index: 9;
 `;
-const LogoImg = styled.img`
-  width: 100px;
-  height: 50px;
-  display: block;
-  margin: 0 auto;
-`;
+
 const BtnSortDiv = styled.div`
   margin: 0 auto;
   display: flex;
@@ -118,7 +114,7 @@ function MakePlannerPage() {
       <MenuLayoutDiv>
         <MenuDiv>
           <Link to={"/"}>
-            <LogoImg src="/images/logo.svg" alt="로고" />
+            <Logo />
           </Link>
           <BtnSortDiv>
             <EventBtn>공유하기</EventBtn>

@@ -7,6 +7,7 @@ import {
   LoginDiv,
   LoginOutDiv,
 } from "./headerStyle";
+import Logo from "../Logo";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -14,8 +15,8 @@ const Header = () => {
     <HeaderDiv>
       <HeaderWrapDiv>
         <div className="left">
-          <Link to={"/"} className="logo">
-            로고
+          <Link to={"/"}>
+            <Logo />
           </Link>
           <GnbUl>
             <li className="menu">

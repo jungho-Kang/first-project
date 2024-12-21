@@ -17,15 +17,6 @@ export const HeaderDiv = styled.header`
     justify-content: center;
     align-items: center;
     gap: 20px;
-    > a.logo {
-      display: block;
-      border: 1px solid #bbb;
-      background-color: #eee;
-      width: 120px;
-      height: 38px;
-      line-height: 38px;
-      text-align: center;
-    }
   }
   .right {
     display: flex;
