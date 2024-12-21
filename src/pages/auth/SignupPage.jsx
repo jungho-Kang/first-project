@@ -134,15 +134,6 @@ function SignupPage() {
             <LayerLogo />
             <h2>다녀올 회원약관동의</h2>
 
-            <BasicBtn
-              btnname={"네 모두 동의 합니다."}
-              Bg={isAllChecked ? "#5469d4" : "#eee"}
-              color={isAllChecked ? "#fff" : "#777"}
-              mt={"20px"}
-              onClick={e => {
-                handleAllAgree(e);
-              }}
-            />
             <CustomCheck
               label={"agree01"}
               text={"본인은 만 14세 이상입니다"}
@@ -179,6 +170,15 @@ function SignupPage() {
                 Nobis distinctio fuga consequuntur velit quasi. Magni, eaque.
               </span>
             </AgreementDocumentDiv>
+            <CustomCheck
+              text={"전체약관 동의를 모두 읽었으며, 위내용에 모두 동의합니다."}
+              Bg={isAllChecked ? "#5469d4" : "#eee"}
+              color={isAllChecked ? "#fff" : "#777"}
+              mt={"20px"}
+              onClick={e => {
+                handleAllAgree(e);
+              }}
+            />
             <BasicBtn
               type={"button"}
               btnname={"다음"}

@@ -10,6 +10,8 @@ const TextForm = styled.div`
     width: 100%;
     margin-top: 8px;
     padding: 10px 5px;
+    height: 45px;
+    line-height: 45px;
     border-radius: 4px;
     border: 1px solid #dedede;
     outline: transparent;
