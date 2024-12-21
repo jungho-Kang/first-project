@@ -1,8 +1,14 @@
 import styled from "@emotion/styled";
-import { IoMdHeart } from "react-icons/io";
-import { FaStar, FaPlus } from "react-icons/fa";
+import { useState } from "react";
+import { FaCheck, FaPlus, FaStar } from "react-icons/fa";
 
 const OfferItem = () => {
+  const [btnClick, setBtnClick] = useState(false);
+
+  const handleClick = () => {
+    setBtnClick(prev => !prev);
+  };
+
   const OfferItemA = styled.a`
     display: flex;
     align-items: center;
@@ -50,11 +56,6 @@ const OfferItem = () => {
           margin-right: 3px;
           display: inline-block;
           transform: translateY(1.2px);
-        }
-        > span:first-child em {
-          color: #ff4081;
-        }
-        > span:last-child em {
           color: #facc15;
         }
       }
@@ -91,20 +92,14 @@ const OfferItem = () => {
         <div className="rating">
           <span>
             <em>
-              <IoMdHeart />
-            </em>
-            313
-          </span>
-          <span>
-            <em>
               <FaStar />
             </em>
             4.5
           </span>
         </div>
       </div>
-      <button type="button" className="btn-box">
-        <FaPlus />
+      <button type="button" className="btn-box" onClick={() => handleClick()}>
+        {btnClick ? <FaCheck /> : <FaPlus />}
       </button>
     </OfferItemA>
   );

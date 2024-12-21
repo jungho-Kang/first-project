@@ -90,4 +90,5 @@ export const LayoutDiv = styled.div`
   background-color: #000;
   height: 100vh;
   display: flex;
+  overflow: hidden;
 `;
