@@ -77,9 +77,9 @@ function SignupPage() {
   const handleAllAgree = e => {
     e.preventDefault();
     setAgreeChecked({
-      agree01: !agreeChecked.agree01,
-      agree02: !agreeChecked.agree02,
-      agree03: !agreeChecked.agree03,
+      agree01: true,
+      agree02: true,
+      agree03: true,
     });
   };
   const handleCheckboxChange = label => {

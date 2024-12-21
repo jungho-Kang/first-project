@@ -5,6 +5,7 @@
     format("woff");
   font-weight: 400;
   font-style: normal;
+  unicode-range: U+AC00-D7A3;
 }
 
 /* 영어 폰트 - Montserrat */
@@ -31,7 +32,6 @@ li {
 }
 html {
   font-size: 16px;
-  font-family: "Pretendard-Regular", "Montserrat", sans-serif;
 }
 button {
   cursor: pointer;
@@ -42,12 +42,12 @@ body,
   width: 100%;
   height: 100%;
   overflow-x: hidden;
+  font-family: "Pretendard-Regular", "Montserrat", serif;
 }
 
 body {
   font-size: var(--font-size-base);
   color: var(--primary-color);
-  font-family: "Pretendard-Regular";
 }
 
 html,
