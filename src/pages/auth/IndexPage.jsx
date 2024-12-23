@@ -13,6 +13,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 
 import LayerLogo from "../../components/layer/LayerLogo";
+import ConfirmPopup from "../../components/ConfirmPopup";
+import { useState } from "react";
 
 const schema = yup.object({
   email: yup
@@ -30,6 +32,7 @@ const schema = yup.object({
     ),
 });
 function IndexPage() {
+  const [isPopup, setIsPopup] = useState(false);
   const {
     register,
     handleSubmit,
@@ -50,51 +53,81 @@ function IndexPage() {
     }
   };
 
+  const handleClickPopup = () => {
+    setIsPopup(true);
+    console.log(isPopup);
+  };
+  const handleClickPopupClose = () => {
+    setIsPopup(false);
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <LoginDiv>
-        <LayerDiv>
-          {/* 로고 */}
-          <LayerLogo />
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <LoginDiv>
+          <LayerDiv>
+            {/* 로고 */}
+            <LayerLogo />
 
-          {/* input 태그 */}
-          {/* email */}
-          <CustomInput
-            label={"Email"}
-            type={"email"}
-            name={"email"}
-            register={register}
-            errors={errors}
-            initmessage={"이메일 주소에 '@'가 포함하여 입력해주세요."}
-          ></CustomInput>
-          {/* 비밀번호 */}
-          <CustomInput
-            label={"Password"}
-            type={"password"}
-            name={"pw"}
-            register={register}
-            errors={errors}
-            initmessage={
-              "영문, 숫자, 특수문자가 포함한 비밀번호를 입력해주세요."
-            }
-          ></CustomInput>
+            {/* input 태그 */}
+            {/* email */}
+            <CustomInput
+              label={"Email"}
+              type={"email"}
+              name={"email"}
+              register={register}
+              errors={errors}
+              initmessage={"이메일 주소에 '@'가 포함하여 입력해주세요."}
+            ></CustomInput>
+            {/* 비밀번호 */}
+            <CustomInput
+              label={"Password"}
+              type={"password"}
+              name={"pw"}
+              register={register}
+              errors={errors}
+              initmessage={
+                "영문, 숫자, 특수문자가 포함한 비밀번호를 입력해주세요."
+              }
+            ></CustomInput>
 
-          {/* 비밀번호찾기 - 링크 */}
-          <FindPwDiv>
-            <Link to={"/auth/findpw"}>비밀번호 찾기</Link>
-          </FindPwDiv>
+            {/* 비밀번호찾기 - 링크 */}
+            <FindPwDiv>
+              <Link to={"/auth/findpw"}>비밀번호 찾기</Link>
+            </FindPwDiv>
 
-          {/* 로그인 버튼  홈화면 아니면 틀렸다는 창 띄우기*/}
-          <BasicBtn btnname={"로그인"} type={"submit"}></BasicBtn>
+            {/* 로그인 버튼  홈화면 아니면 틀렸다는 창 띄우기*/}
+            <BasicBtn btnname={"로그인"} type={"submit"}></BasicBtn>
 
-          {/* 회원가입 링크 */}
-          <JoinDiv>
-            <span>아직 회원이 아니신가요?</span>
-            <Link to={"/auth/signup"}>회원가입</Link>
-          </JoinDiv>
-        </LayerDiv>
-      </LoginDiv>
-    </form>
+            {/* 회원가입 링크 */}
+            <JoinDiv>
+              <span>아직 회원이 아니신가요?</span>
+              <Link to={"/auth/signup"}>회원가입</Link>
+            </JoinDiv>
+            {/* start 팝업버튼 사용시 버튼 */}
+            <button
+              type="button"
+              onClick={() => {
+                handleClickPopup();
+              }}
+            >
+              이거
+            </button>
+            {/* //end 팝업버튼 사용시 버튼 */}
+          </LayerDiv>
+        </LoginDiv>
+      </form>
+      {/* start 팝업버튼 사용시 */}
+      {isPopup && (
+        <ConfirmPopup
+          navi={"/"}
+          onClose={() => {
+            handleClickPopupClose();
+          }}
+        />
+      )}
+      {/* //end 팝업버튼 사용시 */}
+    </>
   );
 }
 

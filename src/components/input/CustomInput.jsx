@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { ErrorP, InitMessageP } from "../../pages/mypage/my-info/myinfo";
 
 const TextForm = styled.div`
   padding: 10px 0;
@@ -16,21 +17,6 @@ const TextForm = styled.div`
     border: 1px solid #dedede;
     outline: transparent;
   }
-`;
-
-const ErrorP = styled.p`
-  display: block;
-  margin-top: 5px;
-  line-height: 1.3em;
-  font-weight: 400;
-  color: #ff0000;
-`;
-const InitMessageP = styled.p`
-  display: block;
-  margin-top: 5px;
-  line-height: 1.3em;
-  font-weight: 400;
-  color: #999;
 `;
 
 function CustomInput({ label, type, name, register, errors, initmessage }) {

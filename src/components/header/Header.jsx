@@ -8,8 +8,14 @@ import {
   LoginOutDiv,
 } from "./headerStyle";
 import Logo from "../Logo";
+import { useContext } from "react";
+import { LoginContext } from "../../contexts/LoginContext";
+import { BsFillSuitcase2Fill } from "react-icons/bs";
+import { FaUser } from "react-icons/fa6";
+import { RiLogoutBoxRLine } from "react-icons/ri";
 
 const Header = () => {
+  const { isLogin, handleClick } = useContext(LoginContext);
   const navigate = useNavigate();
   return (
     <HeaderDiv>
@@ -34,38 +40,48 @@ const Header = () => {
           </GnbUl>
         </div>
         <div className="right">
-          <LoginOutDiv>
-            <Link to={"/auth/signup"} className="signup-btn">
-              회원가입
-            </Link>
-            <button
-              onClick={() => {
-                navigate("/auth");
-              }}
-            >
-              로그인
-            </button>
-          </LoginOutDiv>
-          <LoginDiv>
-            <Link to={"/myinfo"}>마이페이지</Link>
-            <ul>
-              <li>
-                <Link to={"/myplanlist"}>내일정</Link>
-              </li>
-              <li>
-                <Link to={"/myinfo"}>내정보</Link>
-              </li>
-              <li>
-                <button
-                  onClick={() => {
-                    navigate("/");
-                  }}
-                >
-                  로그아웃
-                </button>
-              </li>
-            </ul>
-          </LoginDiv>
+          {isLogin ? (
+            <LoginOutDiv>
+              <Link to={"/auth/signup"} className="signup-btn">
+                회원가입
+              </Link>
+              <button
+                onClick={() => {
+                  navigate("/auth");
+                }}
+              >
+                로그인
+              </button>
+            </LoginOutDiv>
+          ) : (
+            <LoginDiv>
+              <Link to={"/myinfo"}>마이페이지</Link>
+              <ul>
+                <li>
+                  <Link to={"/myplanlist"}>
+                    <BsFillSuitcase2Fill />
+                    내일정
+                  </Link>
+                </li>
+                <li>
+                  <Link to={"/myinfo"}>
+                    <FaUser />
+                    내정보
+                  </Link>
+                </li>
+                <li>
+                  <button
+                    onClick={() => {
+                      handleClick(false);
+                    }}
+                  >
+                    <RiLogoutBoxRLine />
+                    로그아웃
+                  </button>
+                </li>
+              </ul>
+            </LoginDiv>
+          )}
         </div>
       </HeaderWrapDiv>
     </HeaderDiv>
