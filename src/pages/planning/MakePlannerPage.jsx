@@ -1,14 +1,48 @@
 import styled from "@emotion/styled";
-import { useEffect, useState } from "react";
-import { Map, MapMarker } from "react-kakao-maps-sdk";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { LayoutDiv } from "./plan";
 
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import Logo from "../../components/Logo";
-import OfferItem from "../../components/plantabs/OfferItem";
-import PlanTabs from "../../components/plantabs/PlanTabs";
 import PlanTop from "../../components/plantabs/PlanTop";
+import RecommendItem from "../../components/plantabs/RecommendItem";
+import TravelMap from "../../components/plantabs/TravelMap";
+import SchedulePush from "../../components/plantabs/SchedulePush";
+
+const PlanTabsUl = styled.ul`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: 15px 10px 0;
+  border-bottom: 1px solid #eee;
+
+  li {
+    width: 50%;
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+    cursor: pointer;
+    color: #777;
+    font-size: 18px;
+  }
+
+  .active {
+    font-weight: 500;
+    color: #3825e4;
+  }
+`;
+
+const TabUnderline = styled.li`
+  position: absolute !important;
+  bottom: -2px;
+  left: ${props => (props.activeTab === "추천항목" ? "0" : "50%")};
+  width: 50%;
+  height: 5px !important;
+  border-radius: 3px;
+  background-color: #3825e4;
+`;
 
 const MenuDiv = styled.div`
   width: 125px;
@@ -40,11 +74,7 @@ const EventBtn = styled.button`
   font-weight: 600;
   font-size: 14px;
 `;
-const MapLayoutDiv = styled.div`
-  width: 100%;
-  height: 100%;
-  background-color: rebeccapurple;
-`;
+
 const MenuLayoutDiv = styled.div`
   max-width: 100%;
   height: 100%;
@@ -81,67 +111,13 @@ const AddScheduleDiv = styled.div`
   }
 `;
 
-const OfferListDiv = styled.div`
-  max-height: 620px;
-  height: 100%;
-  padding: 0 10px;
-  overflow-y: auto;
-`;
-
 function MakePlannerPage() {
-  // 지도의 로딩 상태를 관리하는 state를 선언합니다
-  const [isMapLoaded, setIsMapLoaded] = useState(false);
-  // 현재 위치를 저장할 상태
-  const [location, setLoacation] = useState(null);
   const [isSlide, setIsSlide] = useState(false);
+  const [activeTab, setActiveTab] = useState("추천항목");
 
-  // 위치 성공
-  const successHandler = response => {
-    // coords: GeolocationCoordinates {latitude: 위도, longitude: 경도, …} timestamp: 1673446873903
-    const { latitude, longitude } = response.coords;
-    setLoacation({ latitude, longitude });
+  const handleTabClick = tab => {
+    setActiveTab(tab);
   };
-  // 위치 에러
-  const errorHandler = error => {
-    console.log(error);
-  };
-
-  useEffect(() => {
-    // 성공시 successHandler, 실패시 errorHandler 함수가 실행된다.
-    navigator.geolocation.getCurrentPosition(successHandler, errorHandler);
-  }, []);
-
-  // 컴포넌트가 마운트될 때 카카오맵 스크립트를 로드합니다
-  useEffect(() => {
-    // 카카오맵 스크립트 엘리먼트를 생성합니다
-    const kakaoMapScript = document.createElement("script");
-    // 스크립트를 비동기로 로드하도록 설정합니다
-    kakaoMapScript.async = true;
-    // 카카오맵 SDK URL을 설정합니다 (환경변수에서 API 키를 가져옵니다)
-    kakaoMapScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${import.meta.env.VITE_KKO_MAP_KEY}&autoload=false`;
-
-    // 스크립트 로드가 완료되면 실행될 이벤트 리스너를 추가합니다
-    kakaoMapScript.addEventListener("load", () => {
-      // 카카오맵을 로드하고 로딩 상태를 true로 변경합니다
-      window.kakao.maps.load(() => {
-        setIsMapLoaded(true);
-      });
-    });
-
-    // 생성한 스크립트를 head에 추가합니다
-    document.head.appendChild(kakaoMapScript);
-
-    // 클린업 함수
-    // 컴포넌트가 언마운트될 때 스크립트를 제거합니다
-    return () => {
-      document.head.removeChild(kakaoMapScript);
-    };
-  }, []);
-
-  // 지도가 로드되지 않았다면 로딩 메시지를 표시합니다
-  if (!isMapLoaded) {
-    return <div>지도를 불러오는 중입니다...</div>;
-  }
 
   return (
     <LayoutDiv>
@@ -158,17 +134,24 @@ function MakePlannerPage() {
         <AddScheduleDiv isSlide={isSlide}>
           <div className="inner">
             <PlanTop />
-            <PlanTabs />
-            <OfferListDiv>
-              <OfferItem />
-              <OfferItem />
-              <OfferItem />
-              <OfferItem />
-              <OfferItem />
-              <OfferItem />
-              <OfferItem />
-              <OfferItem />
-            </OfferListDiv>
+            <div>
+              <PlanTabsUl>
+                <li
+                  className={activeTab === "추천항목" ? "active" : ""}
+                  onClick={() => handleTabClick("추천항목")}
+                >
+                  추천항목
+                </li>
+                <li
+                  className={activeTab === "일정등록" ? "active" : ""}
+                  onClick={() => handleTabClick("일정등록")}
+                >
+                  일정등록
+                </li>
+                <TabUnderline activeTab={activeTab} />
+              </PlanTabsUl>
+            </div>
+            {activeTab === "추천항목" ? <RecommendItem /> : <SchedulePush />}
           </div>
           <button
             className="slide-btn"
@@ -180,19 +163,8 @@ function MakePlannerPage() {
           </button>
         </AddScheduleDiv>
       </MenuLayoutDiv>
-      <MapLayoutDiv>
-        {location && (
-          <Map
-            center={{ lat: location.latitude, lng: location.longitude }}
-            style={{ width: "100%", height: "100%" }}
-            level={3}
-          >
-            <MapMarker
-              position={{ lat: location.latitude, lng: location.longitude }}
-            />
-          </Map>
-        )}
-      </MapLayoutDiv>
+      {/* 맵 API 컴포넌트 */}
+      <TravelMap />
     </LayoutDiv>
   );
 }
