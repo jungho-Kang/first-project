@@ -1,16 +1,14 @@
 import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
-import { LayoutDiv } from "./plan";
 import { useEffect, useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
+import { Link } from "react-router-dom";
+import { LayoutDiv } from "./plan";
 
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import Logo from "../../components/Logo";
-import { FaChevronRight } from "react-icons/fa6";
-import PlanTab from "../../components/plantabs/PlanTop";
-import PlanTop from "../../components/plantabs/PlanTop";
-import PlanTabs from "../../components/plantabs/PlanTabs";
 import OfferItem from "../../components/plantabs/OfferItem";
-
+import PlanTabs from "../../components/plantabs/PlanTabs";
+import PlanTop from "../../components/plantabs/PlanTop";
 
 const MenuDiv = styled.div`
   width: 125px;
@@ -44,7 +42,7 @@ const EventBtn = styled.button`
 `;
 const MapLayoutDiv = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background-color: rebeccapurple;
 `;
 const MenuLayoutDiv = styled.div`
@@ -68,8 +66,8 @@ const AddScheduleDiv = styled.div`
     top: 50%;
     right: -20px;
     transform: translateY(-50%);
-    width: 20px;
-    height: 30px;
+    width: 25px;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -100,7 +98,6 @@ function MakePlannerPage() {
   // 위치 성공
   const successHandler = response => {
     // coords: GeolocationCoordinates {latitude: 위도, longitude: 경도, …} timestamp: 1673446873903
-    console.log(response);
     const { latitude, longitude } = response.coords;
     setLoacation({ latitude, longitude });
   };
@@ -179,7 +176,7 @@ function MakePlannerPage() {
               setIsSlide(prev => !prev);
             }}
           >
-            <FaChevronRight />
+            {isSlide ? <FaChevronLeft /> : <FaChevronRight />}
           </button>
         </AddScheduleDiv>
       </MenuLayoutDiv>

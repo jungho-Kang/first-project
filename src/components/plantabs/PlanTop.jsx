@@ -34,7 +34,7 @@ const SelectedOption = styled.div`
 const OptionsList = styled.div`
   position: absolute;
   top: 35px;
-  left: 84px;
+  left: 80px;
   width: 90px;
   border-radius: 0 0 5px 5px;
   border: 1px solid #ddd;
@@ -47,6 +47,7 @@ const OptionsList = styled.div`
 
 const OptionItem = styled.div`
   padding: 10px;
+  text-indent: -20px;
   cursor: pointer;
   &:hover {
     background-color: #f0f0f0;
@@ -80,6 +81,7 @@ const PlanTop = () => {
 
   const handleOptionClick = option => {
     setSelectedOption(option);
+    console.log(option);
     setIsOpen(false);
   };
 
@@ -115,8 +117,18 @@ const PlanTop = () => {
       </div>
       <PlanDateDiv>2024.12.20 - 2024.12.25</PlanDateDiv>
       <LinkbtnAreaDiv>
-        <Link to={"/"}>교통</Link>
-        <Link to={"/"}>숙소</Link>
+        <Link
+          to="#"
+          onClick={() => window.open("https://www.letskorail.com", "_blank")}
+        >
+          교통
+        </Link>
+        <Link
+          to="#"
+          onClick={() => window.open("https://www.yanolja.com", "_blank")}
+        >
+          숙소
+        </Link>
       </LinkbtnAreaDiv>
     </Wrapper>
   );

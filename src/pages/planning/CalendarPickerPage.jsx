@@ -8,8 +8,9 @@ import { TitleDiv } from "../../components/common";
 import { PickDateDiv } from "./plan";
 import "./react-datepicker.css";
 
-import { useNavigate } from "react-router-dom";
 import { ko } from "date-fns/locale";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const FlexBtnDiv = styled.div`
   display: flex;
@@ -53,45 +54,44 @@ function CalendarPickerPage() {
     if (endDate) {
       setMaxDate(null);
     }
-    console.log(endDate);
-    console.log(startDate);
   }, [startDate, endDate]);
 
+  const { handleSubmit } = useForm();
+
+  const handleSubmitDate = () => {
+    if (
+      moment(endDate).format("YYYY-MM-DD") ===
+      moment(startDate).format("YYYY-MM-DD")
+    ) {
+      alert("여행기간을 선택해주세요.");
+    } else if (endDate === null) {
+      alert("여행기간을 선택해주세요.");
+    } else {
+      navigate("/planning/makeplanner");
+    }
+  };
+
   return (
-    <PickDateDiv>
-      <TitleDiv>기간을 선택해주세요</TitleDiv>
-      <DatePicker
-        locale={ko}
-        selected={startDate}
-        onChange={onChange}
-        minDate={new Date()}
-        maxDate={maxDate}
-        startDate={startDate}
-        endDate={endDate}
-        selectsRange
-        inline
-        showDisabledMonthNavigation
-      />
-      <FlexBtnDiv>
-        <NextBtn
-          type="button"
-          onClick={() => {
-            if (
-              moment(endDate).format("YYYY-MM-DD") ===
-              moment(startDate).format("YYYY-MM-DD")
-            ) {
-              alert("여행기간을 선택해주세요.");
-            } else if (endDate === null) {
-              alert("여행기간을 선택해주세요.");
-            } else {
-              navigate("/planning/makeplanner");
-            }
-          }}
-        >
-          다음
-        </NextBtn>
-      </FlexBtnDiv>
-    </PickDateDiv>
+    <form onSubmit={handleSubmit(handleSubmitDate)}>
+      <PickDateDiv>
+        <TitleDiv>여행 기간을 선택해주세요</TitleDiv>
+        <DatePicker
+          locale={ko}
+          selected={startDate}
+          onChange={onChange}
+          minDate={new Date()}
+          maxDate={maxDate}
+          startDate={startDate}
+          endDate={endDate}
+          selectsRange
+          inline
+          showDisabledMonthNavigation
+        />
+        <FlexBtnDiv>
+          <NextBtn type="submit">다음</NextBtn>
+        </FlexBtnDiv>
+      </PickDateDiv>
+    </form>
   );
 }
 export default CalendarPickerPage;
