@@ -58,6 +58,7 @@ const AgreementDiv = styled.div`
   h2 {
     font-size: 28px;
     font-weight: 700;
+    margin-bottom: 20px;
   }
 `;
 const AgreementDocumentDiv = styled.div`
@@ -100,6 +101,7 @@ function SignupPage() {
   };
   const isAllChecked =
     agreeChecked.agree01 && agreeChecked.agree02 && agreeChecked.agree03;
+
   const {
     register,
     handleSubmit,

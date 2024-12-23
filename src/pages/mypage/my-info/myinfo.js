@@ -49,6 +49,7 @@ export const ErrorP = styled.p`
   display: block;
   margin-top: 5px;
   line-height: 1.3em;
+  font-size: 12px;
   font-weight: 400;
   color: #ff0000;
 `;
@@ -58,4 +59,5 @@ export const InitMessageP = styled.p`
   line-height: 1.3em;
   font-weight: 400;
   color: #999;
+  font-size: 12px;
 `;

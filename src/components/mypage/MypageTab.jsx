@@ -22,7 +22,7 @@ const TabMenuDiv = styled.div`
     font-size: 18px;
   }
   li.active a {
-    background-color: #5469d4;
+    background-color: #1180ff;
     color: #fff;
   }
 `;

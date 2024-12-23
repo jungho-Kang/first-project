@@ -67,6 +67,7 @@ const ResetPw = () => {
       {/* 로그인 버튼  홈화면 아니면 틀렸다는 창 띄우기*/}
       <Button
         btnname={"확인"}
+        mt={"30px"}
         onClick={() => {
           handleClickUpdatePw();
         }}

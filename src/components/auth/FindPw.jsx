@@ -65,6 +65,7 @@ const FindPw = () => {
       <BasicBtn
         btnname={"확인"}
         type="submit"
+        mt={"30px"}
         onClick={() => {
           navigate("/auth/resetpw");
         }}

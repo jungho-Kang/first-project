@@ -22,7 +22,7 @@ const CustomInputBtn = ({
       align-items: end;
       gap: 10px;
       button {
-        min-width: 100px;
+        min-width: 85px;
         font-size: 16px;
         font-weight: 600;
         border-radius: 5px;
@@ -37,7 +37,7 @@ const CustomInputBtn = ({
       }
     }
     input {
-      width: 100%;
+      flex-grow: 1;
       height: 45px;
       line-height: 45px;
       margin-top: 8px;
