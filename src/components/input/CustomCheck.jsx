@@ -31,7 +31,6 @@ const CustomCheck = ({ label, text, checked, onChange }) => {
       <label htmlFor={label}>
         <input
           type="checkbox"
-          name=""
           id={label}
           checked={checked}
           onChange={onChange}

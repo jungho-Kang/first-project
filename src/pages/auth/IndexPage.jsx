@@ -35,25 +35,21 @@ function IndexPage() {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    mode: "onChange",
+    mode: "onSubmit",
     resolver: yupResolver(schema),
   });
 
   const onSubmit = data => {
     console.log("data", data);
     try {
-      // const result = await postLoginMember(data);
-      // if (result.data) {
-      // navigate("/"); // 홈 화면으로 이동
-      // } else {
       console.log("잘되는중");
       alert("로그인에 실패했습니다. 다시 시도해주세요.");
-      // }
     } catch (error) {
       console.log(error);
       alert("서버 오류가 발생했습니다.");
     }
   };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <LoginDiv>
@@ -62,20 +58,25 @@ function IndexPage() {
           <LayerLogo />
 
           {/* input 태그 */}
+          {/* email */}
           <CustomInput
             label={"Email"}
             type={"email"}
             name={"email"}
             register={register}
             errors={errors}
+            initmessage={"이메일 주소에 '@'가 포함하여 입력해주세요."}
           ></CustomInput>
-
+          {/* 비밀번호 */}
           <CustomInput
             label={"Password"}
             type={"password"}
             name={"pw"}
             register={register}
             errors={errors}
+            initmessage={
+              "영문, 숫자, 특수문자가 포함한 비밀번호를 입력해주세요."
+            }
           ></CustomInput>
 
           {/* 비밀번호찾기 - 링크 */}
