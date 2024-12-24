@@ -8,7 +8,7 @@ import CustomInputBtn from "../../components/input/CustomInputBtn";
 import LayerLogo from "../../components/layer/LayerLogo";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
@@ -74,6 +74,16 @@ function SignupPage() {
   });
   const [isAgreementStep, setIsAgreementStep] = useState(true);
 
+  const [isAllChecked, setIsAllChecked] = useState(false);
+
+  useEffect(() => {
+    if (agreeChecked.agree01 && agreeChecked.agree02 && agreeChecked.agree03) {
+      setIsAllChecked(true);
+    } else {
+      setIsAllChecked(false);
+    }
+  }, [agreeChecked.agree01, agreeChecked.agree02, agreeChecked.agree03]);
+
   const handleAllAgree = e => {
     const { checked } = e.target;
 
@@ -98,8 +108,7 @@ function SignupPage() {
       [label]: !prev[label],
     }));
   };
-  const isAllChecked =
-    agreeChecked.agree01 && agreeChecked.agree02 && agreeChecked.agree03;
+
   const {
     register,
     handleSubmit,
@@ -182,6 +191,7 @@ function SignupPage() {
             </AgreementDocumentDiv>
             <CustomCheck
               text={"전체약관 동의를 모두 읽었으며, 위내용에 모두 동의합니다."}
+              checked={isAllChecked}
               mt={"20px"}
               onChange={e => {
                 handleAllAgree(e);

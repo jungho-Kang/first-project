@@ -159,7 +159,7 @@ function MakePlannerPage() {
               setIsSlide(prev => !prev);
             }}
           >
-            {isSlide ? <FaChevronLeft /> : <FaChevronRight />}
+            {isSlide ? <FaChevronRight /> : <FaChevronLeft />}
           </button>
         </AddScheduleDiv>
       </MenuLayoutDiv>
