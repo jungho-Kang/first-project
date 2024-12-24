@@ -19,12 +19,26 @@ const TextForm = styled.div`
   }
 `;
 
-function CustomInput({ label, type, name, register, errors, initmessage }) {
+function CustomInput({
+  label,
+  type,
+  name,
+  register,
+  errors,
+  initmessage,
+  value,
+  onChange,
+}) {
   return (
     <TextForm>
       <label htmlFor="">
         <p>{label}</p>
-        <input type={type} {...register?.(name)} />
+        <input
+          type={type}
+          {...register?.(name)}
+          value={value}
+          onChange={onChange}
+        />
         {errors?.[name] ? (
           <ErrorP>{errors[name]?.message}</ErrorP>
         ) : (
