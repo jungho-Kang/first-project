@@ -55,22 +55,50 @@ export const LoginOutDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 9;
   gap: 20px;
   * {
     border: 1px solid #bbb;
     border-radius: 4px;
     padding: 8px 16px;
   }
-  /* display: none; */
 `;
 export const LoginDiv = styled.div`
   position: relative;
-  display: none;
   top: 15px;
   right: 0;
+  z-index: 9;
   > a {
     border: 1px solid #bbb;
     border-radius: 4px;
     padding: 8px 16px;
+  }
+
+  ul {
+    border: 1px solid #bbb;
+    position: absolute;
+    right: 0;
+    top: 30px;
+    overflow: hidden;
+
+    border-radius: 8px;
+    li {
+      width: 100%;
+
+      a {
+        background-color: #fefefe;
+        display: block;
+        width: 160px;
+        padding: 12px;
+        border-bottom: 1px solid #bbb;
+      }
+      button {
+        width: 160px;
+        padding: 12px;
+        text-align: left;
+        border: none;
+        background-color: #fefefe;
+      }
+    }
   }
 `;
