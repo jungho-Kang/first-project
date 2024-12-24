@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { ErrorP, InitMessageP } from "../../pages/mypage/my-info/myinfo";
 
 const TextForm = styled.div`
   padding: 10px 0;
@@ -18,27 +19,26 @@ const TextForm = styled.div`
   }
 `;
 
-const ErrorP = styled.p`
-  display: block;
-  margin-top: 5px;
-  line-height: 1.3em;
-  font-weight: 400;
-  color: #ff0000;
-`;
-const InitMessageP = styled.p`
-  display: block;
-  margin-top: 5px;
-  line-height: 1.3em;
-  font-weight: 400;
-  color: #999;
-`;
-
-function CustomInput({ label, type, name, register, errors, initmessage }) {
+function CustomInput({
+  label,
+  type,
+  name,
+  register,
+  errors,
+  initmessage,
+  value,
+  onChange,
+}) {
   return (
     <TextForm>
       <label htmlFor="">
         <p>{label}</p>
-        <input type={type} {...register?.(name)} />
+        <input
+          type={type}
+          {...register?.(name)}
+          value={value}
+          onChange={onChange}
+        />
         {errors?.[name] ? (
           <ErrorP>{errors[name]?.message}</ErrorP>
         ) : (
