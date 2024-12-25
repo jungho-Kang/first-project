@@ -16,12 +16,13 @@ const BtnBasic = styled.button`
     opacity: 0.8;
   }
 `;
-const BasicBtn = ({ btnname, onClick, Bg, color, mt, type }) => {
+const BasicBtn = ({ btnname, onClick, type, style }) => {
   return (
     <BtnBasic
       onClick={onClick}
       type={type}
-      style={{ backgroundColor: Bg, color: color, marginTop: mt }}
+      style={style}
+      // style={{ backgroundColor: Bg, color: color, marginTop: mt }}
     >
       {btnname}
     </BtnBasic>

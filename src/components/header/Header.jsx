@@ -15,13 +15,13 @@ import { FaUser, FaCircleUser } from "react-icons/fa6";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 
 const Header = () => {
-  const { isLogin, handleClick } = useContext(LoginContext);
+  const { isLogin, handleClickLogin } = useContext(LoginContext);
   const [myMenuOpen, setMyMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   // 로그아웃
   const handleLogOut = () => {
-    handleClick(false);
+    handleClickLogin(false);
   };
   // 마이페이지 버튼 토글
   const handleMyMenuToggle = () => {

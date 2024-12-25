@@ -74,7 +74,7 @@ const OfferItemA = styled.a`
 const OfferItem = () => {
   const [btnClick, setBtnClick] = useState(false);
 
-  const handleClick = () => {
+  const handleClickLogin = () => {
     setBtnClick(prev => !prev);
   };
 
@@ -98,7 +98,11 @@ const OfferItem = () => {
           </span>
         </div>
       </div>
-      <button type="button" className="btn-box" onClick={() => handleClick()}>
+      <button
+        type="button"
+        className="btn-box"
+        onClick={() => handleClickLogin()}
+      >
         {btnClick ? <FaCheck /> : <FaPlus />}
       </button>
     </OfferItemA>

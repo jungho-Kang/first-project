@@ -1,8 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import Button from "../button/BasicBtn";
 import CustomInputBtn from "../input/CustomInput";
 import { useForm } from "react-hook-form";
+import BasicBtn from "../button/BasicBtn";
 
 const schema = yup.object({
   pw: yup
@@ -65,13 +65,13 @@ const ResetPw = () => {
         initmessage={"비밀번호를 한 번 더 입력해주세요."}
       />
       {/* 로그인 버튼  홈화면 아니면 틀렸다는 창 띄우기*/}
-      <Button
+      <BasicBtn
         btnname={"확인"}
-        mt={"30px"}
+        style={{ marginTop: "30px" }}
         onClick={() => {
           handleClickUpdatePw();
         }}
-      ></Button>
+      ></BasicBtn>
     </form>
   );
 };

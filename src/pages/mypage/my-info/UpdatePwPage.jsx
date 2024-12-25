@@ -22,19 +22,23 @@ function UpdatePwPage() {
 
             <BtnAreaDiv>
               <BasicBtn
-                mt={"25px"}
                 btnname={"취소"}
-                Bg={"#EEEEEE"}
-                color={"#555"}
+                style={{
+                  marginTop: "25px",
+                  backgroundColor: "#eee",
+                  color: "#555",
+                }}
                 onClick={() => {
                   navigate("/myinfo");
                 }}
               />
               <BasicBtn
-                mt={"25px"}
                 btnname={"설정완료"}
-                Bg={"#5469d4"}
-                color={"#fff"}
+                style={{
+                  marginTop: "25px",
+                  backgroundColor: "#5469d4",
+                  color: "#fff",
+                }}
                 onClick={() => {
                   navigate("/myinfo");
                 }}

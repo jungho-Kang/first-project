@@ -1,11 +1,12 @@
 import { WrapDiv } from "../../components/common";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import Agreement from "../../components/auth/Agreement";
-import LoginForm from "../../components/auth/LoginForm";
+import SignupForm from "../../components/auth/SignupForm";
+import { useNavigate } from "react-router-dom";
 
 const schema = yup.object({
   nickname: yup
@@ -40,10 +41,9 @@ const schema = yup.object({
   emailassign: yup.string().required("인증번호를 입력해주세요"),
 });
 
-
 function SignupPage() {
   const [isAgreementStep, setIsAgreementStep] = useState(true);
-
+  const navigate = useNavigate();
 
   const initData = {
     upw: "",
@@ -51,10 +51,8 @@ function SignupPage() {
     name: "",
     email: "",
     agreement: false,
-
   };
   const [formData, setFormData] = useState(initData);
-
 
   const {
     register,
@@ -69,12 +67,13 @@ function SignupPage() {
       pwconfirm: "",
       // policy: false,
     },
-    mode: "onChange",
+    mode: "onSubmit",
     resolver: yupResolver(schema),
   });
   const onSubmit = async data => {
     console.log(data);
     // try {
+    //   const result = await postLoginMember(data)
     //   if (result.data) {
     //     navigate("/login");
     //   } else {
@@ -95,16 +94,14 @@ function SignupPage() {
       <WrapDiv>
         {/* 동의서 */}
         {isAgreementStep && (
-
           <Agreement
             isAgreementStep={isAgreementStep}
             setIsAgreementStep={setIsAgreementStep}
           />
-
         )}
         {/* 회원가입 */}
         {!isAgreementStep && (
-          <LoginForm
+          <SignupForm
             formData={formData}
             handleChangeFormData={handleChangeFormData}
             register={register}

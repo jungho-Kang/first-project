@@ -6,7 +6,7 @@ import CustomInput from "../input/CustomInput";
 import CustomInputBtn from "../input/CustomInputBtn";
 import LayerLogo from "../layer/LayerLogo";
 
-const LoginForm = ({ formData, handleChangeFormData, register, errors }) => {
+const SignupForm = ({ formData, handleChangeFormData, register, errors }) => {
   return (
     <AgreementDiv style={{ padding: "30px 200px 100px" }}>
       <LayerLogo />
@@ -80,4 +80,4 @@ const LoginForm = ({ formData, handleChangeFormData, register, errors }) => {
     </AgreementDiv>
   );
 };
-export default LoginForm;
+export default SignupForm;
