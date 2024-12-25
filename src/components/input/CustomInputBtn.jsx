@@ -1,17 +1,6 @@
 import styled from "@emotion/styled";
 import { ErrorP, InitMessageP } from "../../pages/mypage/my-info/myinfo";
-
-const CustomInputBtn = ({
-  label,
-  type,
-  btntxt,
-  name,
-  register,
-  errors,
-  onClick,
-  initmessage,
-}) => {
-  const InputBtnArea = styled.div`
+const InputBtnArea = styled.div`
     padding: 10px 0;
     label {
       font-size: 15px;
@@ -48,12 +37,30 @@ const CustomInputBtn = ({
     }
   `;
 
+const CustomInputBtn = ({
+  onClick,
+  btntxt,
+  label,
+  type,
+  name,
+  register,
+  errors,
+  initmessage,
+  value,
+  onChange,
+}) => {
+  
   // console.log(register);
   return (
     <InputBtnArea>
       <label htmlFor="">{label}</label>
       <div>
-        <input type={type} {...register?.(name)} />
+        <input
+          type={type}
+          {...register?.(name)}
+          value={value}
+          onChange={onChange}
+        />
         <button onClick={onClick}>{btntxt}</button>
       </div>
       {errors?.[name] ? (
