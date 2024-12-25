@@ -43,7 +43,7 @@ export const GnbUl = styled.ul`
       transition: all 0.3s;
     }
     > a:hover {
-      color: #3825e4;
+      color: #17a1fa;
       font-weight: 500;
     }
   }
@@ -60,44 +60,69 @@ export const LoginOutDiv = styled.div`
   * {
     border: 1px solid #bbb;
     border-radius: 4px;
-    padding: 8px 16px;
+    padding: 2px 16px;
+    height: 40px;
+    line-height: 36px;
+  }
+  button {
+    background-color: #1270b0;
+    color: #fff;
+    border-color: #1270b0;
   }
 `;
 export const LoginDiv = styled.div`
   position: relative;
-  top: 15px;
+  top: 6px;
   right: 0;
   z-index: 9;
-  > a {
-    border: 1px solid #bbb;
-    border-radius: 4px;
-    padding: 8px 16px;
+  > button {
+    font-size: 40px;
+    color: #1270b0;
+    height: 40px;
+    border-radius: 100%;
+    border: none;
+    transition: all 0.3s;
+    :hover {
+      transform: scale(1.08);
+    }
   }
 
   ul {
-    border: 1px solid #bbb;
+    border: 1px solid rgb(211, 211, 211);
     position: absolute;
     right: 0;
-    top: 30px;
+    top: 50px;
     overflow: hidden;
+    box-shadow:
+      rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+      rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 
     border-radius: 8px;
     li {
       width: 100%;
-
-      a {
-        background-color: #fefefe;
-        display: block;
+      > * {
+        display: flex;
+        gap: 10px;
         width: 160px;
         padding: 12px;
-        border-bottom: 1px solid #bbb;
+        font-size: 14px;
+        background-color: #fefefe;
+        color: rgba(0, 0, 0, 0.7);
+        transition: all.3s;
+        :hover {
+          background-color: rgb(238, 247, 255);
+          color: #1270b0;
+        }
+      }
+      a {
+        border-bottom: 1px solid rgb(241, 241, 241);
       }
       button {
-        width: 160px;
-        padding: 12px;
         text-align: left;
         border: none;
-        background-color: #fefefe;
+        svg {
+          transform: translateY(1.2px);
+        }
       }
     }
   }

@@ -40,6 +40,7 @@ const schema = yup.object({
   emailassign: yup.string().required("인증번호를 입력해주세요"),
 });
 
+
 function SignupPage() {
   const [isAgreementStep, setIsAgreementStep] = useState(true);
 
@@ -51,6 +52,7 @@ function SignupPage() {
     agreement: false,
   };
   const [formData, setFormData] = useState(initData);
+
 
   const {
     register,

@@ -8,15 +8,33 @@ import {
   LoginOutDiv,
 } from "./headerStyle";
 import Logo from "../Logo";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { LoginContext } from "../../contexts/LoginContext";
 import { BsFillSuitcase2Fill } from "react-icons/bs";
-import { FaUser } from "react-icons/fa6";
+import { FaUser, FaCircleUser } from "react-icons/fa6";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 
 const Header = () => {
   const { isLogin, handleClick } = useContext(LoginContext);
+  const [myMenuOpen, setMyMenuOpen] = useState(false);
   const navigate = useNavigate();
+
+  // 로그아웃
+  const handleLogOut = () => {
+    handleClick(false);
+  };
+  // 마이페이지 버튼 토글
+  const handleMyMenuToggle = () => {
+    setMyMenuOpen(!myMenuOpen);
+  };
+
+  // 메뉴
+  const menuItems = [
+    { path: "/about", label: "다녀ALL" },
+    { path: "/guide", label: "이용방법" },
+    { path: "/planning", label: "일정만들기" },
+    { path: "/board", label: "여행로그" },
+  ];
   return (
     <HeaderDiv>
       <HeaderWrapDiv>
@@ -25,18 +43,11 @@ const Header = () => {
             <Logo />
           </Link>
           <GnbUl>
-            <li className="menu">
-              <Link to={"/about"}>다녀ALL</Link>
-            </li>
-            <li className="menu">
-              <Link to={"/guide"}>이용방법</Link>
-            </li>
-            <li className="menu">
-              <Link to={"/planning"}>일정만들기</Link>
-            </li>
-            <li className="menu">
-              <Link to={"/board"}>여행로그</Link>
-            </li>
+            {menuItems.map((item, index) => (
+              <li className="menu" key={index}>
+                <Link to={item.path}>{item.label}</Link>
+              </li>
+            ))}
           </GnbUl>
         </div>
         <div className="right">
@@ -55,31 +66,41 @@ const Header = () => {
             </LoginOutDiv>
           ) : (
             <LoginDiv>
-              <Link to={"/myinfo"}>마이페이지</Link>
-              <ul>
-                <li>
-                  <Link to={"/myplanlist"}>
-                    <BsFillSuitcase2Fill />
-                    내일정
-                  </Link>
-                </li>
-                <li>
-                  <Link to={"/myinfo"}>
-                    <FaUser />
-                    내정보
-                  </Link>
-                </li>
-                <li>
-                  <button
-                    onClick={() => {
-                      handleClick(false);
-                    }}
-                  >
-                    <RiLogoutBoxRLine />
-                    로그아웃
-                  </button>
-                </li>
-              </ul>
+              <button
+                onClick={() => {
+                  handleMyMenuToggle();
+                }}
+              >
+                <FaCircleUser />
+              </button>
+              {myMenuOpen ? (
+                <ul>
+                  <li>
+                    <Link to={"/myplanlist"}>
+                      <BsFillSuitcase2Fill />
+                      내일정
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to={"/myinfo"}>
+                      <FaUser />
+                      내정보
+                    </Link>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => {
+                        handleLogOut();
+                      }}
+                    >
+                      <RiLogoutBoxRLine />
+                      로그아웃
+                    </button>
+                  </li>
+                </ul>
+              ) : (
+                <></>
+              )}
             </LoginDiv>
           )}
         </div>

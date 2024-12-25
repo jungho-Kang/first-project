@@ -7,12 +7,12 @@ const MypageTop = () => {
       justify-content: center;
       align-items: center;
       height: 280px;
-      background-color: #5469d4;
+      background-color: #1270b0;
       h2 {
         font-size: 38px;
         font-weight: 500;
         color: #fff;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+        text-shadow: 1px 2px 2px rgba(0, 0, 0, 0.4);
       }
     }
 
@@ -28,7 +28,7 @@ const MypageTop = () => {
         border-radius: 100%;
         border: 3px solid #fff;
         margin-top: -40px;
-        background-color: #5469d4;
+        background-color: #1270b0;
       }
       p {
         font-size: 20px;
@@ -40,7 +40,7 @@ const MypageTop = () => {
   return (
     <MyPageTopDiv>
       <div className="top">
-        <h2 className="tit">회원탈퇴</h2>
+        <h2 className="tit">회원정보</h2>
       </div>
       <div className="user-photo">
         <div className="photo"></div>

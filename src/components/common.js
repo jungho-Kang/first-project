@@ -51,19 +51,20 @@ export const LayerDiv = styled.div`
 `;
 
 export const JoinDiv = styled.div`
+  margin: 24px 0 30px;
   display: flex;
   justify-content: center;
-  margin: 30px 0;
-  font-size: 14px;
-
   span {
+    font-size: 14px;
     color: #777;
+
     text-decoration: underline;
   }
   a {
-    font-weight: bold;
     color: #5469d4;
+    font-size: 14px;
     transform: translate(4px, 2px);
+    font-weight: bold;
   }
 `;
 export const FindPwDiv = styled.div`
@@ -71,7 +72,7 @@ export const FindPwDiv = styled.div`
   display: flex;
   justify-content: end;
   font-size: 14px;
-  color: #999;
+  margin-top: -25px;
 `;
 export const TitleDiv = styled.div`
   margin-top: 60px;
