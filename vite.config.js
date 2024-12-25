@@ -8,6 +8,7 @@ export default defineConfig({
     proxy: {
       "/api": {
         target: "http://192.168.0.181:8080",
+
         changeOrigin: true,
         secure: false,
       },

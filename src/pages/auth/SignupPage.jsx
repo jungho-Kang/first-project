@@ -1,7 +1,7 @@
 import { WrapDiv } from "../../components/common";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import Agreement from "../../components/auth/Agreement";
@@ -44,12 +44,14 @@ const schema = yup.object({
 function SignupPage() {
   const [isAgreementStep, setIsAgreementStep] = useState(true);
 
+
   const initData = {
     upw: "",
     nickName: "",
     name: "",
     email: "",
     agreement: false,
+
   };
   const [formData, setFormData] = useState(initData);
 
@@ -93,10 +95,12 @@ function SignupPage() {
       <WrapDiv>
         {/* 동의서 */}
         {isAgreementStep && (
+
           <Agreement
             isAgreementStep={isAgreementStep}
             setIsAgreementStep={setIsAgreementStep}
           />
+
         )}
         {/* 회원가입 */}
         {!isAgreementStep && (
