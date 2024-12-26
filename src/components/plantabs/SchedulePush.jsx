@@ -1,3 +1,5 @@
+// "일정등록" 모달창 띄우기
+
 import styled from "@emotion/styled";
 
 const ContentDiv = styled.div`
