@@ -1,23 +1,23 @@
+import { Link, useNavigate } from "react-router-dom";
+import BasicBtn from "../../components/button/BasicBtn";
 import {
   FindPwDiv,
   JoinDiv,
   LayerDiv,
   LoginDiv,
 } from "../../components/common";
-import BasicBtn from "../../components/button/BasicBtn";
 import CustomInput from "../../components/input/CustomInput";
-import { Link, useNavigate } from "react-router-dom";
 
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import * as yup from "yup";
 
-import LayerLogo from "../../components/layer/LayerLogo";
-import ConfirmPopup from "../../components/ConfirmPopup";
 import { useContext, useState } from "react";
+// import { postLoginMember } from "../../../apis/myauth";
+import { postLoginMember } from "../../../fetch/auth";
+import ConfirmPopup from "../../components/ConfirmPopup";
+import LayerLogo from "../../components/layer/LayerLogo";
 import { LoginContext } from "../../contexts/LoginContext";
-import axios from "axios";
-// import { postLoginMember } from "../../../apis/auth";
 
 const schema = yup.object({
   email: yup
@@ -49,20 +49,24 @@ function IndexPage() {
   } = useForm({
     mode: "onSubmit",
     resolver: yupResolver(schema),
+    defaultValues: {
+      email: "a@a.net",
+      upw: "1234!!GG",
+    },
   });
 
-  // api 요청
   const onSubmit = async data => {
-    console.log("onSubmit 호출됨");
-    // 목데이터 API 호출
-    // const result = await axios.post("http://주소:5000/user", data);
+    console.log("onSubmit 호출됨", data);
 
-    // 나중에 아래 주석풀기
-    // const result = await postLoginMember(data);
-    // 서버에서 받아온 데이터 확인
-    console.log("받아온 데이터:", result.data);
     try {
+      // 목데이터 API 호출
+      // const result = await axios.post("/api/user/signin", { ...data });
+
+      const result = await postLoginMember(data);
+
       if (result.data) {
+        // 서버에서 받아온 데이터 확인
+        console.log("받아온 데이터:", result.data);
         console.log("로그인 성공");
         handleClickLogin(true);
         navigate("/");
@@ -91,7 +95,6 @@ function IndexPage() {
           <LayerDiv>
             {/* 로고 */}
             <LayerLogo />
-
             {/* input 태그 */}
             {/* email */}
             <CustomInput

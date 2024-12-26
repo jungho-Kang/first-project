@@ -57,6 +57,7 @@ const CustomInputBtn = forwardRef(
     ref,
   ) => {
     // console.log(register);
+    console.log(register);
     return (
       <InputBtnArea>
         <label htmlFor="">{label}</label>

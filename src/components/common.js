@@ -87,3 +87,5 @@ export const LineDiv = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.1);
   margin-bottom: 30px;
 `;
+
+// CustomInput

@@ -14,7 +14,8 @@ const schema = yup.object({
     .string()
     .required("이메일을 입력해주세요.")
     .email("올바른 이메일 형식이 아닙니다."),
-  emailCode: yup.string().required("인증번호가 틀렸습니다. 다시 시도해주세요."),
+  emailCode: yup.string().required("인증번호를 입력해주세요."),
+  // authCode
 });
 // 1. 사용자가 이메일을 입력하고 인증번호 버튼을 누른다.
 // 2. 이메일로 코드를 발송한다(버튼을 누르는 동시에 인증번호를 백엔드로부터 받아와??)
@@ -50,7 +51,7 @@ const FindPw = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    mode: "onSubmit",
+    mode: "onChange",
     resolver: yupResolver(schema),
   });
 
@@ -65,15 +66,18 @@ const FindPw = () => {
   };
 
   // 이메일 인증 요청
+
   const handleSendCode = async email => {
     // const result = await sendEmailCode(email);
 
     // ------------test------------------------
     console.log("이메일 인증코드 요청", email);
-    setSendMessage("인증번호가 발송되었습니다.");
-    // const result = await axios.post("http://주소:5000/ecode", { email });
     // ----------------------------------------
     try {
+      const result = await axios.post("http://192.168.0.77:5000/ecode", {
+        email,
+      });
+      // setSendMessage("인증번호가 발송되었습니다.");
       if (result.data && result.data.emailCode) {
         setCode(result.data.emailCode);
         setCodeSent(true);
@@ -92,7 +96,7 @@ const FindPw = () => {
   const handleInputChange = e => {
     setInputCode(e.target.value);
     // -----------test---------------------
-    setCode("1234");
+    setCode("12345");
     // ------------------------------------
     if (e.target.value === code) {
       setBtnDisabled(false);
@@ -104,19 +108,23 @@ const FindPw = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <h3>비밀번호 찾기</h3>
       <span>가입시 등록한 이메일 주소로 인증번호를 발송해 드립니다.</span>
-
+      <input type="email" {...register("email")} />{" "}
+      <button type={"button"} onClick={handleSendCode}>
+        인증
+      </button>
+      <div>{errors.email?.message}</div>
       {/* 이메일 입력 */}
       <CustomInputBtn
         label={"Email"}
-        type={"text"}
+        type={"email"}
         name={"email"}
+        btntype={"button"}
         btntxt={"인증"}
         register={register}
         errors={errors}
         initmessage={sendMessage}
         ref={emailRef}
-        onClick={e => {
-          e.preventDefault();
+        onClick={() => {
           handleSendCode(emailRef.current.value);
         }}
       />
@@ -136,7 +144,7 @@ const FindPw = () => {
       {/* 로그인 버튼  홈화면 아니면 틀렸다는 창 띄우기*/}
       <BasicBtn
         btnname={"확인"}
-        type="submit"
+        type={"submit"}
         disabled={inputCode !== code || btnDisabled}
         style={{
           marginTop: "30px",

@@ -89,13 +89,16 @@ function IndexPage() {
     height: 17vw;
     max-height: 270px;
     overflow: hidden;
-
+    &:nth-child(1) {
+      background: url(/images/korail.png) no-repeat center center;
+      background-size: 50%;
+    }
     > a {
       display: block;
       width: 100%;
       height: 100%;
-      background-color: #eee;
       position: relative;
+
       em {
         background-color: #333;
         color: #fff;
