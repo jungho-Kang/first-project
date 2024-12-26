@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
+import { FaCheck } from "react-icons/fa";
 import { AgreementDiv, AgreementDocumentDiv } from "../../pages/auth/login";
-import BasicBtn from "../button/BasicBtn";
-import CustomCheck from "../input/CustomCheck";
+import { BtnBasic, CheckBoxDiv } from "../common";
 import LayerLogo from "../layer/LayerLogo";
 
 const Agreement = ({ setIsAgreementStep }) => {
@@ -57,19 +57,41 @@ const Agreement = ({ setIsAgreementStep }) => {
     <AgreementDiv>
       <LayerLogo />
       <h2>다녀올 회원약관동의</h2>
+      {/* 체크박스 1 */}
+      <CheckBoxDiv>
+        <label htmlFor="agree01">
+          <input
+            type="checkbox"
+            id="agree01"
+            checked={agreeChecked.agree01}
+            onChange={() => handleCheckboxChange("agree01")}
+          />
+          <em>
+            <FaCheck />
+          </em>
+          <span>
+            본인은 만 14세 이상입니다 <b>(필수)</b>
+          </span>
+        </label>
+      </CheckBoxDiv>
 
-      <CustomCheck
-        label={"agree01"}
-        text={"본인은 만 14세 이상입니다"}
-        checked={agreeChecked.agree01}
-        onChange={() => handleCheckboxChange("agree01")}
-      />
-      <CustomCheck
-        label={"agree02"}
-        text={"개인정보 수집에 동의합니다"}
-        checked={agreeChecked.agree02}
-        onChange={() => handleCheckboxChange("agree02")}
-      />
+      {/* 체크박스 2 */}
+      <CheckBoxDiv>
+        <label htmlFor="agree02">
+          <input
+            type="checkbox"
+            id="agree02"
+            checked={agreeChecked.agree02}
+            onChange={() => handleCheckboxChange("agree02")}
+          />
+          <em>
+            <FaCheck />
+          </em>
+          <span>
+            개인정보 수집에 동의합니다 <b>(필수)</b>
+          </span>
+        </label>
+      </CheckBoxDiv>
       <AgreementDocumentDiv>
         <p>Lorem ipsum dolor sit amet.</p>
         <span>
@@ -79,12 +101,24 @@ const Agreement = ({ setIsAgreementStep }) => {
           consequuntur velit quasi. Magni, eaque.
         </span>
       </AgreementDocumentDiv>
-      <CustomCheck
-        label={"agree03"}
-        text={"이용약관에 동의합니다"}
-        checked={agreeChecked.agree03}
-        onChange={() => handleCheckboxChange("agree03")}
-      />
+
+      {/* 체크박스 3 */}
+      <CheckBoxDiv>
+        <label htmlFor="agree03">
+          <input
+            type="checkbox"
+            id="agree03"
+            checked={agreeChecked.agree03}
+            onChange={() => handleCheckboxChange("agree03")}
+          />
+          <em>
+            <FaCheck />
+          </em>
+          <span>
+            이용약관에 동의합니다 <b>(필수)</b>
+          </span>
+        </label>
+      </CheckBoxDiv>
       <AgreementDocumentDiv>
         <p>Lorem ipsum dolor sit amet.</p>
         <span>
@@ -94,17 +128,32 @@ const Agreement = ({ setIsAgreementStep }) => {
           consequuntur velit quasi. Magni, eaque.
         </span>
       </AgreementDocumentDiv>
-      <CustomCheck
-        text={"전체약관 동의를 모두 읽었으며, 위내용에 모두 동의합니다."}
-        checked={isAllChecked}
-        mt={"20px"}
-        onChange={e => {
-          handleAllAgree(e);
-        }}
-      />
-      <BasicBtn
+
+      {/* 전체동의 체크박스 */}
+      <CheckBoxDiv>
+        <label htmlFor="agree04">
+          <input
+            type="checkbox"
+            id="agree04"
+            checked={isAllChecked}
+            onChange={e => {
+              handleAllAgree(e);
+            }}
+            style={{ marginTop: "20px" }}
+          />
+          <em>
+            <FaCheck />
+          </em>
+          <span>
+            전체약관 동의를 모두 읽었으며, 위내용에 모두 동의합니다.{" "}
+            <b>(필수)</b>
+          </span>
+        </label>
+      </CheckBoxDiv>
+
+      {/* 회원가입폼으로 이동 버튼 */}
+      <BtnBasic
         type={"button"}
-        btnname={"다음"}
         style={{
           backgroundColor: isAllChecked ? "#5469d4" : "#eee",
           color: isAllChecked ? "#fff" : "#777",
@@ -112,7 +161,9 @@ const Agreement = ({ setIsAgreementStep }) => {
         onClick={() => {
           handleNext();
         }}
-      />
+      >
+        다음
+      </BtnBasic>
     </AgreementDiv>
   );
 };

@@ -89,3 +89,120 @@ export const LineDiv = styled.div`
 `;
 
 // CustomInput
+export const TextForm = styled.div`
+  padding: 10px 0;
+  label {
+    font-size: 15px;
+    font-weight: 600;
+  }
+  input {
+    width: 100%;
+    margin-top: 8px;
+    padding: 10px 5px;
+    height: 45px;
+    line-height: 45px;
+    border-radius: 4px;
+    border: 1px solid #dedede;
+    outline: transparent;
+  }
+`;
+
+// CustomInputBtn
+export const InputBtnArea = styled.div`
+  padding: 10px 0;
+  label {
+    font-size: 15px;
+    font-weight: 600;
+  }
+  > div {
+    display: flex;
+    align-items: end;
+    gap: 10px;
+    button {
+      min-width: 85px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 5px;
+      text-align: center;
+      color: #fff;
+      background-color: #5469d4;
+      transition: all 0.3s;
+      border: 1px solid transparent;
+      padding: 0px 15px;
+      height: 45px;
+      line-height: 45px;
+    }
+  }
+  input {
+    flex-grow: 1;
+    height: 45px;
+    line-height: 45px;
+    margin-top: 8px;
+    padding: 10px 5px;
+    border-radius: 4px;
+    border: 1px solid #dedede;
+    outline: transparent;
+  }
+`;
+
+// BtnBasic
+export const BtnBasic = styled.button`
+  font-size: 16px;
+  font-weight: 600;
+  width: 100%;
+  border-radius: 5px;
+  height: 45px;
+  line-height: 45px;
+  text-align: center;
+  color: #fff;
+  background-color: #5469d4;
+  transition: all 0.3s;
+  border: 1px solid transparent;
+  margin-top: 40px;
+  :hover {
+    opacity: 0.8;
+  }
+`;
+// 체크박스
+export const CheckBoxDiv = styled.div`
+  display: flex;
+  align-items: center;
+  > * {
+    cursor: pointer;
+  }
+  input {
+    display: none;
+  }
+  em {
+    color: #ddd;
+    margin-right: 10px;
+  }
+  input:checked + em {
+    color: #ff0000;
+  }
+  b {
+    color: #3450da;
+    font-size: 14px;
+  }
+  span {
+    font-weight: 600;
+  }
+`;
+
+// 에러메세지
+export const ErrorP = styled.p`
+  display: block;
+  margin-top: 5px;
+  line-height: 1.3em;
+  font-size: 12px;
+  font-weight: 400;
+  color: #ff0000;
+`;
+export const InitMessageP = styled.p`
+  display: block;
+  margin-top: 5px;
+  line-height: 1.3em;
+  font-weight: 400;
+  color: #999;
+  font-size: 12px;
+`;

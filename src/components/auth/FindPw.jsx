@@ -1,12 +1,17 @@
-import BasicBtn from "../button/BasicBtn";
-import CustomInputBtn from "../input/CustomInputBtn";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import axios from "axios";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
-import axios from "axios";
-import CustomInput from "../input/CustomInput";
+import * as yup from "yup";
+import {
+  BtnBasic,
+  ErrorP,
+  InitMessageP,
+  InputBtnArea,
+  TextForm,
+} from "../common";
+
 // import { sendEmailCode } from "../../../apis/auth";
 
 const schema = yup.object({
@@ -14,7 +19,7 @@ const schema = yup.object({
     .string()
     .required("이메일을 입력해주세요.")
     .email("올바른 이메일 형식이 아닙니다."),
-  emailCode: yup.string().required("인증번호를 입력해주세요."),
+  authCode: yup.string().required("인증번호를 입력해주세요."),
   // authCode
 });
 // 1. 사용자가 이메일을 입력하고 인증번호 버튼을 누른다.
@@ -78,8 +83,8 @@ const FindPw = () => {
         email,
       });
       // setSendMessage("인증번호가 발송되었습니다.");
-      if (result.data && result.data.emailCode) {
-        setCode(result.data.emailCode);
+      if (result.data && result.data.authCode) {
+        setCode(result.data.authCode);
         setCodeSent(true);
         setBtnDisabled(false);
         setSendMessage("인증번호가 발송되었습니다.");
@@ -108,49 +113,55 @@ const FindPw = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <h3>비밀번호 찾기</h3>
       <span>가입시 등록한 이메일 주소로 인증번호를 발송해 드립니다.</span>
-      <input type="email" {...register("email")} />{" "}
-      <button type={"button"} onClick={handleSendCode}>
-        인증
-      </button>
-      <div>{errors.email?.message}</div>
+
       {/* 이메일 입력 */}
-      <CustomInputBtn
-        label={"Email"}
-        type={"email"}
-        name={"email"}
-        btntype={"button"}
-        btntxt={"인증"}
-        register={register}
-        errors={errors}
-        initmessage={sendMessage}
-        ref={emailRef}
-        onClick={() => {
-          handleSendCode(emailRef.current.value);
-        }}
-      />
+      <InputBtnArea>
+        <label htmlFor="">Email</label>
+        <div>
+          <input type="email" name="email" {...register("email")} />
+          <button type="button" onClick={handleSendCode}>
+            인증
+          </button>
+        </div>
+        {errors?.email ? (
+          <ErrorP>{errors.email?.message}</ErrorP>
+        ) : (
+          <InitMessageP>{sendMessage}</InitMessageP>
+        )}
+      </InputBtnArea>
+
       {/* 인증코드 입력 */}
-      <CustomInput
-        label={"인증번호"}
-        type={"text"}
-        name={"emailCode"}
-        value={inputCode}
-        onChange={e => {
-          handleInputChange(e);
-        }}
-        register={register}
-        errors={errors}
-        initmessage={"인증번호를 입력해주세요."}
-      />
-      {/* 로그인 버튼  홈화면 아니면 틀렸다는 창 띄우기*/}
-      <BasicBtn
-        btnname={"확인"}
-        type={"submit"}
+      <TextForm>
+        <label htmlFor="">
+          <p>인증번호</p>
+          <input
+            type="text"
+            name={"authCode"}
+            {...register("authCode")}
+            value={inputCode}
+            onChange={e => {
+              handleInputChange(e);
+            }}
+          />
+          {errors?.authCode ? (
+            <ErrorP>{errors.authCode?.message}</ErrorP>
+          ) : (
+            <InitMessageP>인증번호를 입력해주세요.</InitMessageP>
+          )}
+        </label>
+      </TextForm>
+
+      {/* 확인버튼*/}
+      <BtnBasic
+        type="submit"
         disabled={inputCode !== code || btnDisabled}
         style={{
           marginTop: "30px",
           backgroundColor: btnDisabled ? "#d3d3d3" : "#5469D4",
         }}
-      ></BasicBtn>
+      >
+        확인
+      </BtnBasic>
     </form>
   );
 };

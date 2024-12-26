@@ -1,12 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
 import BasicBtn from "../../components/button/BasicBtn";
 import {
+  ErrorP,
   FindPwDiv,
+  InitMessageP,
   JoinDiv,
   LayerDiv,
   LoginDiv,
+  TextForm,
 } from "../../components/common";
-import CustomInput from "../../components/input/CustomInput";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -95,27 +97,36 @@ function IndexPage() {
           <LayerDiv>
             {/* 로고 */}
             <LayerLogo />
-            {/* input 태그 */}
+
             {/* email */}
-            <CustomInput
-              label={"Email"}
-              type={"email"}
-              name={"email"}
-              register={register}
-              errors={errors}
-              initmessage={"이메일 주소에 '@'가 포함하여 입력해주세요."}
-            ></CustomInput>
+            <TextForm>
+              <label htmlFor="">
+                <p>Email</p>
+                <input type="email" name={"email"} {...register("email")} />
+                {errors?.email ? (
+                  <ErrorP>{errors.email?.message}</ErrorP>
+                ) : (
+                  <InitMessageP>
+                    `이메일 주소에 @가 포함하여 입력해주세요.`
+                  </InitMessageP>
+                )}
+              </label>
+            </TextForm>
+
             {/* 비밀번호 */}
-            <CustomInput
-              label={"Password"}
-              type={"password"}
-              name={"upw"}
-              register={register}
-              errors={errors}
-              initmessage={
-                "영문, 숫자, 특수문자가 포함한 비밀번호를 입력해주세요."
-              }
-            ></CustomInput>
+            <TextForm>
+              <label htmlFor="">
+                <p>비밀번호</p>
+                <input type="password" name="upw" {...register("upw")} />
+                {errors?.upw ? (
+                  <ErrorP>{errors.upw?.message}</ErrorP>
+                ) : (
+                  <InitMessageP>
+                    영문, 숫자, 특수문자가 포함한 비밀번호를 입력해주세요.
+                  </InitMessageP>
+                )}
+              </label>
+            </TextForm>
 
             {/* 비밀번호찾기 - 링크 */}
             <FindPwDiv>

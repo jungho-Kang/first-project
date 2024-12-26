@@ -9,7 +9,7 @@ import SignupForm from "../../components/auth/SignupForm";
 import { useNavigate } from "react-router-dom";
 
 const schema = yup.object({
-  nickname: yup
+  nickName: yup
     .string()
     .required("닉네임은 필수입니다.")
     .min(3, "닉네임은 최소 3자 이상이어야 합니다")
@@ -22,7 +22,7 @@ const schema = yup.object({
     .string()
     .required("이메일은 필수입니다.")
     .email("올바른 이메일 형식이 아닙니다."),
-  pw: yup
+  upw: yup
     .string()
     .required("비밀번호는 필수입니다.")
     .min(8, "비밀번호는 8자 이상입니다.")
@@ -31,14 +31,13 @@ const schema = yup.object({
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]+$/,
       "비밀번호는 영문, 숫자, 특수문자가 포함되어야 합니다.",
     ),
-
   pwconfirm: yup
     .string()
     .required("비밀번호 확인을 입력해주세요")
     .oneOf([yup.ref("password")], "비밀번호가 일치하지 않습니다."),
 
-  policy: yup.boolean().oneOf([true], "이용약관에 동의해 주세요"),
-  emailassign: yup.string().required("인증번호를 입력해주세요"),
+  agreement: yup.boolean().oneOf([true], "이용약관에 동의해 주세요"),
+  authCode: yup.string().required("인증번호를 입력해주세요."),
 });
 
 function SignupPage() {
@@ -46,10 +45,10 @@ function SignupPage() {
   const navigate = useNavigate();
 
   const initData = {
-    upw: "",
     nickName: "",
     name: "",
     email: "",
+    upw: "",
     agreement: false,
   };
   const [formData, setFormData] = useState(initData);
@@ -63,11 +62,11 @@ function SignupPage() {
       nickname: "",
       name: "",
       email: "",
-      pw: "",
+      upw: "",
       pwconfirm: "",
-      // policy: false,
+      agreement: false,
     },
-    mode: "onSubmit",
+    mode: "onChange",
     resolver: yupResolver(schema),
   });
   const onSubmit = async data => {
