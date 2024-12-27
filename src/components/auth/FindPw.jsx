@@ -1,5 +1,4 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import axios from "axios";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +11,8 @@ import {
   TextForm,
 } from "../common";
 
-// import { sendEmailCode } from "../../../apis/auth";
+import { postEmailCode } from "../../../fetch/auth";
+import axios from "axios";
 
 const schema = yup.object({
   email: yup
@@ -37,7 +37,6 @@ const schema = yup.object({
 
 const FindPw = () => {
   const navigate = useNavigate();
-  const emailRef = useRef();
   // 이메일 인증 발송 상태관리
   const [codeSent, setCodeSent] = useState(false);
   // 서버에서 발송된 인증번호
@@ -50,6 +49,7 @@ const FindPw = () => {
   const [sendMessage, setSendMessage] = useState(
     "가입시 등록한 이메일 주소를 입력해주세요.",
   );
+  const [inputEmail, setInputEmail] = useState("");
 
   const {
     register,
@@ -70,31 +70,36 @@ const FindPw = () => {
     }
   };
 
+  const handleChangeEmail = e => {
+    setInputEmail(e.target.value);
+  };
+
   // 이메일 인증 요청
 
   const handleSendCode = async email => {
-    // const result = await sendEmailCode(email);
-
-    // ------------test------------------------
     console.log("이메일 인증코드 요청", email);
-    // ----------------------------------------
     try {
-      const result = await axios.post("http://192.168.0.77:5000/ecode", {
-        email,
-      });
-      // setSendMessage("인증번호가 발송되었습니다.");
-      if (result.data && result.data.authCode) {
-        setCode(result.data.authCode);
-        setCodeSent(true);
-        setBtnDisabled(false);
-        setSendMessage("인증번호가 발송되었습니다.");
-      } else {
-        alert("인증번호 발송에 실패했습니다.");
-      }
+      const res = await axios.post("/emailCheck", { email: email });
+      console.log(res.data);
     } catch (error) {
       console.log(error);
-      alert("서버 오류가 발생했습니다.");
     }
+    // try {
+    //  api 호출
+    // const result = await postEmailCode(email);
+    // setSendMessage("인증번호가 발송되었습니다.");
+    // if (result.data && result.data.authCode) {
+    //   setCode(result.data.authCode);
+    //   setCodeSent(true);
+    //   setBtnDisabled(false);
+    //   setSendMessage("인증번호가 발송되었습니다.");
+    // } else {
+    //   alert("인증번호 발송에 실패했습니다.");
+    // }
+    // } catch (error) {
+    //   console.log(error);
+    //   alert("서버 오류가 발생했습니다.");
+    // }
   };
 
   // 버튼 활성화
@@ -116,10 +121,17 @@ const FindPw = () => {
 
       {/* 이메일 입력 */}
       <InputBtnArea>
-        <label htmlFor="">Email</label>
+        <label htmlFor="email">Email</label>
         <div>
-          <input type="email" name="email" {...register("email")} />
-          <button type="button" onClick={handleSendCode}>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            {...register("email")}
+            value={inputEmail}
+            onChange={e => handleChangeEmail(e)}
+          />
+          <button type="button" onClick={() => handleSendCode(inputEmail)}>
             인증
           </button>
         </div>
@@ -132,10 +144,11 @@ const FindPw = () => {
 
       {/* 인증코드 입력 */}
       <TextForm>
-        <label htmlFor="">
+        <label htmlFor="authcode">
           <p>인증번호</p>
           <input
             type="text"
+            id="authcode"
             name={"authCode"}
             {...register("authCode")}
             value={inputCode}

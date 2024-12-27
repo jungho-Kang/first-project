@@ -37,27 +37,6 @@ const SignupForm = ({ formData, handleChangeFormData, register, errors }) => {
           </label>
         </TextForm>
 
-        {/* 이름 */}
-        <TextForm>
-          <label htmlFor="">
-            <p>Name</p>
-            <input
-              type="text"
-              name="name"
-              {...register("name")}
-              value={formData.name}
-              onChange={e => {
-                handleChangeFormData(e);
-              }}
-            />
-            {errors?.name ? (
-              <ErrorP>{errors.name?.message}</ErrorP>
-            ) : (
-              <InitMessageP>이름을 입력해주세요.</InitMessageP>
-            )}
-          </label>
-        </TextForm>
-
         {/* 이메일 입력 */}
         <InputBtnArea>
           <label htmlFor="">Email</label>

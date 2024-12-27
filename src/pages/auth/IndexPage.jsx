@@ -15,7 +15,6 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
 import { useContext, useState } from "react";
-// import { postLoginMember } from "../../../apis/myauth";
 import { postLoginMember } from "../../../fetch/auth";
 import ConfirmPopup from "../../components/ConfirmPopup";
 import LayerLogo from "../../components/layer/LayerLogo";
@@ -61,9 +60,7 @@ function IndexPage() {
     console.log("onSubmit 호출됨", data);
 
     try {
-      // 목데이터 API 호출
-      // const result = await axios.post("/api/user/signin", { ...data });
-
+      //  api 호출
       const result = await postLoginMember(data);
 
       if (result.data) {

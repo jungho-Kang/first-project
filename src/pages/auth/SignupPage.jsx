@@ -7,6 +7,7 @@ import * as yup from "yup";
 import Agreement from "../../components/auth/Agreement";
 import SignupForm from "../../components/auth/SignupForm";
 import { useNavigate } from "react-router-dom";
+import { postLoginMember } from "../../../fetch/auth";
 
 const schema = yup.object({
   nickName: yup
@@ -14,10 +15,6 @@ const schema = yup.object({
     .required("닉네임은 필수입니다.")
     .min(3, "닉네임은 최소 3자 이상이어야 합니다")
     .max(20, "닉네임은 최대 20자까지 입력할 수 있습니다"),
-  name: yup
-    .string()
-    .required("이름은 필수입니다.")
-    .min(2, "이름은 최소 2자 이상입니다."),
   email: yup
     .string()
     .required("이메일은 필수입니다.")
@@ -46,7 +43,6 @@ function SignupPage() {
 
   const initData = {
     nickName: "",
-    name: "",
     email: "",
     upw: "",
     agreement: false,
@@ -60,27 +56,27 @@ function SignupPage() {
   } = useForm({
     defaultValue: {
       nickname: "",
-      name: "",
       email: "",
       upw: "",
       pwconfirm: "",
       agreement: false,
     },
-    mode: "onChange",
+    // 나중에 onSubmit으로 전체 바꾸기
+    mode: "all",
     resolver: yupResolver(schema),
   });
   const onSubmit = async data => {
     console.log(data);
-    // try {
-    //   const result = await postLoginMember(data)
-    //   if (result.data) {
-    //     navigate("/login");
-    //   } else {
-    //     alert("회원가입을 다시 시도해주세요.");
-    //   }
-    // } catch (error) {
-    //   console.log("회원가입 실패", error);
-    // }
+    try {
+      const result = await postLoginMember(data);
+      if (result.data) {
+        navigate("/login");
+      } else {
+        alert("회원가입을 다시 시도해주세요.");
+      }
+    } catch (error) {
+      console.log("회원가입 실패", error);
+    }
   };
 
   const handleChangeFormData = e => {
