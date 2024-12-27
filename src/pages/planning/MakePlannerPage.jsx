@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { LayoutDiv } from "./plan";
 
@@ -9,6 +9,7 @@ import AddPlace from "../../components/plantabs/AddPlace";
 import PlanTop from "../../components/plantabs/PlanTop";
 import RecommendItem from "../../components/plantabs/RecommendItem";
 import TravelMap from "../../components/plantabs/TravelMap";
+import SchedulePush from "../../components/plantabs/SchedulePush";
 
 const PlanTabsUl = styled.ul`
   display: flex;
@@ -115,120 +116,81 @@ function MakePlannerPage() {
   const [isSlide, setIsSlide] = useState(false);
   const [activeTab, setActiveTab] = useState("추천항목");
 
-  // 검색 관련 키워드 입력 및 출력 목록
-  const [list, setList] = useState([]);
-  const [searchWord, setSearchWord] = useState("");
+  // 12-17 : 검색 관련 키워드 입력 및 출력 목록
+  const [mapResultList, setMapResultList] = useState([]);
+  const [searchWord, setSearchWord] = useState("이태원 맛집");
 
-  const [markers, setMarkers] = useState([]);
-  const [map, setMap] = useState();
-  const psRef = useRef(null);
-
-  const { kakao } = window;
-
-  const searchPlace = (word = `대구 명소`) => {
-    if (!psRef.current) {
-      // 카카오맵 서비스 인스턴스를 생성합니다
-      psRef.current = new kakao.maps.services.Places();
-    }
-    // const ps = new kakao.maps.services.Places();
-    psRef.current.keywordSearch(word, (data, status, _pagination) => {
-      console.log(data, status, _pagination);
-      if (status === kakao.maps.services.Status.OK) {
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-        // LatLngBounds 객체에 좌표를 추가합니다
-        const bounds = new kakao.maps.LatLngBounds();
-        let markers = [];
-
-        for (var i = 0; i < data.length; i++) {
-          // @ts-ignore
-          markers.push({
-            position: {
-              lat: data[i].y,
-              lng: data[i].x,
-            },
-            content: data[i].place_name,
-          });
-          // @ts-ignore
-          bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-        }
-        // 원본 검색 데이터를 저장합니다
-        setList([...data]);
-        setMarkers(markers);
-
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-        map.setBounds(bounds);
-      }
-    });
-  };
+  // 팝업창 띄우기 버튼
+  const [isClick, setIsClick] = useState(false);
 
   const handleTabClick = tab => {
     setActiveTab(tab);
   };
 
   return (
-    <LayoutDiv>
-      <MenuLayoutDiv>
-        <MenuDiv>
-          <Link to={"/"}>
-            <Logo />
-          </Link>
-          <BtnSortDiv>
-            <EventBtn>공유하기</EventBtn>
-            <EventBtn>저장</EventBtn>
-          </BtnSortDiv>
-        </MenuDiv>
-        <AddScheduleDiv isSlide={isSlide}>
-          <div className="inner">
-            <PlanTop />
-            <div>
-              <PlanTabsUl>
-                <li
-                  className={activeTab === "추천항목" ? "active" : ""}
-                  onClick={() => handleTabClick("추천항목")}
-                >
-                  추천항목
-                </li>
-                <li
-                  className={activeTab === "직접추가" ? "active" : ""}
-                  onClick={() => handleTabClick("직접추가")}
-                >
-                  직접추가
-                </li>
-                <TabUnderline activeTab={activeTab} />
-              </PlanTabsUl>
+    <div style={{ position: "relative", width: "100%", height: "100vh" }}>
+      <LayoutDiv>
+        <MenuLayoutDiv>
+          <MenuDiv>
+            <Link to={"/"}>
+              <Logo />
+            </Link>
+            <BtnSortDiv>
+              <EventBtn>공유하기</EventBtn>
+              <EventBtn>저장</EventBtn>
+            </BtnSortDiv>
+          </MenuDiv>
+          <AddScheduleDiv isSlide={isSlide}>
+            <div className="inner">
+              <PlanTop />
+              <div>
+                <PlanTabsUl>
+                  <li
+                    className={activeTab === "추천항목" ? "active" : ""}
+                    onClick={() => handleTabClick("추천항목")}
+                  >
+                    추천항목
+                  </li>
+                  <li
+                    className={activeTab === "직접추가" ? "active" : ""}
+                    onClick={() => handleTabClick("직접추가")}
+                  >
+                    직접추가
+                  </li>
+                  <TabUnderline activeTab={activeTab} />
+                </PlanTabsUl>
+              </div>
+              {activeTab === "추천항목" ? (
+                <RecommendItem />
+              ) : (
+                <AddPlace
+                  // 팝업창 띄우기
+                  setIsClick={setIsClick}
+                  setSearchWord={setSearchWord}
+                  // 지도 목록 리스트
+                  mapResultList={mapResultList}
+                />
+              )}
             </div>
-            {activeTab === "추천항목" ? (
-              <RecommendItem />
-            ) : (
-              <AddPlace
-                searchWord={searchWord}
-                setSearchWord={setSearchWord}
-                searchPlace={searchPlace}
-                list={list}
-              />
-            )}
-          </div>
-          <button
-            className="slide-btn"
-            onClick={() => {
-              setIsSlide(prev => !prev);
-            }}
-          >
-            {isSlide ? <FaChevronRight /> : <FaChevronLeft />}
-          </button>
-        </AddScheduleDiv>
-      </MenuLayoutDiv>
-      {/* 맵 API 컴포넌트 */}
-      <TravelMap
-        list={list}
-        map={map}
-        searchPlace={searchPlace}
-        setMap={setMap}
-        markers={markers}
-        searchWord={searchWord}
-        setSearchWord={setSearchWord}
-      />
-    </LayoutDiv>
+            <button
+              className="slide-btn"
+              onClick={() => {
+                setIsSlide(prev => !prev);
+              }}
+            >
+              {isSlide ? <FaChevronRight /> : <FaChevronLeft />}
+            </button>
+          </AddScheduleDiv>
+        </MenuLayoutDiv>
+        {/* 맵 API 컴포넌트 */}
+        <TravelMap
+          // 지도 목록 갱신
+          setMapResultList={setMapResultList}
+          searchWord={searchWord}
+        />
+      </LayoutDiv>
+      {isClick ? <SchedulePush /> : <></>}
+    </div>
   );
 }
 export default MakePlannerPage;

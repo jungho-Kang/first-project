@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { useState } from "react";
 
 const ContentDiv = styled.div`
   width: 100%;
@@ -13,11 +14,18 @@ const PlaceNameDiv = styled.div`
   margin-bottom: 10px;
 `;
 
-const AddPlace = ({ searchWord, setSearchWord, searchPlace, list }) => {
+const AddPlace = ({ setSearchWord, mapResultList, setIsClick }) => {
+  const [word, setWord] = useState("");
+
+  const handleBtnClick = () => {
+    setIsClick(true);
+  };
+
   return (
     <ContentDiv>
       <div style={{ marginBottom: 20 }}>
         <input
+          value={word}
           type="text"
           placeholder="검색하려는 장소를 입력해주세요"
           style={{
@@ -27,7 +35,14 @@ const AddPlace = ({ searchWord, setSearchWord, searchPlace, list }) => {
             borderRadius: 10,
             marginRight: 20,
           }}
-          onChange={e => setSearchWord(e.target.value)}
+          onChange={e => setWord(e.target.value)}
+          // 엔터키 누르면 검색
+          onKeyDown={e => {
+            if (e.key === "Enter") {
+              setWord(e.target.value);
+              setSearchWord(e.target.value);
+            }
+          }}
         />
         <button
           style={{
@@ -38,13 +53,17 @@ const AddPlace = ({ searchWord, setSearchWord, searchPlace, list }) => {
             color: "#fff",
             border: "none",
           }}
-          onClick={() => searchPlace(searchWord)}
+          onClick={() => setSearchWord(word)}
         >
           검색
         </button>
       </div>
-      <div style={{ overflowY: "auto", height: 500, cursor: "pointer" }}>
-        {list.map(item => {
+      {/* 검색결과 출력 */}
+      <div
+        style={{ overflowY: "auto", height: 500, cursor: "pointer" }}
+        onClick={() => handleBtnClick()}
+      >
+        {mapResultList.map(item => {
           return (
             <div
               key={`item-${item.address_name}-${item.x},${item.y}`}
