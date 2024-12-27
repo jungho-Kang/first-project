@@ -32,8 +32,8 @@ export const postEmailCode = async email => {
 };
 
 // 인증번호 받기
-export const patchAuthCode = async data => {
-  try {
-    const res = aw;
-  } catch (error) {}
-};
+// export const patchAuthCode = async data => {
+//   try {
+//     const res = aw;
+//   } catch (error) {}
+// };

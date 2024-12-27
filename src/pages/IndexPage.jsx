@@ -17,6 +17,7 @@ function IndexPage() {
   // 메인배너
   const VisualDiv = styled.div`
     background-color: #eee;
+    background: url(/images/visual_img.jpg) no-repeat center center / cover;
     height: 600px;
     display: flex;
     align-items: center;
@@ -84,15 +85,28 @@ function IndexPage() {
   `;
   const LinkBoxDiv = styled.div`
     border-radius: 12px;
-    border: 1px solid #bbb;
     width: calc(100% / 3);
     height: 17vw;
     max-height: 270px;
     overflow: hidden;
+    transition: all 0.3s;
+    box-shadow:
+      rgba(0, 0, 0, 0.25) 0px 14px 28px,
+      rgba(0, 0, 0, 0.22) 0px 10px 10px;
     &:nth-child(1) {
-      background: url(/images/korail.png) no-repeat center center;
-      background-size: 50%;
+      background: url(/images/link-img_01.jpg) no-repeat center center / cover;
     }
+    &:nth-child(2) {
+      background: url(/images/link-img_02.jpg) no-repeat center center / cover;
+    }
+    &:nth-child(3) {
+      background: url(/images/link-img_03.jpg) no-repeat center center / cover;
+    }
+
+    &:hover {
+      transform: translateY(-3px);
+    }
+
     > a {
       display: block;
       width: 100%;
@@ -115,15 +129,18 @@ function IndexPage() {
         left: 0;
         width: 100%;
         padding: 2vw 1.5vw;
-        /* border: 1px solid #bbb; */
+        background: linear-gradient(to top, #000, rgba(0, 0, 0, 0));
 
         h4 {
           font-size: 28px;
           font-weight: 700;
-          margin-bottom: 8px;
+          margin-bottom: 10px;
+          color: #fff;
+          text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.5);
         }
         p {
-          color: #555;
+          font-size: 14px;
+          color: rgba(255, 255, 255, 0.7);
         }
       }
     }

@@ -15,7 +15,8 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
 import { useContext, useState } from "react";
-import { postLoginMember } from "../../../fetch/auth";
+import { useAxios } from "../../hooks/Axios";
+// import { postLoginMember } from "../../../fetch/auth";
 import ConfirmPopup from "../../components/ConfirmPopup";
 import LayerLogo from "../../components/layer/LayerLogo";
 import { LoginContext } from "../../contexts/LoginContext";
@@ -56,21 +57,33 @@ function IndexPage() {
     },
   });
 
-  const onSubmit = async data => {
-    console.log("onSubmit 호출됨", data);
+  //  api 요청후 결과받기
+  const { data, error, loading } = useAxios("/user/signin", null, "post");
+
+  const onSubmit = async formData => {
+    console.log("onSubmit 호출됨", formData);
 
     try {
-      //  api 호출
-      const result = await postLoginMember(data);
+      // 로딩 상태 확인 - 요청이 진행 중이라면 함수 종료
+      if (loading) {
+        console.log("로딩 중...");
+        return;
+      }
 
-      if (result.data) {
+      // 오류 처리 - error 상태가 존재하면 오류 메시지 및 함수 종료
+      if (error) {
+        alert("로그인 중 오류가 발생했습니다. 다시 시도해주세요.");
+        console.error(error);
+        return;
+      }
+
+      if (data) {
         // 서버에서 받아온 데이터 확인
-        console.log("받아온 데이터:", result.data);
-        console.log("로그인 성공");
+        console.log("로그인 성공시 받아온 데이터:", data);
         handleClickLogin(true);
         navigate("/");
       } else {
-        alert("로그인에 실패했습니다. 다시 시도해주세요.");
+        alert("로그인 중 오류가 발생했습니다. 다시 시도해주세요.");
       }
     } catch (error) {
       console.log(error);
@@ -130,8 +143,12 @@ function IndexPage() {
               <Link to={"/auth/findpw"}>비밀번호 찾기</Link>
             </FindPwDiv>
 
-            {/* 로그인 버튼  홈화면 아니면 틀렸다는 창 띄우기*/}
-            <BasicBtn btnname={"로그인"} type={"submit"}></BasicBtn>
+            {/* 로그인 버튼  */}
+            <BasicBtn
+              btnname={"로그인"}
+              type={"submit"}
+              disabled={loading}
+            ></BasicBtn>
 
             {/* 회원가입 링크 */}
             <JoinDiv>
