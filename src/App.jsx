@@ -20,7 +20,7 @@ import MyPlanDetail from "./pages/mypage/plan-list/MyPlanDetailPage";
 import City from "./pages/planning/CityPage";
 import CalendarPicker from "./pages/planning/CalendarPickerPage";
 import MakePlanner from "./pages/planning/MakePlannerPage";
-import ResetPw from "./pages/auth/ResetPwPage";
+
 import { LoginProvider } from "./contexts/LoginContext";
 
 function App() {
@@ -36,7 +36,6 @@ function App() {
             <Route path="auth">
               <Route index element={<AuthIndex />} />
               <Route path="findpw" element={<FindPw />} />
-              <Route path="resetpw" element={<ResetPw />} />
               <Route path="signup" element={<Signup />} />
             </Route>
 

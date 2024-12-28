@@ -6,17 +6,17 @@ const FormLogo = styled.div`
     justify-content: center;
     a {
       display: block;
-      width: 140px;
-      height: 40px;
-      line-height: 40px;
-      background-color: #eee;
-      text-align: center;
+      width: 150px;
+      height: 50px;
+      line-height: 50px;
+      font-size: 0;
+      background: url(/images/logo.png) no-repeat center center / contain;
     }
   }
 
   > p {
     text-align: center;
-    padding: 10px 0 40px;
+    padding: 0px 0 40px;
     color: #777;
   }
 `;

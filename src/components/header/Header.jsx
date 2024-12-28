@@ -21,7 +21,7 @@ const Header = () => {
 
   // 로그아웃
   const handleLogOut = () => {
-    handleClickLogin(false);
+    handleClickLogin();
   };
   // 마이페이지 버튼 토글
   const handleMyMenuToggle = () => {
@@ -51,7 +51,7 @@ const Header = () => {
           </GnbUl>
         </div>
         <div className="right">
-          {isLogin ? (
+          {!isLogin ? (
             <LoginOutDiv>
               <Link to={"/auth/signup"} className="signup-btn">
                 회원가입

@@ -20,6 +20,7 @@ import { useAxios } from "../../hooks/Axios";
 import ConfirmPopup from "../../components/ConfirmPopup";
 import LayerLogo from "../../components/layer/LayerLogo";
 import { LoginContext } from "../../contexts/LoginContext";
+import axios from "axios";
 
 const schema = yup.object({
   email: yup
@@ -38,10 +39,14 @@ const schema = yup.object({
 });
 
 function IndexPage() {
+  const [data, setData] = useState(null); // API 회신 데이터 저장
+  const [error, setError] = useState(null); // API 호출 오류 저장
+  const [loading, setLoading] = useState(false); // API 진행 상태 관리
+
   // 팝업상태관리
   const [isPopup, setIsPopup] = useState(false);
   const navigate = useNavigate();
-  const { handleClickLogin } = useContext(LoginContext);
+  const { handleClickLogin, setIsLogin } = useContext(LoginContext);
 
   // 리엑트훅폼 설정
   const {
@@ -52,43 +57,64 @@ function IndexPage() {
     mode: "onSubmit",
     resolver: yupResolver(schema),
     defaultValues: {
-      email: "a@a.net",
-      upw: "1234!!GG",
+      email: "by5028@naver.com",
+      upw: "testtest1212!",
     },
   });
 
   //  api 요청후 결과받기
-  const { data, error, loading } = useAxios("/user/signin", null, "post");
+  // const { data, error, loading } = useAxios("/user/signin", null, "post");
 
-  const onSubmit = async formData => {
-    console.log("onSubmit 호출됨", formData);
-
+  const fetchApi = async _formData => {
     try {
-      // 로딩 상태 확인 - 요청이 진행 중이라면 함수 종료
-      if (loading) {
-        console.log("로딩 중...");
-        return;
-      }
+      // 데이터 연동 로딩 중임을 표현
+      setLoading(true);
+      const response = await axios.post("/api/user/signin", _formData);
+      console.log("로그인 성공시 받아온 데이터:", response.data);
+      // 받아온 데이터
+      //   {
+      //     "resultMessage": "회원정보 조회 수행을 완료하였습니다.",
+      //     "resultData": {
+      //         "userId": 0,
+      //         "upw": null,
+      //         "nickName": null,
+      //         "message": "이메일/비밀번호를 확인해 주세요."
+      //     }
+      // }
 
-      // 오류 처리 - error 상태가 존재하면 오류 메시지 및 함수 종료
-      if (error) {
-        alert("로그인 중 오류가 발생했습니다. 다시 시도해주세요.");
-        console.error(error);
-        return;
-      }
-
-      if (data) {
-        // 서버에서 받아온 데이터 확인
-        console.log("로그인 성공시 받아온 데이터:", data);
-        handleClickLogin(true);
-        navigate("/");
+      if (!response.data.resultData.nickName) {
+        alert(response.data.resultData.message);
+        navigate("/auth/signup");
       } else {
-        alert("로그인 중 오류가 발생했습니다. 다시 시도해주세요.");
+        handleClickLogin();
+        navigate("/");
       }
     } catch (error) {
       console.log(error);
-      alert("서버 오류가 발생했습니다.");
+      alert("로그인 중 오류가 발생했습니다. 다시 시도해주세요.");
+      setError(error);
     }
+    // 데이터 연동 완료를 표현
+    setLoading(false);
+  };
+
+  const onSubmit = async formData => {
+    console.log("onSubmit 호출됨", formData);
+    fetchApi(formData);
+
+    // try {
+    //   if (data) {
+    //     // 서버에서 받아온 데이터 확인
+    //     console.log("로그인 성공시 받아온 데이터:", data);
+    //     handleClickLogin();
+    //     navigate("/");
+    //   } else {
+    //     alert("로그인 중 오류가 발생했습니다. 다시 시도해주세요.");
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    //   alert("서버 오류가 발생했습니다.");
+    // }
   };
 
   // 팝업

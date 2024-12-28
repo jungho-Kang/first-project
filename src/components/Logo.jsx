@@ -14,7 +14,7 @@ const LogoImg = styled.img`
 const Logo = () => {
   return (
     <LogoDiv>
-      <LogoImg src="/images/logo.svg" alt="로고" />
+      <LogoImg src="/images/logo.png" alt="로고" />
     </LogoDiv>
   );
 };
