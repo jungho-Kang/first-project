@@ -4,17 +4,16 @@ const LogoDiv = styled.div`
   width: 100px;
   height: 50px;
   margin: 0 auto;
-`;
-
-const LogoImg = styled.img`
-  width: 100%;
-  height: 100%;
+  img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const Logo = () => {
   return (
     <LogoDiv>
-      <LogoImg src="/images/logo.png" alt="로고" />
+      <img src="/images/logo.png" alt="로고" />
     </LogoDiv>
   );
 };

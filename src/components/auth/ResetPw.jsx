@@ -1,26 +1,8 @@
-// import { yupResolver } from "@hookform/resolvers/yup";
-// import { useForm } from "react-hook-form";
-// import * as yup from "yup";
+import { Controller } from "react-hook-form";
+// styled
 import { BtnBasic, ErrorP, InitMessageP, TextForm } from "../common";
 
-// const schema = yup.object({
-//   upw: yup
-//     .string()
-//     .required("비밀번호는 필수입니다.")
-//     .min(8, "비밀번호는 8자 이상입니다.")
-//     .max(16, "비밀번호는 16자까지 가능합니다.")
-//     .matches(
-//       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]+$/,
-//       "비밀번호는 영문, 숫자, 특수문자가 포함되어야 합니다.",
-//     ),
-
-//   pwconfirm: yup
-//     .string()
-//     .required("비밀번호 확인을 입력해주세요")
-//     .oneOf([yup.ref("upw")], "비밀번호가 일치하지 않습니다."),
-// });
-
-const ResetPw = ({ register, errors }) => {
+const ResetPw = ({ control, errors, handleSubmit }) => {
   // const onSubmit = data => {
   //   console.log("data", data);
   //   try {
@@ -40,7 +22,13 @@ const ResetPw = ({ register, errors }) => {
       <TextForm>
         <label htmlFor="">
           <p>비밀번호</p>
-          <input type="password" name="upw" {...register("upw")} />
+          <Controller
+            type="password"
+            name="upw"
+            control={control}
+            defaultValue=""
+            render={({ field }) => <input type="password" {...field} />}
+          />
           {errors?.upw ? (
             <ErrorP>{errors.upw?.message}</ErrorP>
           ) : (
@@ -55,7 +43,12 @@ const ResetPw = ({ register, errors }) => {
       <TextForm>
         <label htmlFor="">
           <p>비밀번호 확인</p>
-          <input type="password" name="pwconfirm" {...register("pwconfirm")} />
+          <Controller
+            name="pwconfirm"
+            control={control}
+            defaultValue=""
+            render={({ field }) => <input type="password" {...field} />}
+          />
           {errors?.pwconfirm ? (
             <ErrorP>{errors.pwconfirm?.message}</ErrorP>
           ) : (
@@ -65,7 +58,7 @@ const ResetPw = ({ register, errors }) => {
       </TextForm>
 
       {/* 확인 */}
-      <BtnBasic type="button" style={{ marginTop: "30px" }}>
+      <BtnBasic type="submit" style={{ marginTop: "20px" }}>
         확인
       </BtnBasic>
     </div>

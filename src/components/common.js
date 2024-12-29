@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 
+//  --- wrap ---
 export const WrapDiv = styled.div`
   margin: 0 auto;
   max-width: 1440px;
@@ -7,13 +8,15 @@ export const WrapDiv = styled.div`
   height: 100%;
 `;
 
+// --- 메인 페이지 ---
 export const MainDiv = styled.main`
-  /* padding: 80px 0px 160px; */
+  margin-top: 68px;
 `;
 
-// 로그인 페이지
+// --- 로그인 페이지 ---
 export const LoginDiv = styled.div`
-  background-color: #fff;
+  background: url(/images/auth_bg.png) no-repeat center center / cover;
+  /* background: url(/images/auth_bg.jpg) no-repeat center center / cover; */
   position: fixed;
   z-index: 99;
   left: 0;
@@ -23,6 +26,12 @@ export const LoginDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  form {
+    display: block;
+    max-width: 1024px;
+    width: 100%;
+  }
 `;
 export const LayerDiv = styled.div`
   max-width: 460px;
@@ -31,13 +40,14 @@ export const LayerDiv = styled.div`
   padding: 40px 50px;
   border-radius: 12px;
   border: 1px solid #eee;
+  background-color: #fff;
   box-shadow:
     0 3px 6px rgba(0, 0, 0, 0.12),
     0 7px 14px rgba(0, 0, 0, 0.12);
 
   h3 {
-    margin: 10px 0;
-    font-size: 20px;
+    margin: 10px 0 8px;
+    font-size: 22px;
     font-weight: 600;
   }
   span {
@@ -49,7 +59,6 @@ export const LayerDiv = styled.div`
     word-break: keep-all;
   }
 `;
-
 export const JoinDiv = styled.div`
   margin: 24px 0 30px;
   display: flex;
@@ -72,7 +81,7 @@ export const FindPwDiv = styled.div`
   display: flex;
   justify-content: end;
   font-size: 14px;
-  margin-top: -25px;
+  margin-top: -24.5px;
 `;
 export const TitleDiv = styled.div`
   margin-top: 60px;
@@ -81,7 +90,6 @@ export const TitleDiv = styled.div`
   text-align: center;
   font-weight: 700;
 `;
-
 export const LineDiv = styled.div`
   width: 100%;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -90,7 +98,7 @@ export const LineDiv = styled.div`
 
 // CustomInput
 export const TextForm = styled.div`
-  padding: 10px 0;
+  padding: 6px 0;
   label {
     font-size: 15px;
     font-weight: 600;
@@ -98,18 +106,35 @@ export const TextForm = styled.div`
   input {
     width: 100%;
     margin-top: 8px;
-    padding: 10px 5px;
-    height: 45px;
-    line-height: 45px;
+    padding: 12px 10px;
+    height: 42px;
+    line-height: 42px;
     border-radius: 4px;
     border: 1px solid #dedede;
     outline: transparent;
+  }
+  /* 인증코드 */
+  .code {
+    position: relative;
+    input {
+      padding-right: 50px;
+    }
+
+    .codecheck {
+      border-radius: 5px;
+      color: #ddd;
+      height: 26px;
+      font-size: 24px;
+      position: absolute;
+      right: 10px;
+      bottom: 7px;
+    }
   }
 `;
 
 // CustomInputBtn
 export const InputBtnArea = styled.div`
-  padding: 10px 0;
+  padding: 8px 0;
   label {
     font-size: 15px;
     font-weight: 600;
@@ -129,14 +154,14 @@ export const InputBtnArea = styled.div`
       transition: all 0.3s;
       border: 1px solid transparent;
       padding: 0px 15px;
-      height: 45px;
-      line-height: 45px;
+      height: 42px;
+      line-height: 42px;
     }
   }
   input {
     flex-grow: 1;
-    height: 45px;
-    line-height: 45px;
+    height: 42px;
+    line-height: 42px;
     margin-top: 8px;
     padding: 10px 5px;
     border-radius: 4px;
@@ -174,8 +199,10 @@ export const CheckBoxDiv = styled.div`
     display: none;
   }
   em {
+    display: inline-block;
     color: #ddd;
-    margin-right: 10px;
+    transform: translateY(1.5px);
+    margin-right: 8px;
   }
   input:checked + em {
     color: #ff0000;

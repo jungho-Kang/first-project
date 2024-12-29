@@ -1,8 +1,13 @@
+import { useContext, useState } from "react";
+import { LoginContext } from "../../../contexts/LoginContext";
 import { useNavigate } from "react-router-dom";
-import BasicBtn from "../../../components/button/BasicBtn";
-import { ErrorP, InitMessageP, TextForm } from "../../../components/common";
-import MypageTab from "../../../components/mypage/MypageTab";
+import axios from "axios";
+// comp
 import MypageTop from "../../../components/mypage/MypageTop";
+import MypageTab from "../../../components/mypage/MypageTab";
+import BasicBtn from "../../../components/ui/button/BasicBtn";
+// style
+import { ErrorP, InitMessageP, TextForm } from "../../../components/common";
 import {
   BtnAreaDiv,
   FormDiv,
@@ -10,7 +15,7 @@ import {
   MyPageWrapDiv,
   WarningBoxDiv,
 } from "./myinfo";
-
+// yup
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -27,7 +32,9 @@ const schema = yup.object({
     ),
 });
 function DeleteMemberPage() {
+  const [deletePw, setDeletePw] = useState("");
   const navigate = useNavigate();
+  const { user, setIsLogin, setUser } = useContext(LoginContext);
   const {
     register,
     handleSubmit,
@@ -36,15 +43,43 @@ function DeleteMemberPage() {
     mode: "onChange",
     resolver: yupResolver(schema),
   });
+  const handleChangePw = e => {
+    setDeletePw(e.target.value);
+    console.log(deletePw);
+  };
+
+  const fetchApi = async data => {
+    console.log("탈퇴를 위해 보내는 데이터", data);
+    try {
+      const res = await axios.patch("/api/user", data);
+      console.log(res.data);
+      setIsLogin(false);
+      setUser();
+      user;
+      alert("탈퇴되었습니다.");
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      alert("오류가 발생했습니다. 다시 시도해주세요.");
+    }
+  };
+
+  const onSubmit = () => {
+    const payload = { email: user.email, upw: deletePw };
+    console.log(payload);
+    fetchApi(payload);
+  };
   return (
-    <div>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <MypageTop />
 
       <MyPageWrapDiv>
         <MypageTab />
         <FormDiv>
           <FormInnerDiv>
-            <h3>회원탈퇴</h3>
+            <div className="tit-area">
+              <h3>회원탈퇴</h3>
+            </div>
             <WarningBoxDiv>
               <p>회원탈퇴 안내사항</p>
               <span>
@@ -56,7 +91,15 @@ function DeleteMemberPage() {
             <TextForm>
               <label htmlFor="">
                 <p>비밀번호</p>
-                <input type="password" name="upw" {...register("upw")} />
+                <input
+                  type="password"
+                  name="upw"
+                  {...register("upw")}
+                  value={deletePw.upw}
+                  onChange={e => {
+                    handleChangePw(e);
+                  }}
+                />
                 {errors?.upw ? (
                   <ErrorP>{errors.upw?.message}</ErrorP>
                 ) : (
@@ -67,6 +110,7 @@ function DeleteMemberPage() {
 
             <BtnAreaDiv>
               <BasicBtn
+                type="button"
                 btnname={"취소"}
                 style={{
                   marginTop: "25px",
@@ -78,22 +122,19 @@ function DeleteMemberPage() {
                 }}
               />
               <BasicBtn
-                mt={"25px"}
+                type="submit"
                 btnname={"회원탈퇴"}
                 style={{
                   marginTop: "25px",
                   backgroundColor: "#FF5757",
                   color: "#fff",
                 }}
-                onClick={() => {
-                  navigate("/myinfo/deletemember");
-                }}
               />
             </BtnAreaDiv>
           </FormInnerDiv>
         </FormDiv>
       </MyPageWrapDiv>
-    </div>
+    </form>
   );
 }
 

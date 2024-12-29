@@ -1,5 +1,7 @@
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import { WrapDiv } from "../common";
+import { LoginContext } from "../../contexts/LoginContext";
+// styled
 import {
   GnbUl,
   HeaderDiv,
@@ -8,21 +10,17 @@ import {
   LoginOutDiv,
 } from "./headerStyle";
 import Logo from "../Logo";
-import { useContext, useState } from "react";
-import { LoginContext } from "../../contexts/LoginContext";
+// icon
 import { BsFillSuitcase2Fill } from "react-icons/bs";
 import { FaUser, FaCircleUser } from "react-icons/fa6";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 
-const Header = () => {
-  const { isLogin, handleClickLogin } = useContext(LoginContext);
+const Header = ({ isScrolled }) => {
+  const { isLogin, handleClickLogin, handleClickLogout } =
+    useContext(LoginContext);
   const [myMenuOpen, setMyMenuOpen] = useState(false);
   const navigate = useNavigate();
 
-  // 로그아웃
-  const handleLogOut = () => {
-    handleClickLogin();
-  };
   // 마이페이지 버튼 토글
   const handleMyMenuToggle = () => {
     setMyMenuOpen(!myMenuOpen);
@@ -35,8 +33,9 @@ const Header = () => {
     { path: "/planning", label: "일정만들기" },
     { path: "/board", label: "여행로그" },
   ];
+
   return (
-    <HeaderDiv>
+    <HeaderDiv isScrolled={isScrolled}>
       <HeaderWrapDiv>
         <div className="left">
           <Link to={"/"}>
@@ -90,7 +89,7 @@ const Header = () => {
                   <li>
                     <button
                       onClick={() => {
-                        handleLogOut();
+                        handleClickLogout();
                       }}
                     >
                       <RiLogoutBoxRLine />

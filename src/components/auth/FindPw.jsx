@@ -1,5 +1,7 @@
-import axios from "axios";
 import { useState } from "react";
+import { Controller } from "react-hook-form";
+import axios from "axios";
+// styled
 import {
   BtnBasic,
   ErrorP,
@@ -10,7 +12,7 @@ import {
 
 // import { postEmailCode } from "../../../fetch/auth";
 
-const FindPw = ({ setShowResetPw, register, errors, trigger }) => {
+const FindPw = ({ setShowResetPw, control, errors }) => {
   const [code, setCode] = useState(""); // 서버에서 발송된 인증번호
   const [inputCode, setInputCode] = useState(""); // 인증번호 입력 값
   const [btnDisabled, setBtnDisabled] = useState(true); // 확인버튼 비활성화
@@ -55,6 +57,7 @@ const FindPw = ({ setShowResetPw, register, errors, trigger }) => {
   // 버튼 활성화
   const handleInputChange = e => {
     setInputCode(e.target.value);
+
     if (e.target.value === code) {
       setBtnDisabled(false);
     } else {
@@ -62,10 +65,6 @@ const FindPw = ({ setShowResetPw, register, errors, trigger }) => {
     }
   };
 
-  //
-  const handleChangeEmail = e => {
-    setInputEmail(e.target.value);
-  };
   return (
     <div>
       <h3>비밀번호 찾기</h3>
@@ -75,16 +74,26 @@ const FindPw = ({ setShowResetPw, register, errors, trigger }) => {
       <InputBtnArea>
         <label htmlFor="email">Email</label>
         <div>
-          <input
-            type="email"
-            id="email"
+          <Controller
             name="email"
-            {...register("email")}
-            value={inputEmail}
-            onChange={e => handleChangeEmail(e)}
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <input
+                id="email"
+                type="email"
+                {...field}
+                onChange={e => {
+                  // console.log(e.target.value);
+                  field.onChange(e);
+                  setInputEmail(e.target.value);
+                }}
+                value={inputEmail}
+              />
+            )}
           />
           <button type="button" onClick={() => handleSendCode(inputEmail)}>
-            인증
+            인증코드
           </button>
         </div>
         {errors?.email ? (
@@ -98,11 +107,12 @@ const FindPw = ({ setShowResetPw, register, errors, trigger }) => {
       <TextForm>
         <label htmlFor="authcode">
           <p>인증번호</p>
-          <input
-            type="text"
+          <Controller
             id="authcode"
             name={"authCode"}
-            {...register("authCode")}
+            control={control}
+            defaultValue=""
+            render={({ field }) => <input type="text" {...field} />}
             value={inputCode}
             onChange={e => {
               handleInputChange(e);
@@ -121,7 +131,7 @@ const FindPw = ({ setShowResetPw, register, errors, trigger }) => {
         type="submit"
         disabled={inputCode !== code || btnDisabled}
         style={{
-          marginTop: "30px",
+          marginTop: "20px",
           backgroundColor: btnDisabled ? "#d3d3d3" : "#5469D4",
         }}
         onClick={() => {

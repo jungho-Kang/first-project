@@ -1,13 +1,16 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+// comp
 import { JoinDiv, LayerDiv, LoginDiv } from "../../components/common";
-import LayerLogo from "../../components/layer/LayerLogo";
+import LayerLogo from "../../components/ui/logo/LayerLogo";
 import FindPw from "../../components/auth/FindPw";
 import ResetPw from "../../components/auth/ResetPw";
-import { useState } from "react";
-import axios from "axios";
+// yup
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+
 // yup
 const schema = yup.object({
   email: yup
@@ -30,7 +33,7 @@ const schema = yup.object({
   pwconfirm: yup
     .string()
     .required("비밀번호 확인을 입력해주세요")
-    .oneOf([yup.ref("password")], "비밀번호가 일치하지 않습니다."),
+    .oneOf([yup.ref("upw")], "비밀번호가 일치하지 않습니다."),
 });
 
 function FindPwPage() {
@@ -38,12 +41,11 @@ function FindPwPage() {
 
   // react-hook-form
   const {
-    register,
     handleSubmit,
-    trigger,
+    control,
     formState: { errors },
   } = useForm({
-    // mode: "onChange",
+    mode: "onChange",
     resolver: yupResolver(schema),
   });
 
@@ -64,7 +66,6 @@ function FindPwPage() {
       alert("서버 오류가 발생했습니다.");
     }
   };
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <LoginDiv>
@@ -75,15 +76,17 @@ function FindPwPage() {
           {/* 비밀번호 찾기  & 비밀번호 변경*/}
           {!showResetPw ? (
             <FindPw
-              trigger={trigger}
-              register={register}
+              control={control}
               errors={errors}
-              schema={schema}
               showResetPw={showResetPw}
               setShowResetPw={setShowResetPw}
             />
           ) : (
-            <ResetPw></ResetPw>
+            <ResetPw
+              control={control}
+              errors={errors}
+              handleSubmit={handleSubmit}
+            ></ResetPw>
           )}
 
           {/* 로그인 링크 */}

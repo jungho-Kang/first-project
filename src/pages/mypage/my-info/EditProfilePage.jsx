@@ -1,14 +1,21 @@
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-import BasicBtn from "../../../components/button/BasicBtn";
-import { ErrorP, InitMessageP, TextForm } from "../../../components/common";
+// comp
 import MypageTab from "../../../components/mypage/MypageTab";
 import MypageTop from "../../../components/mypage/MypageTop";
+import BasicBtn from "../../../components/ui/button/BasicBtn";
+
+// styled
+import { ErrorP, InitMessageP, TextForm } from "../../../components/common";
 import { BtnAreaDiv, FormDiv, FormInnerDiv, MyPageWrapDiv } from "./myinfo";
 
+// yup
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import { useContext, useState } from "react";
+import { LoginContext } from "../../../contexts/LoginContext";
 
 const schema = yup.object({
   nickName: yup
@@ -19,6 +26,8 @@ const schema = yup.object({
 });
 function EditProfilePage() {
   const navigate = useNavigate();
+  const { user } = useContext(LoginContext);
+  const [editNickName, setEditNickName] = useState(user.nickName);
   const {
     register,
     handleSubmit,
@@ -31,47 +40,79 @@ function EditProfilePage() {
     resolver: yupResolver(schema),
   });
 
+  const handleChangeData = e => {
+    console.log(e.target.value);
+    setEditNickName(e.target.value);
+  };
+
+  const fetchApi = async data => {
+    // console.log("보낼 데이터", data);
+    try {
+      const res = await axios.patch("/api/user", data);
+      console.log("닉네임 수정 성공시 받은 데이터", res.data);
+      alert(res.data.resultData.message);
+      navigate("/myinfo");
+    } catch (error) {
+      console.log(error);
+      alert("닉네임 수정 중 오류가 발생했습니다. 다시 시도해주세요.");
+    }
+  };
+  const onSubmit = _nickname => {
+    console.log("수정된 보낼 닉네임", _nickname);
+    fetchApi(_nickname);
+  };
+
   return (
-    <div>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <MypageTop />
 
       <MyPageWrapDiv>
         <MypageTab />
         <FormDiv>
           <FormInnerDiv>
-            <h3>프로필 수정</h3>
+            <div className="tit-area">
+              <h3>프로필 수정</h3>
+            </div>
+
+            {/* 이름 */}
+            <TextForm style={{ padding: 0, marginBottom: 23 }}>
+              <label htmlFor="">
+                <p>Name</p>
+                <input
+                  type="text"
+                  name="name"
+                  value={"홍길동"}
+                  readOnly
+                  style={{
+                    backgroundColor: "#eee",
+                    color: "#999",
+                  }}
+                />
+              </label>
+            </TextForm>
 
             {/* 닉네임 */}
-            <TextForm>
+            <TextForm style={{ padding: 0, marginBottom: 12 }}>
               <label htmlFor="">
                 <p>NickName</p>
                 <input
                   type="text"
                   name="nickName"
                   {...register("nickName")}
-                  value={"크롱52"}
-                  // value={formData.nickName}
+                  value={editNickName}
                   onChange={e => {
-                    handleChangeFormData(e);
+                    handleChangeData(e);
                   }}
                 />
                 {errors?.nickName ? (
                   <ErrorP>{errors.nickName?.message}</ErrorP>
                 ) : (
-                  <InitMessageP>4자 이상 닉네임을 입력해주세요.</InitMessageP>
+                  <InitMessageP>3글자 이상 입력해주세요.</InitMessageP>
                 )}
               </label>
             </TextForm>
-
-            {/* 이름 */}
-            <TextForm>
-              <label htmlFor="">
-                <p>Name</p>
-                <input type="text" name="name" value={"홍길동"} readOnly />
-              </label>
-            </TextForm>
             {/* 이메일 */}
-            <TextForm>
+            <TextForm style={{ padding: 0 }}>
               <label htmlFor="">
                 <p>Email</p>
                 <input
@@ -79,6 +120,7 @@ function EditProfilePage() {
                   name="email"
                   value={"aa@gmail.com"}
                   readOnly
+                  style={{ backgroundColor: "#eee", color: "#999" }}
                 />
               </label>
             </TextForm>
@@ -86,8 +128,9 @@ function EditProfilePage() {
             <BtnAreaDiv>
               <BasicBtn
                 btnname={"뒤로가기"}
+                type="button"
                 style={{
-                  marginTop: "25px",
+                  // marginTop: "25px",
                   backgroundColor: "#eee",
                   color: "#555",
                 }}
@@ -96,9 +139,10 @@ function EditProfilePage() {
                 }}
               />
               <BasicBtn
+                type="button"
                 btnname={"회원탈퇴"}
                 style={{
-                  marginTop: "25px",
+                  // marginTop: "25px",
                   backgroundColor: "#FF5757",
                   color: "#fff",
                 }}
@@ -108,16 +152,14 @@ function EditProfilePage() {
               />
             </BtnAreaDiv>
             <BasicBtn
+              type="submit"
               btnname={"저장"}
               style={{ marginTop: "25px" }}
-              onClick={() => {
-                navigate("/myinfo");
-              }}
             />
           </FormInnerDiv>
         </FormDiv>
       </MyPageWrapDiv>
-    </div>
+    </form>
   );
 }
 

@@ -1,43 +1,31 @@
-import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { TabMenuDiv } from "./mypage";
 
-const TabMenuDiv = styled.div`
-  ul.tabs {
-    margin: 0 auto;
-    border-radius: 4px;
-    overflow: hidden;
-    display: flex;
-  }
-  li {
-    width: 50%;
-  }
-  a {
-    display: block;
-    width: 100%;
-    text-align: center;
-    padding: 13px;
-    background-color: #eee;
-    color: #777;
-    font-weight: 500;
-    font-size: 18px;
-  }
-  li.active a {
-    background-color: #1180ff;
-    color: #fff;
-  }
-`;
 const MypageTab = () => {
   return (
     <TabMenuDiv>
       <ul className="tabs">
+        {/* 내일정 */}
         <li>
-          <Link to={"/myplanlist"}>내 일정</Link>
+          <NavLink
+            to="/myplanlist"
+            className={({ isActive }) => (isActive ? "active" : "")}
+          >
+            내 일정
+          </NavLink>
         </li>
-        <li className="active">
-          <Link to={"/myinfo"}>내 정보</Link>
+        {/* 내정보 */}
+        <li>
+          <NavLink
+            to="/myinfo"
+            className={({ isActive }) => (isActive ? "active" : "")}
+          >
+            내 정보
+          </NavLink>
         </li>
       </ul>
     </TabMenuDiv>
   );
 };
+
 export default MypageTab;

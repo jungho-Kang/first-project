@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
-import { FaCheck } from "react-icons/fa";
-import { AgreementDiv, AgreementDocumentDiv } from "../../pages/auth/login";
+import { Controller } from "react-hook-form";
+// comp
+import LayerLogo from "../ui/logo/LayerLogo";
+// styled
+import { AgreementDocumentDiv, SignupDiv } from "../../pages/auth/login";
 import { BtnBasic, CheckBoxDiv } from "../common";
-import LayerLogo from "../layer/LayerLogo";
+// icon
+import { FaCheck } from "react-icons/fa";
+import AgreementDetail from "./AgreementDetail";
 
-const Agreement = ({ setIsAgreementStep }) => {
+const Agreement = ({ setIsAgreementStep, control, setFormData, formData }) => {
   const [agreeChecked, setAgreeChecked] = useState({
     agree01: false,
     agree02: false,
@@ -39,6 +44,7 @@ const Agreement = ({ setIsAgreementStep }) => {
   const handleNext = () => {
     if (isAllChecked) {
       setIsAgreementStep(false);
+      setFormData({ ...formData, agreement: true });
     } else {
       alert("모든항목에 동의해주세요.");
     }
@@ -54,7 +60,7 @@ const Agreement = ({ setIsAgreementStep }) => {
   }, [agreeChecked.agree01, agreeChecked.agree02, agreeChecked.agree03]);
 
   return (
-    <AgreementDiv>
+    <SignupDiv>
       <LayerLogo />
       <h2>다녀올 회원약관동의</h2>
       {/* 체크박스 1 */}
@@ -92,14 +98,19 @@ const Agreement = ({ setIsAgreementStep }) => {
           </span>
         </label>
       </CheckBoxDiv>
-      <AgreementDocumentDiv>
-        <p>Lorem ipsum dolor sit amet.</p>
-        <span>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sed nesciunt
-          similique veritatis. Facilis non nihil aperiam reiciendis perferendis
-          veritatis deserunt optio blanditiis. Nobis distinctio fuga
-          consequuntur velit quasi. Magni, eaque.
-        </span>
+      <AgreementDocumentDiv style={{ height: 150 }}>
+        <p className="item">
+          <b>목적</b>
+          <em>개인식별, 회원자격 유지·관리</em>
+        </p>
+        <p className="item">
+          <b>항목</b>
+          <em>이름,이메일,닉네임,비밀번호</em>
+        </p>
+        <p className="item">
+          <b>보유기간</b>
+          <em>회원탈퇴시 즉시 파기</em>
+        </p>
       </AgreementDocumentDiv>
 
       {/* 체크박스 3 */}
@@ -119,27 +130,28 @@ const Agreement = ({ setIsAgreementStep }) => {
           </span>
         </label>
       </CheckBoxDiv>
-      <AgreementDocumentDiv>
-        <p>Lorem ipsum dolor sit amet.</p>
-        <span>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sed nesciunt
-          similique veritatis. Facilis non nihil aperiam reiciendis perferendis
-          veritatis deserunt optio blanditiis. Nobis distinctio fuga
-          consequuntur velit quasi. Magni, eaque.
-        </span>
-      </AgreementDocumentDiv>
+      <AgreementDetail />
 
       {/* 전체동의 체크박스 */}
       <CheckBoxDiv>
         <label htmlFor="agree04">
-          <input
-            type="checkbox"
-            id="agree04"
-            checked={isAllChecked}
-            onChange={e => {
-              handleAllAgree(e);
-            }}
-            style={{ marginTop: "20px" }}
+          <Controller
+            name="agreement"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <input
+                id="agree04"
+                type="checkbox"
+                {...field}
+                checked={isAllChecked}
+                onChange={e => {
+                  field.onChange(e);
+                  handleAllAgree(e);
+                }}
+                style={{ marginTop: "20px" }}
+              />
+            )}
           />
           <em>
             <FaCheck />
@@ -164,7 +176,7 @@ const Agreement = ({ setIsAgreementStep }) => {
       >
         다음
       </BtnBasic>
-    </AgreementDiv>
+    </SignupDiv>
   );
 };
 export default Agreement;

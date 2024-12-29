@@ -1,5 +1,12 @@
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import BasicBtn from "../../components/button/BasicBtn";
+import { LoginContext } from "../../contexts/LoginContext";
+import axios from "axios";
+// comp
+import ConfirmPopup from "../../components/popup/ConfirmPopup";
+import BasicBtn from "../../components/ui/button/BasicBtn";
+import LayerLogo from "../../components/ui/logo/LayerLogo";
+// styled
 import {
   ErrorP,
   FindPwDiv,
@@ -9,18 +16,12 @@ import {
   LoginDiv,
   TextForm,
 } from "../../components/common";
-
+// yup
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-
-import { useContext, useState } from "react";
-import { useAxios } from "../../hooks/Axios";
+// import { useAxios } from "../../hooks/Axios";
 // import { postLoginMember } from "../../../fetch/auth";
-import ConfirmPopup from "../../components/ConfirmPopup";
-import LayerLogo from "../../components/layer/LayerLogo";
-import { LoginContext } from "../../contexts/LoginContext";
-import axios from "axios";
 
 const schema = yup.object({
   email: yup
@@ -71,6 +72,7 @@ function IndexPage() {
       setLoading(true);
       const response = await axios.post("/api/user/signin", _formData);
       console.log("로그인 성공시 받아온 데이터:", response.data);
+      const { upw, message, ...userData } = response.data.resultData;
       // 받아온 데이터
       //   {
       //     "resultMessage": "회원정보 조회 수행을 완료하였습니다.",
@@ -86,7 +88,7 @@ function IndexPage() {
         alert(response.data.resultData.message);
         navigate("/auth/signup");
       } else {
-        handleClickLogin();
+        handleClickLogin(userData);
         navigate("/");
       }
     } catch (error) {
@@ -101,20 +103,6 @@ function IndexPage() {
   const onSubmit = async formData => {
     console.log("onSubmit 호출됨", formData);
     fetchApi(formData);
-
-    // try {
-    //   if (data) {
-    //     // 서버에서 받아온 데이터 확인
-    //     console.log("로그인 성공시 받아온 데이터:", data);
-    //     handleClickLogin();
-    //     navigate("/");
-    //   } else {
-    //     alert("로그인 중 오류가 발생했습니다. 다시 시도해주세요.");
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    //   alert("서버 오류가 발생했습니다.");
-    // }
   };
 
   // 팝업
@@ -143,7 +131,7 @@ function IndexPage() {
                   <ErrorP>{errors.email?.message}</ErrorP>
                 ) : (
                   <InitMessageP>
-                    `이메일 주소에 @가 포함하여 입력해주세요.`
+                    이메일 주소에 @가 포함하여 입력해주세요.
                   </InitMessageP>
                 )}
               </label>

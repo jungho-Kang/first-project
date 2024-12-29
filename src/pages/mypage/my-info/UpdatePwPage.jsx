@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import BasicBtn from "../../../components/button/BasicBtn";
-import { ErrorP, InitMessageP, TextForm } from "../../../components/common";
-import MypageTab from "../../../components/mypage/MypageTab";
+// comp
 import MypageTop from "../../../components/mypage/MypageTop";
+import MypageTab from "../../../components/mypage/MypageTab";
+import BasicBtn from "../../../components/ui/button/BasicBtn";
+// styled
+import { ErrorP, InitMessageP, TextForm } from "../../../components/common";
 import { BtnAreaDiv, FormDiv, FormInnerDiv, MyPageWrapDiv } from "./myinfo";
-
+// yup
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -45,7 +47,9 @@ function UpdatePwPage() {
         <MypageTab />
         <FormDiv>
           <FormInnerDiv>
-            <h3>비밀번호 재설정</h3>
+            <div className="tit-area">
+              <h3>비밀번호 재설정</h3>
+            </div>
             {/* 기존 비밀번호 */}
             <TextForm>
               <label htmlFor="">
