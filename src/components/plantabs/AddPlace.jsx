@@ -14,10 +14,15 @@ const PlaceNameDiv = styled.div`
   margin-bottom: 10px;
 `;
 
-const AddPlace = ({ setSearchWord, mapResultList, setIsClick }) => {
+const AddPlace = ({
+  setSearchWord,
+  mapResultList,
+  setIsClick,
+  setSelectedItem,
+}) => {
   const [word, setWord] = useState("");
 
-  const handleBtnClick = () => {
+  const handleItemClick = () => {
     setIsClick(true);
   };
 
@@ -59,13 +64,17 @@ const AddPlace = ({ setSearchWord, mapResultList, setIsClick }) => {
         </button>
       </div>
       {/* 검색결과 출력 */}
-      <div
-        style={{ overflowY: "auto", height: 500, cursor: "pointer" }}
-        onClick={() => handleBtnClick()}
-      >
+      <div style={{ overflowY: "auto", height: 500, cursor: "pointer" }}>
         {mapResultList.map(item => {
           return (
             <div
+              onClick={() => {
+                handleItemClick();
+                setSelectedItem({
+                  addressName: item.address_name,
+                  placeName: item.place_name,
+                });
+              }}
               key={`item-${item.address_name}-${item.x},${item.y}`}
               style={{ marginBottom: 10 }}
             >

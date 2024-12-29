@@ -51,7 +51,7 @@ function App() {
               <Route path="makeplanner" element={<MakePlanner />}></Route>
             </Route>
 
-            {/* 여행로그 게시판 : 리스트, 디테일페이지, 글쓰기/수정 */}
+            {/* 다녀ON 게시판 : 리스트, 디테일페이지, 글쓰기/수정 */}
             <Route path="board">
               <Route index element={<BoardIndex />} />
               <Route path="detail" element={<BoardDetail />} />

@@ -18,7 +18,7 @@ function IndexPage() {
   const navigate = useNavigate();
   return (
     <WrapDiv>
-      <TitleDiv>여행로그</TitleDiv>
+      <TitleDiv>다녀ON</TitleDiv>
       <PostUl>
         <Link to={navigate("/board/detail")}>
           <PostLi>

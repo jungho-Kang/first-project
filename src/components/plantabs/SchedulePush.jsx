@@ -1,6 +1,7 @@
 // "일정등록" 모달창 띄우기
 
 import styled from "@emotion/styled";
+import { IoMdCloseCircle } from "react-icons/io";
 
 const ContentDiv = styled.div`
   max-width: 600px;
@@ -18,6 +19,15 @@ const ContentDiv = styled.div`
     font-size: 24px;
     font-weight: 700;
     margin-bottom: 20px;
+  }
+  .btnSubmit {
+    width: 100%;
+    height: 50px;
+    margin-top: 10px;
+    background-color: #3825e4;
+    color: #fff;
+    border-radius: 5px;
+    border: none;
   }
 `;
 
@@ -67,12 +77,28 @@ const CateDiv = styled.div`
   text-align: center;
   background-color: #eeeeee;
   line-height: 40px;
+  cursor: pointer;
 `;
 
-const SchedulePush = () => {
+const ExitBtn = styled.button`
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: none;
+  border: none;
+  width: 30px;
+  height: 30px;
+`;
+
+const SchedulePush = ({
+  selectedItem,
+  setIsClick,
+  setSelectedCate,
+  selectedCate,
+}) => {
   return (
     <ContentDiv>
-      <form>
+      <form style={{ position: "relative" }}>
         <h2>일정등록</h2>
         <SmallTitleDiv>시간</SmallTitleDiv>
         <TimeTitleDiv>
@@ -84,16 +110,49 @@ const SchedulePush = () => {
           <TimeInput type="time" defaultValue="22:00" />
         </TimeDiv>
         <SmallTitleDiv>장소 이름</SmallTitleDiv>
-        <TextInput type="text" />
+        <TextInput type="text" value={selectedItem.placeName} readOnly />
+
         <SmallTitleDiv>분류</SmallTitleDiv>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <CateDiv>명소</CateDiv>
-          <CateDiv>숙소</CateDiv>
-          <CateDiv>교통</CateDiv>
-          <CateDiv>음식점</CateDiv>
+          <CateDiv
+            onClick={() => setSelectedCate("명소")}
+            style={{
+              backgroundColor: selectedCate === "명소" ? "#5469D4" : "#ddd",
+              color: selectedCate === "명소" ? "#fff" : "#000",
+            }}
+          >
+            명소
+          </CateDiv>
+          <CateDiv
+            onClick={() => setSelectedCate("숙소")}
+            style={{
+              backgroundColor: selectedCate === "숙소" ? "#5469D4" : "#ddd",
+              color: selectedCate === "숙소" ? "#fff" : "#000",
+            }}
+          >
+            숙소
+          </CateDiv>
+          <CateDiv
+            onClick={() => setSelectedCate("교통")}
+            style={{
+              backgroundColor: selectedCate === "교통" ? "#5469D4" : "#ddd",
+              color: selectedCate === "교통" ? "#fff" : "#000",
+            }}
+          >
+            교통
+          </CateDiv>
+          <CateDiv
+            onClick={() => setSelectedCate("음식점")}
+            style={{
+              backgroundColor: selectedCate === "음식점" ? "#5469D4" : "#ddd",
+              color: selectedCate === "음식점" ? "#fff" : "#000",
+            }}
+          >
+            음식점
+          </CateDiv>
         </div>
         <SmallTitleDiv>주소</SmallTitleDiv>
-        <TextInput type="text" />
+        <TextInput type="text" value={selectedItem.addressName} readOnly />
         <div style={{ display: "flex", gap: 235 }}>
           <SmallTitleDiv>비용</SmallTitleDiv>
           <SmallTitleDiv>인원수</SmallTitleDiv>
@@ -106,6 +165,18 @@ const SchedulePush = () => {
         <textarea
           style={{ padding: 10, width: "100%", height: 120, resize: "none" }}
         ></textarea>
+        <button type="submit" className="btnSubmit">
+          등록
+        </button>
+        <ExitBtn
+          type="button"
+          onClick={() => {
+            setIsClick(false);
+            setSelectedCate("명소");
+          }}
+        >
+          <IoMdCloseCircle style={{ width: "100%", height: "100%" }} />
+        </ExitBtn>
       </form>
     </ContentDiv>
   );

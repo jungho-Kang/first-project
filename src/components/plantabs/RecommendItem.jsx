@@ -24,8 +24,7 @@ const OfferListDiv = styled.div`
   overflow-y: auto;
 `;
 
-const RecommendItem = () => {
-  const [selectedCate, setSelectedCate] = useState("명소");
+const RecommendItem = ({ selectedCate, setSelectedCate }) => {
   return (
     <>
       <OfferFilterListUl>
@@ -36,16 +35,16 @@ const RecommendItem = () => {
           명소
         </li>
         <li
-          onClick={() => setSelectedCate("음식점")}
-          style={{ opacity: selectedCate === "음식점" ? 1 : 0.5 }}
-        >
-          음식점
-        </li>
-        <li
           onClick={() => setSelectedCate("숙소")}
           style={{ opacity: selectedCate === "숙소" ? 1 : 0.5 }}
         >
           숙소
+        </li>
+        <li
+          onClick={() => setSelectedCate("음식점")}
+          style={{ opacity: selectedCate === "음식점" ? 1 : 0.5 }}
+        >
+          음식점
         </li>
       </OfferFilterListUl>
       <OfferListDiv>

@@ -20,16 +20,6 @@ function CityPage() {
         <ImgLi>서울 이미지</ImgLi>
         <ImgLi>서울 이미지</ImgLi>
       </ImgUl>
-      <ImgUl>
-        <ImgLi>서울 이미지</ImgLi>
-        <ImgLi>서울 이미지</ImgLi>
-        <ImgLi>서울 이미지</ImgLi>
-      </ImgUl>
-      <ImgUl>
-        <ImgLi>서울 이미지</ImgLi>
-        <ImgLi>서울 이미지</ImgLi>
-        <ImgLi>서울 이미지</ImgLi>
-      </ImgUl>
     </WrapDiv>
   );
 }

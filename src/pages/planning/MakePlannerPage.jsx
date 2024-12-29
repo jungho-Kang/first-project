@@ -67,8 +67,8 @@ const EventBtn = styled.button`
   width: 80px;
   height: 45px;
   border-radius: 5px;
-  background-color: #5469d4;
-  color: #fff;
+  background-color: #ddd;
+  color: #000;
   border: none;
   line-height: 45px;
   text-align: center;
@@ -123,6 +123,18 @@ function MakePlannerPage() {
   // 팝업창 띄우기 버튼
   const [isClick, setIsClick] = useState(false);
 
+  // 일정등록, 일정 버튼
+  const [selectedBtn, setSelectedBtn] = useState("일정등록");
+
+  // 직접 추가로 선택된 아이템 전달
+  const [selectedItem, setSelectedItem] = useState({
+    addressName: "",
+    placeName: "",
+  });
+
+  // 선택된 카테고리
+  const [selectedCate, setSelectedCate] = useState("명소");
+
   const handleTabClick = tab => {
     setActiveTab(tab);
   };
@@ -132,12 +144,41 @@ function MakePlannerPage() {
       <LayoutDiv>
         <MenuLayoutDiv>
           <MenuDiv>
-            <Link to={"/"}>
-              <Logo />
-            </Link>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 10,
+                alignItems: "center",
+              }}
+            >
+              <Link to={"/"}>
+                <Logo />
+              </Link>
+              <EventBtn
+                style={{
+                  backgroundColor:
+                    selectedBtn === "일정등록" ? "#5469D4" : "#ddd",
+                  color: selectedBtn === "일정등록" ? "#fff" : "#000",
+                }}
+                onClick={() => setSelectedBtn("일정등록")}
+              >
+                일정등록
+              </EventBtn>
+              <EventBtn
+                style={{
+                  backgroundColor: selectedBtn === "일정" ? "#5469D4" : "#ddd",
+                  color: selectedBtn === "일정" ? "#fff" : "#000",
+                }}
+                onClick={() => setSelectedBtn("일정")}
+              >
+                일정
+              </EventBtn>
+            </div>
             <BtnSortDiv>
-              <EventBtn>공유하기</EventBtn>
-              <EventBtn>저장</EventBtn>
+              <EventBtn style={{ backgroundColor: "#D1373A", color: "#fff" }}>
+                저장
+              </EventBtn>
             </BtnSortDiv>
           </MenuDiv>
           <AddScheduleDiv isSlide={isSlide}>
@@ -161,9 +202,14 @@ function MakePlannerPage() {
                 </PlanTabsUl>
               </div>
               {activeTab === "추천항목" ? (
-                <RecommendItem />
+                <RecommendItem
+                  selectedCate={selectedCate}
+                  setSelectedCate={setSelectedCate}
+                />
               ) : (
                 <AddPlace
+                  // 선택된 요소의 주소와 장소이름 넘기기
+                  setSelectedItem={setSelectedItem}
                   // 팝업창 띄우기
                   setIsClick={setIsClick}
                   setSearchWord={setSearchWord}
@@ -189,7 +235,16 @@ function MakePlannerPage() {
           searchWord={searchWord}
         />
       </LayoutDiv>
-      {isClick ? <SchedulePush /> : <></>}
+      {isClick ? (
+        <SchedulePush
+          selectedItem={selectedItem}
+          setIsClick={setIsClick}
+          selectedCate={selectedCate}
+          setSelectedCate={setSelectedCate}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
