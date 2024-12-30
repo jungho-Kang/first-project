@@ -16,23 +16,6 @@ function FindPwPage() {
     email: "",
     upw: "",
   });
-  // const onSubmit = async data => {
-  //   console.log("data---!!", data);
-
-  //   try {
-  //     const res = await axios.patch("/api/user", { data });
-  //     console.log("서버 응답:", res);
-
-  //     if (res.data) {
-  //       console.log("비밀번호 수정");
-  //     } else {
-  //       alert("인증번호가 틀렸습니다. 다시 시도해주세요.");
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     alert("서버 오류가 발생했습니다.");
-  //   }
-  // };
 
   return (
     <div>

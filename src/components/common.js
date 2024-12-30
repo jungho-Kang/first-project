@@ -81,7 +81,7 @@ export const FindPwDiv = styled.div`
   display: flex;
   justify-content: end;
   font-size: 14px;
-  margin-top: -24.5px;
+  margin-top: -21.5px;
 `;
 export const TitleDiv = styled.div`
   margin-top: 60px;

@@ -42,8 +42,9 @@ const ResetPw = ({ putPwEmail }) => {
     },
   });
 
-  const onSubmit = async () => {
-    console.log("data---!!", putPwEmail);
+  const onSubmit = async data => {
+    console.log("data---!!", data);
+    console.log("putPwEmail---!!", putPwEmail);
 
     try {
       const res = await axios.patch("/api/user", { putPwEmail });
