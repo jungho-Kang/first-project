@@ -102,8 +102,7 @@ const OfferItem = ({ setSelectedItem }) => {
       <button
         type="button"
         className="btn-box"
-
-        onClick={() => handleClick()}
+        onClick={() => handleClickLogin()}
         style={{
           backgroundColor: btnClick ? "#5469d4" : "#f5f4f4",
           color: btnClick ? "#fff" : "#333",

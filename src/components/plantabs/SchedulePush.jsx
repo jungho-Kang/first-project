@@ -1,6 +1,7 @@
 // "일정등록" 모달창 띄우기
 
 import styled from "@emotion/styled";
+import { useForm } from "react-hook-form";
 import { IoMdCloseCircle } from "react-icons/io";
 
 const ContentDiv = styled.div`
@@ -96,9 +97,14 @@ const SchedulePush = ({
   setSelectedCate,
   selectedCate,
 }) => {
+  const { handleSubmit } = useForm();
+  const handleSubmitData = () => {};
   return (
     <ContentDiv>
-      <form style={{ position: "relative" }}>
+      <form
+        onSubmit={handleSubmit(handleSubmitData)}
+        style={{ position: "relative" }}
+      >
         <h2>일정등록</h2>
         <SmallTitleDiv>시간</SmallTitleDiv>
         <TimeTitleDiv>

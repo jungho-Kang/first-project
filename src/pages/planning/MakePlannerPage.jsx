@@ -112,9 +112,10 @@ const AddScheduleDiv = styled.div`
   }
 `;
 
-function MakePlannerPage() {
+function MakePlannerPage({ resData }) {
   const { id } = useParams();
   console.log(id);
+  console.log(resData);
 
   const [isSlide, setIsSlide] = useState(false);
   const [activeTab, setActiveTab] = useState("추천항목");
@@ -143,7 +144,14 @@ function MakePlannerPage() {
   };
 
   return (
-    <div style={{ position: "relative", width: "100%", height: "100vh" }}>
+    <div
+      style={{
+        position: "relative",
+        width: "100%",
+        height: "100vh",
+        marginTop: "-68px",
+      }}
+    >
       <LayoutDiv>
         <MenuLayoutDiv>
           <MenuDiv>
@@ -186,7 +194,7 @@ function MakePlannerPage() {
           </MenuDiv>
           <AddScheduleDiv isSlide={isSlide}>
             <div className="inner">
-              <PlanTop />
+              <PlanTop resData={resData} />
               <div>
                 <PlanTabsUl>
                   <li
