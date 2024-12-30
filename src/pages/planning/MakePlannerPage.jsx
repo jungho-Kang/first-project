@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { LayoutDiv } from "./plan";
 
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
@@ -50,7 +50,7 @@ const MenuDiv = styled.div`
   height: 100%;
   background-color: #fff;
   border-right: 1px solid #eee;
-  padding: 32px 0;
+  padding: 20px 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -113,6 +113,9 @@ const AddScheduleDiv = styled.div`
 `;
 
 function MakePlannerPage() {
+  const { id } = useParams();
+  console.log(id);
+
   const [isSlide, setIsSlide] = useState(false);
   const [activeTab, setActiveTab] = useState("추천항목");
 
@@ -205,6 +208,7 @@ function MakePlannerPage() {
                 <RecommendItem
                   selectedCate={selectedCate}
                   setSelectedCate={setSelectedCate}
+                  setSelectedItem={setSelectedItem}
                 />
               ) : (
                 <AddPlace

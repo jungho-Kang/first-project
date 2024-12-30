@@ -18,6 +18,20 @@ const PlanTitleDiv = styled.div`
   margin-bottom: 20px;
 `;
 
+const CostSummaryDiv = styled.div`
+  margin: 0 auto;
+  background-color: #7f8edf;
+  max-width: 1200px;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  color: #fff;
+  align-items: center;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 20px;
+`;
+
 const PlanContentDiv = styled.div`
   margin: 0 auto;
   padding: 15px 0;
@@ -171,6 +185,18 @@ const PlanListResult = () => {
         <SumPriceDiv>250,000</SumPriceDiv>
         <MemoDiv>6시 조식, 11시 체크아웃 핸드폰 충전하기...</MemoDiv>
       </PlanContentDiv>
+      <CostSummaryDiv>
+        <div
+          style={{ width: "10%", display: "flex", justifyContent: "center" }}
+        >
+          <PostCity style={{ backgroundColor: "#000" }}>전체</PostCity>
+        </div>
+        <div style={{ width: "20%" }}>1인당 비용</div>
+        <PriceDiv>250,000</PriceDiv>
+        <div style={{ width: "20%" }}>총 비용</div>
+        <SumPriceDiv>250,000</SumPriceDiv>
+      </CostSummaryDiv>
+
       <ReviewTitleDiv>여행 후기</ReviewTitleDiv>
       {pathname === "/board/writepost" ? (
         <></>

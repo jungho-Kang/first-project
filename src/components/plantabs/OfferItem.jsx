@@ -54,7 +54,6 @@ const OfferItemA = styled.a`
   }
   .btn-box {
     border: none;
-    background-color: #f5f4f4;
     border-radius: 5px;
     margin-right: 20px;
     width: 40px;
@@ -62,20 +61,22 @@ const OfferItemA = styled.a`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #333;
     transition: all 0.3s;
     &:hover {
-      background-color: #5469d4;
-      color: #fff;
+      background-color: #5469d4 !important;
+      color: #fff !important;
     }
   }
 `;
 
-const OfferItem = () => {
+const OfferItem = ({ setSelectedItem }) => {
   const [btnClick, setBtnClick] = useState(false);
 
   const handleClick = () => {
     setBtnClick(prev => !prev);
+    if (btnClick) {
+      setSelectedItem({});
+    }
   };
 
   return (
@@ -98,7 +99,15 @@ const OfferItem = () => {
           </span>
         </div>
       </div>
-      <button type="button" className="btn-box" onClick={() => handleClick()}>
+      <button
+        type="button"
+        className="btn-box"
+        onClick={() => handleClick()}
+        style={{
+          backgroundColor: btnClick ? "#5469d4" : "#f5f4f4",
+          color: btnClick ? "#fff" : "#333",
+        }}
+      >
         {btnClick ? <FaCheck /> : <FaPlus />}
       </button>
     </OfferItemA>

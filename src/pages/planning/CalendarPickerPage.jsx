@@ -10,7 +10,7 @@ import "./react-datepicker.css";
 
 import { ko } from "date-fns/locale";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const FlexBtnDiv = styled.div`
   display: flex;
@@ -34,6 +34,8 @@ const NextBtn = styled.button`
 
 function CalendarPickerPage() {
   const navigate = useNavigate();
+  const { id } = useParams();
+  console.log(id);
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(null);
@@ -67,7 +69,7 @@ function CalendarPickerPage() {
     } else if (endDate === null) {
       alert("여행기간을 선택해주세요.");
     } else {
-      navigate("/planning/makeplanner");
+      navigate(`/planning/makeplanner/${id}`);
     }
   };
 

@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import OfferItem from "./OfferItem";
-import { useState } from "react";
 
 const OfferFilterListUl = styled.div`
   margin: 15px 10px;
@@ -24,7 +23,7 @@ const OfferListDiv = styled.div`
   overflow-y: auto;
 `;
 
-const RecommendItem = ({ selectedCate, setSelectedCate }) => {
+const RecommendItem = ({ selectedCate, setSelectedCate, setSelectedItem }) => {
   return (
     <>
       <OfferFilterListUl>
@@ -48,7 +47,7 @@ const RecommendItem = ({ selectedCate, setSelectedCate }) => {
         </li>
       </OfferFilterListUl>
       <OfferListDiv>
-        <OfferItem />
+        <OfferItem setSelectedItem={setSelectedItem} />
         <OfferItem />
         <OfferItem />
         <OfferItem />

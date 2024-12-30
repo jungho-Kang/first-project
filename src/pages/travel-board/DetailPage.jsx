@@ -32,19 +32,33 @@ function DetailPage() {
         }}
       >
         {isLogin ? (
-          <button
-            onClick={() => navigate("/board/writepost")}
-            style={{
-              width: 100,
-              height: 50,
-              borderRadius: 20,
-              backgroundColor: "#B8D8E4",
-              color: "#fff",
-              border: "none",
-            }}
-          >
-            수정
-          </button>
+          <>
+            <button
+              onClick={() => navigate("/board/writepost")}
+              style={{
+                width: 100,
+                height: 50,
+                borderRadius: 20,
+                backgroundColor: "#B8D8E4",
+                color: "#fff",
+                border: "none",
+              }}
+            >
+              수정
+            </button>
+            <button
+              style={{
+                width: 100,
+                height: 50,
+                borderRadius: 20,
+                backgroundColor: "#B8D8E4",
+                color: "#fff",
+                border: "none",
+              }}
+            >
+              삭제
+            </button>
+          </>
         ) : (
           <>
             <FlexDiv>

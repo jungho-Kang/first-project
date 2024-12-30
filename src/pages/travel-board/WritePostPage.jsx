@@ -101,7 +101,7 @@ function WritePostPage() {
               fontSize: 24,
               fontWeight: 700,
               position: "absolute",
-              paddingLeft: 60,
+              paddingLeft: 70,
               maxWidth: 1200,
               width: "100%",
               height: 60,
