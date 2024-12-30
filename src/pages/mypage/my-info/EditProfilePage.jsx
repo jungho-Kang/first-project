@@ -37,19 +37,23 @@ function EditProfilePage() {
 
             <BtnAreaDiv>
               <BasicBtn
-                mt={"25px"}
                 btnname={"뒤로가기"}
-                Bg={"#EEEEEE"}
-                color={"#555"}
+                style={{
+                  marginTop: "25px",
+                  backgroundColor: "#eee",
+                  color: "#555",
+                }}
                 onClick={() => {
                   navigate("/myinfo");
                 }}
               />
               <BasicBtn
-                mt={"25px"}
                 btnname={"회원탈퇴"}
-                Bg={"#FF5757"}
-                color={"#fff"}
+                style={{
+                  marginTop: "25px",
+                  backgroundColor: "#FF5757",
+                  color: "#fff",
+                }}
                 onClick={() => {
                   navigate("/myinfo/deletemember");
                 }}
@@ -57,7 +61,7 @@ function EditProfilePage() {
             </BtnAreaDiv>
             <BasicBtn
               btnname={"저장"}
-              mt={"25px"}
+              style={{ marginTop: "25px" }}
               onClick={() => {
                 navigate("/myinfo");
               }}

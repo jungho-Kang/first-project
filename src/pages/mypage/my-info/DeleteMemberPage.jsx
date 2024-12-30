@@ -33,10 +33,12 @@ function DeleteMemberPage() {
 
             <BtnAreaDiv>
               <BasicBtn
-                mt={"25px"}
                 btnname={"취소"}
-                Bg={"#EEEEEE"}
-                color={"#555"}
+                style={{
+                  marginTop: "25px",
+                  backgroundColor: "#EEE",
+                  color: "#555",
+                }}
                 onClick={() => {
                   navigate("/myinfo");
                 }}
@@ -44,8 +46,11 @@ function DeleteMemberPage() {
               <BasicBtn
                 mt={"25px"}
                 btnname={"회원탈퇴"}
-                Bg={"#FF5757"}
-                color={"#fff"}
+                style={{
+                  marginTop: "25px",
+                  backgroundColor: "#FF5757",
+                  color: "#fff",
+                }}
                 onClick={() => {
                   navigate("/myinfo/deletemember");
                 }}

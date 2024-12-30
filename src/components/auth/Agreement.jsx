@@ -105,8 +105,10 @@ const Agreement = ({ setIsAgreementStep }) => {
       <BasicBtn
         type={"button"}
         btnname={"다음"}
-        Bg={isAllChecked ? "#5469d4" : "#eee"}
-        color={isAllChecked ? "#fff" : "#777"}
+        style={{
+          backgroundColor: isAllChecked ? "#5469d4" : "#eee",
+          color: isAllChecked ? "#fff" : "#777",
+        }}
         onClick={() => {
           handleNext();
         }}

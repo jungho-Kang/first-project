@@ -6,7 +6,7 @@ import {
 } from "../../components/common";
 import BasicBtn from "../../components/button/BasicBtn";
 import CustomInput from "../../components/input/CustomInput";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -14,14 +14,17 @@ import { useForm } from "react-hook-form";
 
 import LayerLogo from "../../components/layer/LayerLogo";
 import ConfirmPopup from "../../components/ConfirmPopup";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { LoginContext } from "../../contexts/LoginContext";
+import axios from "axios";
+// import { postLoginMember } from "../../../apis/auth";
 
 const schema = yup.object({
   email: yup
     .string()
     .required("이메일을 입력해주세요.")
     .email("올바른 이메일 형식이 아닙니다."),
-  pw: yup
+  upw: yup
     .string()
     .required("비밀번호를 입력해주세요")
     .min(8, "비밀번호는 8자 이상입니다.")
@@ -31,8 +34,14 @@ const schema = yup.object({
       "비밀번호는 영문, 숫자, 특수문자가 포함되어야 합니다.",
     ),
 });
+
 function IndexPage() {
+  // 팝업상태관리
   const [isPopup, setIsPopup] = useState(false);
+  const navigate = useNavigate();
+  const { handleClickLogin } = useContext(LoginContext);
+
+  // 리엑트훅폼 설정
   const {
     register,
     handleSubmit,
@@ -42,17 +51,31 @@ function IndexPage() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = data => {
-    console.log("data", data);
+  // api 요청
+  const onSubmit = async data => {
+    console.log("onSubmit 호출됨");
+    // 목데이터 API 호출
+    // const result = await axios.post("http://주소:5000/user", data);
+
+    // 나중에 아래 주석풀기
+    // const result = await postLoginMember(data);
+    // 서버에서 받아온 데이터 확인
+    console.log("받아온 데이터:", result.data);
     try {
-      console.log("잘되는중");
-      alert("로그인에 실패했습니다. 다시 시도해주세요.");
+      if (result.data) {
+        console.log("로그인 성공");
+        handleClickLogin(true);
+        navigate("/");
+      } else {
+        alert("로그인에 실패했습니다. 다시 시도해주세요.");
+      }
     } catch (error) {
       console.log(error);
       alert("서버 오류가 발생했습니다.");
     }
   };
 
+  // 팝업
   const handleClickPopup = () => {
     setIsPopup(true);
     console.log(isPopup);
@@ -83,7 +106,7 @@ function IndexPage() {
             <CustomInput
               label={"Password"}
               type={"password"}
-              name={"pw"}
+              name={"upw"}
               register={register}
               errors={errors}
               initmessage={

@@ -72,7 +72,7 @@ const OfferItemA = styled.a`
 const OfferItem = ({ setSelectedItem }) => {
   const [btnClick, setBtnClick] = useState(false);
 
-  const handleClick = () => {
+  const handleClickLogin = () => {
     setBtnClick(prev => !prev);
     if (btnClick) {
       setSelectedItem({});
@@ -102,6 +102,7 @@ const OfferItem = ({ setSelectedItem }) => {
       <button
         type="button"
         className="btn-box"
+
         onClick={() => handleClick()}
         style={{
           backgroundColor: btnClick ? "#5469d4" : "#f5f4f4",

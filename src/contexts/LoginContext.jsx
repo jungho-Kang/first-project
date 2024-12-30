@@ -6,7 +6,7 @@ export const LoginContext = createContext();
 export const LoginProvider = ({ children }) => {
   const [isLogin, setIsLogin] = useState(false);
 
-  const handleClick = () => {
+  const handleClickLogin = () => {
     setIsLogin(!isLogin);
     sessionStorage.setItem(LOGIN_SESSION_KEY, JSON.stringify(!isLogin));
   };
@@ -21,7 +21,7 @@ export const LoginProvider = ({ children }) => {
   }, []);
 
   return (
-    <LoginContext.Provider value={{ isLogin, handleClick }}>
+    <LoginContext.Provider value={{ isLogin, handleClickLogin }}>
       {children}
     </LoginContext.Provider>
   );

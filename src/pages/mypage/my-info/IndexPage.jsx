@@ -23,7 +23,7 @@ function IndexPage() {
             <BtnAreaDiv>
               <BasicBtn
                 btnname={"비밀번호 변경"}
-                Bg={"#232a4f"}
+                style={{ backgroundColor: "232a4f" }}
                 onClick={() => {
                   navigate("/myinfo/updatepw");
                 }}
