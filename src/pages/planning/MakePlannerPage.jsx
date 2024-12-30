@@ -5,6 +5,7 @@ import { LayoutDiv } from "./plan";
 
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import Logo from "../../components/Logo";
+import AddPlace from "../../components/plantabs/AddPlace";
 import PlanTop from "../../components/plantabs/PlanTop";
 import RecommendItem from "../../components/plantabs/RecommendItem";
 import TravelMap from "../../components/plantabs/TravelMap";
@@ -115,57 +116,81 @@ function MakePlannerPage() {
   const [isSlide, setIsSlide] = useState(false);
   const [activeTab, setActiveTab] = useState("추천항목");
 
+  // 12-17 : 검색 관련 키워드 입력 및 출력 목록
+  const [mapResultList, setMapResultList] = useState([]);
+  const [searchWord, setSearchWord] = useState("이태원 맛집");
+
+  // 팝업창 띄우기 버튼
+  const [isClick, setIsClick] = useState(false);
+
   const handleTabClick = tab => {
     setActiveTab(tab);
   };
 
   return (
-    <LayoutDiv>
-      <MenuLayoutDiv>
-        <MenuDiv>
-          <Link to={"/"}>
-            <Logo />
-          </Link>
-          <BtnSortDiv>
-            <EventBtn>공유하기</EventBtn>
-            <EventBtn>저장</EventBtn>
-          </BtnSortDiv>
-        </MenuDiv>
-        <AddScheduleDiv isSlide={isSlide}>
-          <div className="inner">
-            <PlanTop />
-            <div>
-              <PlanTabsUl>
-                <li
-                  className={activeTab === "추천항목" ? "active" : ""}
-                  onClick={() => handleTabClick("추천항목")}
-                >
-                  추천항목
-                </li>
-                <li
-                  className={activeTab === "일정등록" ? "active" : ""}
-                  onClick={() => handleTabClick("일정등록")}
-                >
-                  일정등록
-                </li>
-                <TabUnderline activeTab={activeTab} />
-              </PlanTabsUl>
+    <div style={{ position: "relative", width: "100%", height: "100vh" }}>
+      <LayoutDiv>
+        <MenuLayoutDiv>
+          <MenuDiv>
+            <Link to={"/"}>
+              <Logo />
+            </Link>
+            <BtnSortDiv>
+              <EventBtn>공유하기</EventBtn>
+              <EventBtn>저장</EventBtn>
+            </BtnSortDiv>
+          </MenuDiv>
+          <AddScheduleDiv isSlide={isSlide}>
+            <div className="inner">
+              <PlanTop />
+              <div>
+                <PlanTabsUl>
+                  <li
+                    className={activeTab === "추천항목" ? "active" : ""}
+                    onClick={() => handleTabClick("추천항목")}
+                  >
+                    추천항목
+                  </li>
+                  <li
+                    className={activeTab === "직접추가" ? "active" : ""}
+                    onClick={() => handleTabClick("직접추가")}
+                  >
+                    직접추가
+                  </li>
+                  <TabUnderline activeTab={activeTab} />
+                </PlanTabsUl>
+              </div>
+              {activeTab === "추천항목" ? (
+                <RecommendItem />
+              ) : (
+                <AddPlace
+                  // 팝업창 띄우기
+                  setIsClick={setIsClick}
+                  setSearchWord={setSearchWord}
+                  // 지도 목록 리스트
+                  mapResultList={mapResultList}
+                />
+              )}
             </div>
-            {activeTab === "추천항목" ? <RecommendItem /> : <SchedulePush />}
-          </div>
-          <button
-            className="slide-btn"
-            onClick={() => {
-              setIsSlide(prev => !prev);
-            }}
-          >
-            {isSlide ? <FaChevronRight /> : <FaChevronLeft />}
-          </button>
-        </AddScheduleDiv>
-      </MenuLayoutDiv>
-      {/* 맵 API 컴포넌트 */}
-      <TravelMap />
-    </LayoutDiv>
+            <button
+              className="slide-btn"
+              onClick={() => {
+                setIsSlide(prev => !prev);
+              }}
+            >
+              {isSlide ? <FaChevronRight /> : <FaChevronLeft />}
+            </button>
+          </AddScheduleDiv>
+        </MenuLayoutDiv>
+        {/* 맵 API 컴포넌트 */}
+        <TravelMap
+          // 지도 목록 갱신
+          setMapResultList={setMapResultList}
+          searchWord={searchWord}
+        />
+      </LayoutDiv>
+      {isClick ? <SchedulePush /> : <></>}
+    </div>
   );
 }
 export default MakePlannerPage;

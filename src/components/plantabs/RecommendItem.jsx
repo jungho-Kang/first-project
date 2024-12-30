@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import OfferItem from "./OfferItem";
+import { useState } from "react";
 
 const OfferFilterListUl = styled.div`
   margin: 15px 10px;
@@ -12,11 +13,7 @@ const OfferFilterListUl = styled.div`
     background-color: #00b3b3;
     color: #fff;
     font-size: 14px;
-    opacity: 0.5;
     cursor: pointer;
-  }
-  li.active {
-    opacity: 1;
   }
 `;
 
@@ -28,12 +25,28 @@ const OfferListDiv = styled.div`
 `;
 
 const RecommendItem = () => {
+  const [selectedCate, setSelectedCate] = useState("명소");
   return (
     <>
       <OfferFilterListUl>
-        <li className="active">명소</li>
-        <li>음식점</li>
-        <li>숙소</li>
+        <li
+          onClick={() => setSelectedCate("명소")}
+          style={{ opacity: selectedCate === "명소" ? 1 : 0.5 }}
+        >
+          명소
+        </li>
+        <li
+          onClick={() => setSelectedCate("음식점")}
+          style={{ opacity: selectedCate === "음식점" ? 1 : 0.5 }}
+        >
+          음식점
+        </li>
+        <li
+          onClick={() => setSelectedCate("숙소")}
+          style={{ opacity: selectedCate === "숙소" ? 1 : 0.5 }}
+        >
+          숙소
+        </li>
       </OfferFilterListUl>
       <OfferListDiv>
         <OfferItem />
