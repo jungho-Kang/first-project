@@ -143,7 +143,14 @@ function MakePlannerPage() {
   };
 
   return (
-    <div style={{ position: "relative", width: "100%", height: "100vh" }}>
+    <div
+      style={{
+        position: "relative",
+        width: "100%",
+        height: "100vh",
+        marginTop: "-68px",
+      }}
+    >
       <LayoutDiv>
         <MenuLayoutDiv>
           <MenuDiv>

@@ -74,7 +74,7 @@ function SignupPage() {
     console.log("보내는데이터", submitData);
     try {
       // const result = await postLoginMember(data);
-      const res = await axios.post("/api/user/signup", submitData);
+      const res = await axios.post("/api/user/sign-up", submitData);
       console.log("회원가입 성공시 받아온 데이터 : ", res.data);
       if (res.data.resultData) {
         alert("회원가입이 완료되었습니다.");

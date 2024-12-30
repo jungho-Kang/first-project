@@ -70,7 +70,7 @@ function IndexPage() {
     try {
       // 데이터 연동 로딩 중임을 표현
       setLoading(true);
-      const response = await axios.post("/api/user/signin", _formData);
+      const response = await axios.post("/api/user/sign-in", _formData);
       console.log("로그인 성공시 받아온 데이터:", response.data);
       const { upw, message, ...userData } = response.data.resultData;
       // 받아온 데이터
