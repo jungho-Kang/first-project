@@ -5,12 +5,18 @@ export const HeaderDiv = styled.header`
   height: 68px;
   background-color: #fff;
   color: #333;
-  border-bottom: 1px solid #eee;
-  background-color: rgba(255, 255, 255, 0.7);
-  /* position: fixed;
+  /* border-bottom: 1px solid #eee; */
+  transition: all 0.3s;
+  background-color: rgba(255, 255, 255, 0.97);
+  box-shadow: ${props =>
+    props.isScrolled
+      ? "rgba(0, 0, 0, 0.04) 0px 6px 18px 0px, rgba(0, 0, 0, 0.03) 0px 0px 0px 1px"
+      : "none"};
+  z-index: 99;
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%; */
+  width: 100%;
 
   .left {
     display: flex;
@@ -26,6 +32,7 @@ export const HeaderDiv = styled.header`
 export const HeaderWrapDiv = styled(WrapDiv)`
   display: flex;
   justify-content: space-between;
+  background-color: transparent;
 `;
 
 export const GnbUl = styled.ul`
@@ -35,16 +42,20 @@ export const GnbUl = styled.ul`
   gap: 15px;
   li {
     text-align: center;
+    &:nth-of-type(1) a {
+      letter-spacing: -0.01em;
+    }
     > a {
       display: block;
       padding: 0 10px;
-      min-width: 100px;
-      font-weight: 400;
+      min-width: 90px;
+      font-weight: 600;
       transition: all 0.3s;
+      color: #333;
+      letter-spacing: 0.05em;
     }
     > a:hover {
       color: #17a1fa;
-      font-weight: 500;
     }
   }
 `;

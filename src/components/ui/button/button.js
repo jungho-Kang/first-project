@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-const BtnBasic = styled.button`
+export const BtnBasic = styled.button`
   font-size: 16px;
   font-weight: 600;
   width: 100%;
@@ -16,16 +16,3 @@ const BtnBasic = styled.button`
     opacity: 0.8;
   }
 `;
-const BasicBtn = ({ btnname, onClick, type, style }) => {
-  return (
-    <BtnBasic
-      onClick={onClick}
-      type={type}
-      style={style}
-      // style={{ backgroundColor: Bg, color: color, marginTop: mt }}
-    >
-      {btnname}
-    </BtnBasic>
-  );
-};
-export default BasicBtn;

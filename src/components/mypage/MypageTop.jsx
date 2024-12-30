@@ -1,50 +1,18 @@
-import styled from "@emotion/styled";
-const MypageTop = () => {
-  const MyPageTopDiv = styled.div`
-    width: 100%;
-    .top {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 280px;
-      background-color: #1270b0;
-      h2 {
-        font-size: 38px;
-        font-weight: 500;
-        color: #fff;
-        text-shadow: 1px 2px 2px rgba(0, 0, 0, 0.4);
-      }
-    }
+import { useContext } from "react";
+import { LoginContext } from "../../contexts/LoginContext";
+// styled
+import { MyPageTopDiv } from "./mypage";
 
-    .user-photo {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      gap: 6px;
-      .photo {
-        width: 80px;
-        height: 80px;
-        border-radius: 100%;
-        border: 3px solid #fff;
-        margin-top: -40px;
-        background-color: #1270b0;
-      }
-      p {
-        font-size: 20px;
-        text-align: center;
-        font-weight: 600;
-      }
-    }
-  `;
+const MypageTop = () => {
+  const { user } = useContext(LoginContext);
   return (
     <MyPageTopDiv>
       <div className="top">
-        <h2 className="tit">회원정보</h2>
+        <h2 className="tit">My Page</h2>
       </div>
       <div className="user-photo">
         <div className="photo"></div>
-        <p className="nick">User52</p>
+        <p className="nick">{user.nickName}</p>
       </div>
     </MyPageTopDiv>
   );

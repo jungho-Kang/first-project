@@ -1,23 +1,27 @@
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { LoginContext } from "../../contexts/LoginContext";
+import axios from "axios";
+// comp
+import ConfirmPopup from "../../components/popup/ConfirmPopup";
+import BasicBtn from "../../components/ui/button/BasicBtn";
+import LayerLogo from "../../components/ui/logo/LayerLogo";
+// styled
 import {
+  ErrorP,
   FindPwDiv,
+  InitMessageP,
   JoinDiv,
   LayerDiv,
   LoginDiv,
+  TextForm,
 } from "../../components/common";
-import BasicBtn from "../../components/button/BasicBtn";
-import CustomInput from "../../components/input/CustomInput";
-import { Link, useNavigate } from "react-router-dom";
-
-import * as yup from "yup";
+// yup
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-
-import LayerLogo from "../../components/layer/LayerLogo";
-import ConfirmPopup from "../../components/ConfirmPopup";
-import { useContext, useState } from "react";
-import { LoginContext } from "../../contexts/LoginContext";
-import axios from "axios";
-// import { postLoginMember } from "../../../apis/auth";
+import * as yup from "yup";
+// import { useAxios } from "../../hooks/Axios";
+// import { postLoginMember } from "../../../fetch/auth";
 
 const schema = yup.object({
   email: yup
@@ -36,10 +40,14 @@ const schema = yup.object({
 });
 
 function IndexPage() {
+  const [data, setData] = useState(null); // API 회신 데이터 저장
+  const [error, setError] = useState(null); // API 호출 오류 저장
+  const [loading, setLoading] = useState(false); // API 진행 상태 관리
+
   // 팝업상태관리
   const [isPopup, setIsPopup] = useState(false);
   const navigate = useNavigate();
-  const { handleClickLogin } = useContext(LoginContext);
+  const { handleClickLogin, setIsLogin } = useContext(LoginContext);
 
   // 리엑트훅폼 설정
   const {
@@ -49,30 +57,52 @@ function IndexPage() {
   } = useForm({
     mode: "onSubmit",
     resolver: yupResolver(schema),
+    defaultValues: {
+      email: "by5028@naver.com",
+      upw: "testtest1212!",
+    },
   });
 
-  // api 요청
-  const onSubmit = async data => {
-    console.log("onSubmit 호출됨");
-    // 목데이터 API 호출
-    // const result = await axios.post("http://주소:5000/user", data);
+  //  api 요청후 결과받기
+  // const { data, error, loading } = useAxios("/user/signin", null, "post");
 
-    // 나중에 아래 주석풀기
-    // const result = await postLoginMember(data);
-    // 서버에서 받아온 데이터 확인
-    console.log("받아온 데이터:", result.data);
+  const fetchApi = async _formData => {
     try {
-      if (result.data) {
-        console.log("로그인 성공");
-        handleClickLogin(true);
-        navigate("/");
+      // 데이터 연동 로딩 중임을 표현
+      setLoading(true);
+      const response = await axios.post("/api/user/signin", _formData);
+      console.log("로그인 성공시 받아온 데이터:", response.data);
+      const { upw, message, ...userData } = response.data.resultData;
+      // 받아온 데이터
+      //   {
+      //     "resultMessage": "회원정보 조회 수행을 완료하였습니다.",
+      //     "resultData": {
+      //         "userId": 0,
+      //         "upw": null,
+      //         "nickName": null,
+      //         "message": "이메일/비밀번호를 확인해 주세요."
+      //     }
+      // }
+
+      if (!response.data.resultData.nickName) {
+        alert(response.data.resultData.message);
+        navigate("/auth/signup");
       } else {
-        alert("로그인에 실패했습니다. 다시 시도해주세요.");
+        handleClickLogin(userData);
+        navigate("/");
       }
     } catch (error) {
       console.log(error);
-      alert("서버 오류가 발생했습니다.");
+      alert("로그인 중 오류가 발생했습니다. 다시 시도해주세요.");
+      setError(error);
     }
+    // 데이터 연동 완료를 표현
+    setLoading(false);
+  };
+
+  const onSubmit = async formData => {
+    console.log("onSubmit 호출됨", formData);
+    fetchApi(formData);
   };
 
   // 팝업
@@ -92,35 +122,47 @@ function IndexPage() {
             {/* 로고 */}
             <LayerLogo />
 
-            {/* input 태그 */}
             {/* email */}
-            <CustomInput
-              label={"Email"}
-              type={"email"}
-              name={"email"}
-              register={register}
-              errors={errors}
-              initmessage={"이메일 주소에 '@'가 포함하여 입력해주세요."}
-            ></CustomInput>
+            <TextForm>
+              <label htmlFor="">
+                <p>Email</p>
+                <input type="email" name={"email"} {...register("email")} />
+                {errors?.email ? (
+                  <ErrorP>{errors.email?.message}</ErrorP>
+                ) : (
+                  <InitMessageP>
+                    이메일 주소에 @가 포함하여 입력해주세요.
+                  </InitMessageP>
+                )}
+              </label>
+            </TextForm>
+
             {/* 비밀번호 */}
-            <CustomInput
-              label={"Password"}
-              type={"password"}
-              name={"upw"}
-              register={register}
-              errors={errors}
-              initmessage={
-                "영문, 숫자, 특수문자가 포함한 비밀번호를 입력해주세요."
-              }
-            ></CustomInput>
+            <TextForm>
+              <label htmlFor="">
+                <p>비밀번호</p>
+                <input type="password" name="upw" {...register("upw")} />
+                {errors?.upw ? (
+                  <ErrorP>{errors.upw?.message}</ErrorP>
+                ) : (
+                  <InitMessageP>
+                    영문, 숫자, 특수문자가 포함한 비밀번호를 입력해주세요.
+                  </InitMessageP>
+                )}
+              </label>
+            </TextForm>
 
             {/* 비밀번호찾기 - 링크 */}
             <FindPwDiv>
               <Link to={"/auth/findpw"}>비밀번호 찾기</Link>
             </FindPwDiv>
 
-            {/* 로그인 버튼  홈화면 아니면 틀렸다는 창 띄우기*/}
-            <BasicBtn btnname={"로그인"} type={"submit"}></BasicBtn>
+            {/* 로그인 버튼  */}
+            <BasicBtn
+              btnname={"로그인"}
+              type={"submit"}
+              disabled={loading}
+            ></BasicBtn>
 
             {/* 회원가입 링크 */}
             <JoinDiv>

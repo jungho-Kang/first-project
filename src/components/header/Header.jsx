@@ -1,10 +1,7 @@
 import { useContext, useState } from "react";
-import { BsFillSuitcase2Fill } from "react-icons/bs";
-import { FaCircleUser, FaUser } from "react-icons/fa6";
-import { RiLogoutBoxRLine } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginContext } from "../../contexts/LoginContext";
-import Logo from "../Logo";
+// styled
 import {
   GnbUl,
   HeaderDiv,
@@ -12,16 +9,18 @@ import {
   LoginDiv,
   LoginOutDiv,
 } from "./headerStyle";
+import Logo from "../Logo";
+// icon
+import { BsFillSuitcase2Fill } from "react-icons/bs";
+import { FaUser, FaCircleUser } from "react-icons/fa6";
+import { RiLogoutBoxRLine } from "react-icons/ri";
 
-const Header = () => {
-  const { isLogin, handleClickLogin } = useContext(LoginContext);
+const Header = ({ isScrolled }) => {
+  const { isLogin, handleClickLogin, handleClickLogout } =
+    useContext(LoginContext);
   const [myMenuOpen, setMyMenuOpen] = useState(false);
   const navigate = useNavigate();
 
-  // 로그아웃
-  const handleLogOut = () => {
-    handleClickLogin(false);
-  };
   // 마이페이지 버튼 토글
   const handleMyMenuToggle = () => {
     setMyMenuOpen(!myMenuOpen);
@@ -34,8 +33,9 @@ const Header = () => {
     { path: "/planning", label: "일정만들기" },
     { path: "/board", label: "다녀ON" },
   ];
+
   return (
-    <HeaderDiv>
+    <HeaderDiv isScrolled={isScrolled}>
       <HeaderWrapDiv>
         <div className="left">
           <Link to={"/"}>
@@ -50,7 +50,7 @@ const Header = () => {
           </GnbUl>
         </div>
         <div className="right">
-          {isLogin ? (
+          {!isLogin ? (
             <LoginOutDiv>
               <Link to={"/auth/signup"} className="signup-btn">
                 회원가입
@@ -89,7 +89,7 @@ const Header = () => {
                   <li>
                     <button
                       onClick={() => {
-                        handleLogOut();
+                        handleClickLogout();
                       }}
                     >
                       <RiLogoutBoxRLine />

@@ -10,4 +10,5 @@ export const FooterWrap = styled(WrapDiv)`
   align-items: center;
   justify-content: center;
   gap: 10px;
+  background: #ddd;
 `;

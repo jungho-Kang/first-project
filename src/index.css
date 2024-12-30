@@ -8,6 +8,15 @@
   unicode-range: U+AC00-D7A3;
 }
 
+/* 로고 */
+@font-face {
+  font-family: "yg-jalnan";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* 영어 폰트 - Montserrat */
 /* font-family: "Montserrat", serif; */
 

@@ -1,148 +1,37 @@
-import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
+// comp
 import { WrapDiv } from "../components/common";
+// Swiper
 import { Swiper, SwiperSlide } from "swiper/react";
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 // import required modules
 import { Autoplay } from "swiper/modules";
+import {
+  LinkBoxDiv,
+  LinkContDiv,
+  MainWrapDiv,
+  ProvideDiv,
+  TextareaDiv,
+  VisualDiv,
+} from ".";
 
 function IndexPage() {
-  const MainWrapDiv = styled(WrapDiv)`
-    /* border: 1px solid #333; */
-    padding: 40px 0 120px;
-  `;
-
-  // 메인배너
-  const VisualDiv = styled.div`
-    background-color: #eee;
-    height: 600px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  `;
-  const TextareaDiv = styled.div`
-    h1 {
-      font-size: 46px;
-      margin-bottom: 20px;
-    }
-    p {
-      color: #777;
-    }
-  `;
-
-  // 메인컨텐츠1 - 추천여행지
-  const ProvideDiv = styled.div`
-    /* border: 1px solid red; */
-    padding: 80px 0;
-    /* 타이틀 */
-    .tit {
-      text-align: center;
-      h3 {
-        font-size: 32px;
-        font-weight: 600;
-        padding: 0.8em 0;
-      }
-      span {
-        color: #555;
-      }
-    }
-    /* 스와이퍼 */
-    .mySwiper {
-      padding: 60px 0;
-      .mcont {
-        height: 320px;
-        border: 1px solid #eee;
-        border-radius: 12px;
-      }
-    }
-
-    /* 버튼 */
-    .btn-area {
-      display: flex;
-      justify-content: center;
-      a {
-        padding: 15px 50px;
-        border-radius: 5px;
-        background-color: #333;
-        color: #fff;
-      }
-    }
-  `;
-
-  // 메인컨텐츠2 - 링크
-  const LinkContDiv = styled.div`
-    display: flex;
-    justify-content: space-between;
-    gap: 60px;
-    padding: 60px 0;
-    /* gap: 4.16vw; */
-    .tit {
-    }
-  `;
-  const LinkBoxDiv = styled.div`
-    border-radius: 12px;
-    border: 1px solid #bbb;
-    width: calc(100% / 3);
-    height: 17vw;
-    max-height: 270px;
-    overflow: hidden;
-    &:nth-child(1) {
-      background: url(/images/korail.png) no-repeat center center;
-      background-size: 50%;
-    }
-    &:nth-child(2) {
-      background: url(/images/) no-repeat center center;
-      background-size: 50%;
-    }
-    &:nth-child(3) {
-      background: url(/images/) no-repeat center center;
-      background-size: 50%;
-    }
-    > a {
-      display: block;
-      width: 100%;
-      height: 100%;
-      position: relative;
-      em {
-        background-color: #333;
-        color: #fff;
-        padding: 3px 5px 4px;
-        position: absolute;
-        top: 1vw;
-        right: 1vw;
-        border-radius: 4px;
-      }
-
-      .txt-box {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        padding: 2vw 1.5vw;
-        /* border: 1px solid #bbb; */
-
-        h4 {
-          font-size: 28px;
-          font-weight: 700;
-          margin-bottom: 8px;
-        }
-        p {
-          color: #555;
-        }
-      }
-    }
-  `;
-
   return (
     <>
       <VisualDiv>
-        <TextareaDiv>
-          <h1>다녀 ALL</h1>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-        </TextareaDiv>
+        <WrapDiv>
+          <TextareaDiv>
+            <h1>
+              다녀 <b>ALL</b>
+            </h1>
+            <p>
+              여행지 추천부터 일정 계획까지, 다녀ALL에서 완벽한 여행을
+              준비하세요.
+            </p>
+            <Link to={"/planning"}>일정계획 시작하기</Link>
+          </TextareaDiv>
+        </WrapDiv>
       </VisualDiv>
 
       <MainWrapDiv>
