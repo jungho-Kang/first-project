@@ -146,7 +146,7 @@ function IndexPage() {
       </VisualDiv>
 
       <MainWrapDiv>
-        {/* 메인 컨텐츠1 - 추천여행지 (여행로그) */}
+        {/* 메인 컨텐츠1 - 추천여행지 (다녀ON) */}
         <ProvideDiv>
           <div className="tit">
             <h3>오늘의 추천 여행지</h3>
@@ -178,7 +178,7 @@ function IndexPage() {
           </Swiper>
 
           <div className="btn-area">
-            <Link to={"/board"}>여행로그 바로가기</Link>
+            <Link to={"/board"}>다녀ON 바로가기</Link>
           </div>
         </ProvideDiv>
         {/* 메인 컨텐츠2 - 링크 버튼 */}

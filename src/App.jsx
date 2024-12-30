@@ -47,11 +47,11 @@ function App() {
             {/* 일정계획 */}
             <Route path="planning">
               <Route index element={<City />}></Route>
-              <Route path="schedule" element={<CalendarPicker />}></Route>
-              <Route path="makeplanner" element={<MakePlanner />}></Route>
+              <Route path="schedule/:id" element={<CalendarPicker />}></Route>
+              <Route path="makeplanner/:id" element={<MakePlanner />}></Route>
             </Route>
 
-            {/* 여행로그 게시판 : 리스트, 디테일페이지, 글쓰기/수정 */}
+            {/* 다녀ON 게시판 : 리스트, 디테일페이지, 글쓰기/수정 */}
             <Route path="board">
               <Route index element={<BoardIndex />} />
               <Route path="detail" element={<BoardDetail />} />

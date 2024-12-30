@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { WrapDiv } from "../common";
 import { PostCity } from "../../pages/planning/plan";
 import { SubTitleDiv } from "../../pages/travel-board/board";
+import { useLocation } from "react-router-dom";
 
 const PlanTitleDiv = styled.div`
   margin: 0 auto;
@@ -11,6 +12,20 @@ const PlanTitleDiv = styled.div`
   display: flex;
   justify-content: space-between;
   color: #009800;
+  align-items: center;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 20px;
+`;
+
+const CostSummaryDiv = styled.div`
+  margin: 0 auto;
+  background-color: #7f8edf;
+  max-width: 1200px;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  color: #fff;
   align-items: center;
   font-weight: 700;
   text-align: center;
@@ -33,18 +48,18 @@ const PlanContentDiv = styled.div`
 
 const ReviewDiv = styled.div`
   margin: 0 auto;
-  max-width: 860px;
+  max-width: 1200px;
   border: 1px solid #000;
   border-radius: 30px;
   padding: 30px;
   line-height: 1.5em;
   margin-top: 30px;
-  margin-bottom: 60px;
+  margin-bottom: 30px;
 `;
 
 const ReviewTitleDiv = styled(SubTitleDiv)`
   text-align: center;
-  margin-top: 30px;
+  margin-top: 100px;
 `;
 
 const TimeDiv = styled.div`
@@ -76,6 +91,8 @@ const SubLocationDiv = styled.div`
 `;
 
 const PlanListResult = () => {
+  const { pathname } = useLocation();
+
   return (
     <WrapDiv>
       <PlanTitleDiv>
@@ -168,9 +185,24 @@ const PlanListResult = () => {
         <SumPriceDiv>250,000</SumPriceDiv>
         <MemoDiv>6시 조식, 11시 체크아웃 핸드폰 충전하기...</MemoDiv>
       </PlanContentDiv>
+      <CostSummaryDiv>
+        <div
+          style={{ width: "10%", display: "flex", justifyContent: "center" }}
+        >
+          <PostCity style={{ backgroundColor: "#000" }}>전체</PostCity>
+        </div>
+        <div style={{ width: "20%" }}>1인당 비용</div>
+        <PriceDiv>250,000</PriceDiv>
+        <div style={{ width: "20%" }}>총 비용</div>
+        <SumPriceDiv>250,000</SumPriceDiv>
+      </CostSummaryDiv>
+
       <ReviewTitleDiv>여행 후기</ReviewTitleDiv>
-      <ReviewDiv>
-        {`[1일차] 서울 KTX >> 부산 남포동 포장마차 퇴근 후, 친구와 함께 서울역에서
+      {pathname === "/board/writepost" ? (
+        <></>
+      ) : (
+        <ReviewDiv>
+          {`[1일차] 서울 KTX >> 부산 남포동 포장마차 퇴근 후, 친구와 함께 서울역에서
         ktx를 타고 부산으로 이동했어요 숙소는 남포동에 위치한 GnB HOTEL로
         잡았어요. 도착시간이 늦어서 밤늦게 여자둘이 이동하기 어려워서 숙소
         근처에는 남포동 포장마차 가려고 숙소를 남포동을 잡았어요 ㅎㅎㅎㅎㅎㅎㅎ
@@ -199,7 +231,8 @@ const PlanListResult = () => {
         손칼국수만 먹었는데 대박 가격이 5000원! 진한 멸치육수의 맛에 칼국수가 진짜
         맛있었어요ㅎㅎㅎㅎㅎ 이렇게 배를 든든히 채우고.. 여행을 마무리하고 집으로
         돌아갔어요!`}
-      </ReviewDiv>
+        </ReviewDiv>
+      )}
     </WrapDiv>
   );
 };

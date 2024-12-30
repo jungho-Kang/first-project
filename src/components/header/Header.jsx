@@ -1,5 +1,10 @@
+import { useContext, useState } from "react";
+import { BsFillSuitcase2Fill } from "react-icons/bs";
+import { FaCircleUser, FaUser } from "react-icons/fa6";
+import { RiLogoutBoxRLine } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
-// import { WrapDiv } from "../common";
+import { LoginContext } from "../../contexts/LoginContext";
+import Logo from "../Logo";
 import {
   GnbUl,
   HeaderDiv,
@@ -7,12 +12,6 @@ import {
   LoginDiv,
   LoginOutDiv,
 } from "./headerStyle";
-import Logo from "../Logo";
-import { useContext, useState } from "react";
-import { LoginContext } from "../../contexts/LoginContext";
-import { BsFillSuitcase2Fill } from "react-icons/bs";
-import { FaUser, FaCircleUser } from "react-icons/fa6";
-import { RiLogoutBoxRLine } from "react-icons/ri";
 
 const Header = () => {
   const { isLogin, handleClickLogin } = useContext(LoginContext);
@@ -33,7 +32,7 @@ const Header = () => {
     { path: "/about", label: "다녀ALL" },
     { path: "/guide", label: "이용방법" },
     { path: "/planning", label: "일정만들기" },
-    { path: "/board", label: "여행로그" },
+    { path: "/board", label: "다녀ON" },
   ];
   return (
     <HeaderDiv>

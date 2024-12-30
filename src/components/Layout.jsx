@@ -11,14 +11,14 @@ const Layout = ({ children }) => {
       {pathname === "/auth" ||
       pathname === "/auth/findpw" ||
       pathname === "/auth/signup" ||
-      pathname === "/planning/makeplanner" ? null : (
+      pathname === "/planning/makeplanner/1" ? null : (
         <Header />
       )}
       <MainDiv>{children}</MainDiv>
       {pathname === "/auth" ||
       pathname === "/auth/findpw" ||
       pathname === "/auth/signup" ||
-      pathname === "/planning/makeplanner" ? null : (
+      pathname === "/planning/makeplanner/1" ? null : (
         <Footer />
       )}
     </div>

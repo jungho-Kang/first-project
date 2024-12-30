@@ -15,7 +15,7 @@ const Footer = () => {
         <Link to={"/planning"}> 일정계획 /</Link>
         <Link to={"/planning/makeplanner"}> 일정만들기 /</Link>
 
-        <Link to={"/board"}> 여행로그 /</Link>
+        <Link to={"/board"}> 다녀ON /</Link>
         <Link to={"/board/detail"}> 게시글상세보기 /</Link>
         <Link to={"/board/writepost"}> 글쓰기/수정 /</Link>
         <Link to={"/myplanlist"}> 내일정 /</Link>
