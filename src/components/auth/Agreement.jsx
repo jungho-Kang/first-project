@@ -1,21 +1,19 @@
 import { useEffect, useState } from "react";
-import { Controller } from "react-hook-form";
 // comp
 import LayerLogo from "../ui/logo/LayerLogo";
+import AgreementDetail from "./AgreementDetail";
 // styled
 import { AgreementDocumentDiv, SignupDiv } from "../../pages/auth/login";
 import { BtnBasic, CheckBoxDiv } from "../common";
 // icon
 import { FaCheck } from "react-icons/fa";
-import AgreementDetail from "./AgreementDetail";
 
-const Agreement = ({ setIsAgreementStep, control, setFormData, formData }) => {
+const Agreement = ({ setIsAgreementStep }) => {
   const [agreeChecked, setAgreeChecked] = useState({
     agree01: false,
     agree02: false,
     agree03: false,
   });
-
   const handleAllAgree = e => {
     const { checked } = e.target;
 
@@ -33,23 +31,19 @@ const Agreement = ({ setIsAgreementStep, control, setFormData, formData }) => {
       });
     }
   };
-
   const handleCheckboxChange = label => {
     setAgreeChecked(prev => ({
       ...prev,
       [label]: !prev[label],
     }));
   };
-
   const handleNext = () => {
     if (isAllChecked) {
       setIsAgreementStep(false);
-      setFormData({ ...formData, agreement: true });
     } else {
       alert("모든항목에 동의해주세요.");
     }
   };
-
   const [isAllChecked, setIsAllChecked] = useState(false);
   useEffect(() => {
     if (agreeChecked.agree01 && agreeChecked.agree02 && agreeChecked.agree03) {
@@ -135,29 +129,21 @@ const Agreement = ({ setIsAgreementStep, control, setFormData, formData }) => {
       {/* 전체동의 체크박스 */}
       <CheckBoxDiv>
         <label htmlFor="agree04">
-          <Controller
+          <input
+            id="agree04"
+            type="checkbox"
             name="agreement"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <input
-                id="agree04"
-                type="checkbox"
-                {...field}
-                checked={isAllChecked}
-                onChange={e => {
-                  field.onChange(e);
-                  handleAllAgree(e);
-                }}
-                style={{ marginTop: "20px" }}
-              />
-            )}
+            checked={isAllChecked}
+            onChange={e => {
+              handleAllAgree(e);
+            }}
+            style={{ marginTop: "20px" }}
           />
           <em>
             <FaCheck />
           </em>
           <span>
-            전체약관 동의를 모두 읽었으며, 위내용에 모두 동의합니다.{" "}
+            전체약관 동의를 모두 읽었으며, 위내용에 모두 동의합니다.
             <b>(필수)</b>
           </span>
         </label>

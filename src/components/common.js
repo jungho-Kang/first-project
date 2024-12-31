@@ -27,11 +27,11 @@ export const LoginDiv = styled.div`
   justify-content: center;
   align-items: center;
 
-  form {
+  /* form {
     display: block;
     max-width: 1024px;
     width: 100%;
-  }
+  } */
 `;
 export const LayerDiv = styled.div`
   max-width: 460px;

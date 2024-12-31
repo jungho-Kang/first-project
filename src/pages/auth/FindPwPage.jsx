@@ -31,7 +31,7 @@ function FindPwPage() {
               setPutPwEmail={setPutPwEmail}
             />
           ) : (
-            <ResetPw putPwEmail={putPwEmail} />
+            <ResetPw putPwEmail={putPwEmail} setPutPwEmail={setPutPwEmail} />
           )}
           {/* 로그인 링크 */}
           <JoinDiv>

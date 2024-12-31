@@ -3,7 +3,7 @@ import { BtnBasic, ErrorP, InitMessageP, TextForm } from "../common";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
@@ -25,9 +25,8 @@ const schema = yup.object({
     .oneOf([yup.ref("upw")], "비밀번호가 일치하지 않습니다."),
 });
 
-const ResetPw = ({ putPwEmail }) => {
-  console.log("리랜더링");
-
+const ResetPw = ({ putPwEmail, setPutPwEmail }) => {
+  const [pw, setPw] = useState("");
   // react-hook-form
   const {
     handleSubmit,
@@ -47,7 +46,7 @@ const ResetPw = ({ putPwEmail }) => {
     console.log("putPwEmail---!!", putPwEmail);
 
     try {
-      const res = await axios.patch("/api/user", { putPwEmail });
+      const res = await axios.patch("/api/user/upw", putPwEmail);
       console.log("서버 응답:", res);
 
       if (res.data) {
@@ -61,6 +60,9 @@ const ResetPw = ({ putPwEmail }) => {
     }
   };
 
+  useEffect(() => {
+    setPutPwEmail({ ...putPwEmail, upw: pw });
+  }, [pw]);
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <h3>비밀번호 재설정</h3>
@@ -70,7 +72,15 @@ const ResetPw = ({ putPwEmail }) => {
       <TextForm>
         <label htmlFor="">
           <p>비밀번호</p>
-          <input type="password" name="upw" {...register("upw")} />
+          <input
+            type="password"
+            name="upw"
+            {...register("upw")}
+            value={pw}
+            onChange={e => {
+              setPw(e.target.value);
+            }}
+          />
           {errors?.upw ? (
             <ErrorP>{errors.upw?.message}</ErrorP>
           ) : (

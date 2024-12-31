@@ -9,7 +9,7 @@ export const SignupDiv = styled.div`
   display: flex;
   gap: 15px;
   flex-direction: column;
-  padding: 60px 100px 100px;
+  padding: 60px 18% 100px;
   background-color: #fff;
   box-shadow:
     rgba(0, 0, 0, 0.19) 0px 10px 20px,

@@ -34,22 +34,6 @@ const FindPw = ({ setShowResetPw, setPutPwEmail, putPwEmail }) => {
     authCode: "",
   });
 
-  // 이메일 인증 요청 api 호출
-  const handleSendCode = async email => {
-    console.log("이메일 인증코드 요청", email);
-    try {
-      const res = await axios.post("/api/email-check", { email: email });
-      console.log(res.data);
-      setSendMessage("인증번호가 발송되었습니다.");
-      setPutData({ ...putData, email: email });
-      setPutPwEmail({ ...putPwEmail, email: email });
-      setCode(res.data);
-    } catch (error) {
-      console.log("인증코드 발송 실패", error);
-      alert("인증번호 발송에 실패했습니다. 다시 시도해주세요.");
-    }
-  };
-
   const {
     handleSubmit,
     register,
@@ -58,10 +42,27 @@ const FindPw = ({ setShowResetPw, setPutPwEmail, putPwEmail }) => {
     mode: "onChange",
     resolver: yupResolver(schema),
     defaultValues: {
-      email: "o52o.suhyun@gmail.com",
-      authCode: "1234",
+      email: "",
+      authCode: "",
     },
   });
+
+  // 이메일 인증 요청 api 호출
+  const handleSendCode = async email => {
+    console.log("이메일 인증코드 요청", email);
+    try {
+      const res = await axios.post("/api/email-check", { email: email });
+      // console.log(res.data);
+      setSendMessage("해당 이메일로 인증번호가 발송되었습니다.");
+      setPutData({ ...putData, email: email });
+      setPutPwEmail({ ...putPwEmail, email: email });
+      setCode(res.data);
+      console.log("PutData updated:", putData);
+    } catch (error) {
+      console.log("인증코드 발송 실패", error);
+      alert("인증번호 발송에 실패했습니다. 다시 시도해주세요.");
+    }
+  };
 
   // 이메일,코드 보내기
   const onSubmit = async data => {
@@ -82,6 +83,13 @@ const FindPw = ({ setShowResetPw, setPutPwEmail, putPwEmail }) => {
       alert("서버 오류가 발생했습니다.");
     }
   };
+
+  const handleEmailChange = e => {
+    // console.log(e.target.value);
+
+    setInputEmail(e.target.value);
+  };
+  // console.log(inputEmail);
 
   // 버튼 활성화
   const handleInputChange = e => {
@@ -104,7 +112,7 @@ const FindPw = ({ setShowResetPw, setPutPwEmail, putPwEmail }) => {
             id="email"
             {...register("email")}
             onChange={e => {
-              setInputEmail(e.target.value);
+              handleEmailChange(e);
             }}
             value={inputEmail}
           />
@@ -127,6 +135,7 @@ const FindPw = ({ setShowResetPw, setPutPwEmail, putPwEmail }) => {
             type="text"
             id="authcode"
             name="authCode"
+            {...register("authCode")}
             value={inputCode}
             onChange={e => {
               handleInputChange(e);
