@@ -75,7 +75,7 @@ const LinkbtnAreaDiv = styled.div`
   }
 `;
 
-const PlanTop = ({ resData }) => {
+const PlanTop = ({ resData, cityName }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("1일차");
 
@@ -98,7 +98,7 @@ const PlanTop = ({ resData }) => {
   return (
     <Wrapper>
       <div>
-        <h2>{resData.cityId === 1 ? "서울" : ""}</h2>
+        <h2>{cityName}</h2>
         <SelectedOption onClick={() => setIsOpen(prev => !prev)}>
           {selectedOption}
           <TiArrowSortedDown

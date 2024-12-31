@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { useEffect, useState, useCallback } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
+import FocusMap from "./FocusMap";
 
 const MapLayoutDiv = styled.div`
   width: 100%;
@@ -8,7 +9,7 @@ const MapLayoutDiv = styled.div`
   background-color: rebeccapurple;
 `;
 
-const TravelMap = ({ setMapResultList, searchWord }) => {
+const TravelMap = ({ setMapResultList, searchWord, itemLatLng, isClick }) => {
   const [isMapLoaded, setIsMapLoaded] = useState(false);
   const [map, setMap] = useState(null);
   const [markers, setMarkers] = useState([]);
@@ -80,30 +81,34 @@ const TravelMap = ({ setMapResultList, searchWord }) => {
 
   return (
     <MapLayoutDiv>
-      <Map
-        center={{
-          lat: 37.566826,
-          lng: 126.9786567,
-        }}
-        style={{
-          width: "100%",
-          height: "100%",
-        }}
-        level={3}
-        onCreate={setMap}
-      >
-        {markers.map(marker => (
-          <MapMarker
-            key={`${marker.content}-${marker.position.lat}-${marker.position.lng}`}
-            position={marker.position}
-            onClick={() => setSelectedMarker(marker)}
-          >
-            {selectedMarker?.content === marker.content && (
-              <div style={{ color: "#000" }}>{marker.content}</div>
-            )}
-          </MapMarker>
-        ))}
-      </Map>
+      {!isClick ? (
+        <Map
+          center={{
+            lat: 37.566826,
+            lng: 126.9786567,
+          }}
+          style={{
+            width: "100%",
+            height: "100%",
+          }}
+          level={3}
+          onCreate={setMap}
+        >
+          {markers.map(marker => (
+            <MapMarker
+              key={`${marker.content}-${marker.position.lat}-${marker.position.lng}`}
+              position={marker.position}
+              onClick={() => setSelectedMarker(marker)}
+            >
+              {selectedMarker?.content === marker.content && (
+                <div style={{ color: "#000" }}>{marker.content}</div>
+              )}
+            </MapMarker>
+          ))}
+        </Map>
+      ) : (
+        <FocusMap itemLatLng={itemLatLng} />
+      )}
     </MapLayoutDiv>
   );
 };

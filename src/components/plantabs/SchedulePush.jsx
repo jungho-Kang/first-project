@@ -13,9 +13,9 @@ const ContentDiv = styled.div`
   margin-top: 40px;
   z-index: 999;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: calc(50% - 34px);
+  right: 0;
+  transform: translateY(-50%);
   h2 {
     font-size: 24px;
     font-weight: 700;

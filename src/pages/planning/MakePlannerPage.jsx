@@ -4,12 +4,13 @@ import { Link, useParams } from "react-router-dom";
 import { LayoutDiv } from "./plan";
 
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+import PlanListInput from "../../components/list-result/PlanListInput";
 import Logo from "../../components/Logo";
 import AddPlace from "../../components/plantabs/AddPlace";
 import PlanTop from "../../components/plantabs/PlanTop";
 import RecommendItem from "../../components/plantabs/RecommendItem";
-import TravelMap from "../../components/plantabs/TravelMap";
 import SchedulePush from "../../components/plantabs/SchedulePush";
+import TravelMap from "../../components/plantabs/TravelMap";
 
 const PlanTabsUl = styled.ul`
   display: flex;
@@ -112,7 +113,7 @@ const AddScheduleDiv = styled.div`
   }
 `;
 
-function MakePlannerPage({ resData }) {
+function MakePlannerPage({ resData, cityName }) {
   const { id } = useParams();
   console.log(id);
   console.log(resData);
@@ -122,7 +123,7 @@ function MakePlannerPage({ resData }) {
 
   // 12-17 : 검색 관련 키워드 입력 및 출력 목록
   const [mapResultList, setMapResultList] = useState([]);
-  const [searchWord, setSearchWord] = useState("이태원 맛집");
+  const [searchWord, setSearchWord] = useState(`${cityName}역`);
 
   // 팝업창 띄우기 버튼
   const [isClick, setIsClick] = useState(false);
@@ -138,6 +139,12 @@ function MakePlannerPage({ resData }) {
 
   // 선택된 카테고리
   const [selectedCate, setSelectedCate] = useState("명소");
+
+  // 선택된 항목 위도 경도
+  const [itemLatLng, setItemLatLng] = useState({
+    lat: "",
+    lng: "",
+  });
 
   const handleTabClick = tab => {
     setActiveTab(tab);
@@ -194,7 +201,7 @@ function MakePlannerPage({ resData }) {
           </MenuDiv>
           <AddScheduleDiv isSlide={isSlide}>
             <div className="inner">
-              <PlanTop resData={resData} />
+              <PlanTop resData={resData} cityName={cityName} />
               <div>
                 <PlanTabsUl>
                   <li
@@ -227,6 +234,8 @@ function MakePlannerPage({ resData }) {
                   setSearchWord={setSearchWord}
                   // 지도 목록 리스트
                   mapResultList={mapResultList}
+                  // 위도, 경도
+                  setItemLatLng={setItemLatLng}
                 />
               )}
             </div>
@@ -240,12 +249,20 @@ function MakePlannerPage({ resData }) {
             </button>
           </AddScheduleDiv>
         </MenuLayoutDiv>
-        {/* 맵 API 컴포넌트 */}
-        <TravelMap
-          // 지도 목록 갱신
-          setMapResultList={setMapResultList}
-          searchWord={searchWord}
-        />
+        {/* 맵 API 컴포넌트, 일정 보여주기 컴포넌트 */}
+        {selectedBtn === "일정등록" ? (
+          <TravelMap
+            // 지도 목록 갱신
+            setMapResultList={setMapResultList}
+            searchWord={searchWord}
+            // 위도, 경도
+            itemLatLng={itemLatLng}
+            // 아이템이 선택됐는지 여부
+            isClick={isClick}
+          />
+        ) : (
+          <PlanListInput />
+        )}
       </LayoutDiv>
       {isClick ? (
         <SchedulePush

@@ -35,7 +35,7 @@ const NextBtn = styled.button`
   font-size: 14px;
 `;
 
-function CalendarPickerPage({ setResData }) {
+function CalendarPickerPage({ setResData, setParamPath }) {
   const { user } = useContext(LoginContext);
 
   console.log("유저 ID", user.userId);
@@ -60,17 +60,6 @@ function CalendarPickerPage({ setResData }) {
     setEndDate(end);
   };
 
-  useEffect(() => {
-    if (moment(startDate).isSame(endDate, "day")) {
-      setMaxDate(null);
-    } else {
-      setMaxDate(moment(startDate).add(4, "days").toDate());
-    }
-    if (endDate) {
-      setMaxDate(null);
-    }
-  }, [startDate, endDate]);
-
   const { handleSubmit } = useForm();
 
   const postPlan = async item => {
@@ -87,16 +76,6 @@ function CalendarPickerPage({ setResData }) {
     }
   };
 
-  useEffect(() => {
-    setFormData({
-      userId: user.userId,
-      cityId: 1,
-      startDate: moment(startDate).format("YYYY-MM-DD"),
-      endDate: moment(endDate).format("YYYY-MM-DD"),
-      peopleCnt: "3",
-    });
-  }, [endDate]);
-
   const handleSubmitDate = () => {
     console.log(formData);
     postPlan({ ...formData });
@@ -109,6 +88,32 @@ function CalendarPickerPage({ setResData }) {
       alert("여행기간을 선택해주세요.");
     }
   };
+
+  useEffect(() => {
+    setParamPath(id);
+  }, []);
+
+  useEffect(() => {
+    if (moment(startDate).isSame(endDate, "day")) {
+      setMaxDate(null);
+    } else {
+      setMaxDate(moment(startDate).add(4, "days").toDate());
+    }
+    if (endDate) {
+      setMaxDate(null);
+    }
+  }, [startDate, endDate]);
+
+  useEffect(() => {
+    setFormData({
+      userId: 1,
+      cityId: id,
+      startDate: moment(startDate).format("YYYY-MM-DD"),
+      endDate: moment(endDate).format("YYYY-MM-DD"),
+      peopleCnt: "3",
+    });
+    // console.log(user.userId, id);
+  }, [endDate]);
 
   return (
     <form onSubmit={handleSubmit(handleSubmitDate)}>

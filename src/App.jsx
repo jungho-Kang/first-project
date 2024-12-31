@@ -26,11 +26,13 @@ import { useState } from "react";
 
 function App() {
   const [resData, setResData] = useState({});
+  const [paramPath, setParamPath] = useState("");
+  const [cityName, setCityName] = useState("");
 
   return (
     <Router>
       <LoginProvider>
-        <Layout>
+        <Layout paramPath={paramPath}>
           <Routes>
             {/* 홈 */}
             <Route path="/" element={<Home />} />
@@ -48,14 +50,19 @@ function App() {
 
             {/* 일정계획 */}
             <Route path="planning">
-              <Route index element={<City />}></Route>
+              <Route index element={<City setCityName={setCityName} />}></Route>
               <Route
                 path="schedule/:id"
-                element={<CalendarPicker setResData={setResData} />}
+                element={
+                  <CalendarPicker
+                    setResData={setResData}
+                    setParamPath={setParamPath}
+                  />
+                }
               ></Route>
               <Route
                 path="makeplanner/:id"
-                element={<MakePlanner resData={resData} />}
+                element={<MakePlanner resData={resData} cityName={cityName} />}
               ></Route>
             </Route>
 
