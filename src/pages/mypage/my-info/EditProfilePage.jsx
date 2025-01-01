@@ -46,9 +46,10 @@ function EditProfilePage() {
   };
 
   const fetchApi = async data => {
-    // console.log("보낼 데이터", data);
+    data.userId = user.userId;
+    console.log("보낼 데이터", data);
     try {
-      const res = await axios.patch("/api/user", data);
+      const res = await axios.patch("/api/user/nickname", data);
       console.log("닉네임 수정 성공시 받은 데이터", res.data);
       alert(res.data.resultData.message);
       navigate("/myinfo");

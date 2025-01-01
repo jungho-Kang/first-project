@@ -5,6 +5,7 @@ import { WrapDiv } from "../components/common";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
+
 // import required modules
 import { Autoplay } from "swiper/modules";
 import {
@@ -15,6 +16,8 @@ import {
   TextareaDiv,
   VisualDiv,
 } from ".";
+// icon
+import { IoHeart } from "react-icons/io5";
 
 function IndexPage() {
   return (
@@ -55,15 +58,126 @@ function IndexPage() {
             spaceBetween={60}
             className="mySwiper"
           >
-            <SwiperSlide className="mcont">Slide 1</SwiperSlide>
-            <SwiperSlide className="mcont">Slide 2</SwiperSlide>
-            <SwiperSlide className="mcont">Slide 3</SwiperSlide>
-            <SwiperSlide className="mcont">Slide 4</SwiperSlide>
-            <SwiperSlide className="mcont">Slide 5</SwiperSlide>
-            <SwiperSlide className="mcont">Slide 6</SwiperSlide>
-            <SwiperSlide className="mcont">Slide 7</SwiperSlide>
-            <SwiperSlide className="mcont">Slide 8</SwiperSlide>
-            <SwiperSlide className="mcont">Slide 9</SwiperSlide>
+            <SwiperSlide className="mcont">
+              <div className="item">
+                <div className="thum"></div>
+                <div className="txt-box">
+                  <div>
+                    <em>부산</em>
+                    <h4>부산 맛집 투어</h4>
+                  </div>
+                  <div className="like">
+                    <IoHeart />
+                    <span>200</span>
+                  </div>
+                </div>
+              </div>
+            </SwiperSlide>
+            <SwiperSlide className="mcont">
+              <div className="item">
+                <div className="thum"></div>
+                <div className="txt-box">
+                  <div>
+                    <em>부산</em>
+                    <h4>부산 맛집 투어</h4>
+                  </div>
+                  <div className="like">
+                    <IoHeart />
+                    <span>200</span>
+                  </div>
+                </div>
+              </div>
+            </SwiperSlide>
+            <SwiperSlide className="mcont">
+              <div className="item">
+                <div className="thum"></div>
+                <div className="txt-box">
+                  <div>
+                    <em>부산</em>
+                    <h4>부산 맛집 투어</h4>
+                  </div>
+                  <div className="like">
+                    <IoHeart />
+                    <span>200</span>
+                  </div>
+                </div>
+              </div>
+            </SwiperSlide>
+            <SwiperSlide className="mcont">
+              <div className="item">
+                <div className="thum"></div>
+                <div className="txt-box">
+                  <div>
+                    <em>부산</em>
+                    <h4>부산 맛집 투어</h4>
+                  </div>
+                  <div className="like">
+                    <IoHeart />
+                    <span>200</span>
+                  </div>
+                </div>
+              </div>
+            </SwiperSlide>
+            <SwiperSlide className="mcont">
+              <div className="item">
+                <div className="thum"></div>
+                <div className="txt-box">
+                  <div>
+                    <em>부산</em>
+                    <h4>부산 맛집 투어</h4>
+                  </div>
+                  <div className="like">
+                    <IoHeart />
+                    <span>200</span>
+                  </div>
+                </div>
+              </div>
+            </SwiperSlide>
+            <SwiperSlide className="mcont">
+              <div className="item">
+                <div className="thum"></div>
+                <div className="txt-box">
+                  <div>
+                    <em>부산</em>
+                    <h4>부산 맛집 투어</h4>
+                  </div>
+                  <div className="like">
+                    <IoHeart />
+                    <span>200</span>
+                  </div>
+                </div>
+              </div>
+            </SwiperSlide>
+            <SwiperSlide className="mcont">
+              <div className="item">
+                <div className="thum"></div>
+                <div className="txt-box">
+                  <div>
+                    <em>부산</em>
+                    <h4>부산 맛집 투어</h4>
+                  </div>
+                  <div className="like">
+                    <IoHeart />
+                    <span>200</span>
+                  </div>
+                </div>
+              </div>
+            </SwiperSlide>
+            <SwiperSlide className="mcont">
+              <div className="item">
+                <div className="thum"></div>
+                <div className="txt-box">
+                  <div>
+                    <em>부산</em>
+                    <h4>부산 맛집 투어</h4>
+                  </div>
+                  <div className="like">
+                    <IoHeart />
+                    <span>200</span>
+                  </div>
+                </div>
+              </div>
+            </SwiperSlide>
           </Swiper>
 
           <div className="btn-area">

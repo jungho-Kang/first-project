@@ -114,13 +114,13 @@ export const TextForm = styled.div`
     outline: transparent;
   }
   /* 인증코드 */
-  .code {
+  .pw {
     position: relative;
     input {
       padding-right: 50px;
     }
 
-    .codecheck {
+    .pwcheck {
       border-radius: 5px;
       color: #ddd;
       height: 26px;
@@ -134,7 +134,7 @@ export const TextForm = styled.div`
 
 // CustomInputBtn
 export const InputBtnArea = styled.div`
-  padding: 8px 0;
+  padding: 6px 0;
   label {
     font-size: 15px;
     font-weight: 600;

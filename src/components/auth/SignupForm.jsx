@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 // styled
-import { SignupDiv } from "../../pages/auth/login";
+import { NameNickNameDiv, SignupDiv } from "../../pages/auth/login";
 import {
   BtnBasic,
   ErrorP,
@@ -20,18 +20,18 @@ import {
 } from "../common";
 // icon
 import { FaRegCircleCheck } from "react-icons/fa6";
+import CodeCheck from "./CodeCheck";
 
 const schema = yup.object({
+  name: yup
+    .string()
+    .required("이름은 필수입니다.")
+    .min(2, "이름은 최소 2자 이상이어야 합니다"),
   nickName: yup
     .string()
     .required("닉네임은 필수입니다.")
     .min(3, "닉네임은 최소 3자 이상이어야 합니다")
     .max(20, "닉네임은 최대 20자까지 입력할 수 있습니다"),
-  email: yup
-    .string()
-    .required("이메일은 필수입니다.")
-    .email("올바른 이메일 형식이 아닙니다."),
-  authCode: yup.string().required("인증번호를 입력해주세요."),
   upw: yup
     .string()
     .required("비밀번호는 필수입니다.")
@@ -48,21 +48,9 @@ const schema = yup.object({
 });
 
 const SignupForm = () => {
-  const initData = {
-    nickName: "",
-    email: "",
-    upw: "",
-  };
-  const [formData, setFormData] = useState(initData);
+  const [email, setEmail] = useState({ email: "" });
   const navigate = useNavigate();
 
-  const [code, setCode] = useState(""); // 서버에서 발송된 인증번호
-  const [inputCode, setInputCode] = useState(""); // 인증번호 입력 값
-
-  const [inputEmail, setInputEmail] = useState("");
-  const [sendMessage, setSendMessage] = useState(
-    "가입시 등록한 이메일 주소를 입력해주세요.",
-  );
   const [isCodeCorrect, setIsCodeCorrect] = useState(false); // 인증번호 일치 여부
 
   const {
@@ -81,31 +69,12 @@ const SignupForm = () => {
     resolver: yupResolver(schema),
   });
 
-  // 이메일 인증 요청 api 호출
-  const handleSendCode = async email => {
-    console.log("이메일 인증코드 요청", email);
-    try {
-      const res = await axios.post("/api/email-check", { email: email });
-      setSendMessage("해당 이메일로 인증번호가 발송되었습니다.");
-      console.log(res.data);
-      setCode(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // 인증버튼 체크확인
-  const handleInputChange = e => {
-    setInputCode(e.target.value);
-    setIsCodeCorrect(e.target.value === code);
-  };
-
   const onSubmit = async data => {
-    console.log(data);
-    const { pwconfirm, authCode, ...submitData } = data;
-    console.log("보내는데이터", submitData);
+    console.log("보내는데이터!!!", data);
+    const { pwconfirm, ...submitData } = data;
+    submitData.email = email.email;
+    console.log("보내는데이터--1", submitData);
     try {
-      // const result = await postLoginMember(data);
       const res = await axios.post("/api/user/sign-up", submitData);
       console.log("회원가입 성공시 받아온 데이터 : ", res.data);
       if (res.data.resultData) {
@@ -120,133 +89,48 @@ const SignupForm = () => {
     }
   };
 
-  const handleChangeFormData = e => {
-    const { name, value } = e.target;
-    setInputEmail(e.target.value);
-    setFormData({ ...formData, [name]: value });
-    console.log(formData);
-  };
-
+  console.log(email);
   return (
     <SignupDiv>
       <LayerLogo />
       <h2>회원가입</h2>
       <div className="form">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <InputBtnArea>
-            <label htmlFor="email">Email</label>
-            <div>
-              <input
-                name="email"
-                type="email"
-                id="email"
-                {...register("email")}
-                onChange={e => {
-                  handleChangeFormData(e);
-                }}
-              />
-
-              <button
-                type="button"
-                onClick={() => {
-                  handleSendCode(inputEmail);
-                }}
-              >
-                인증번호
-              </button>
-            </div>
-            {errors?.email ? (
-              <ErrorP>{errors.email?.message}</ErrorP>
-            ) : (
-              <InitMessageP>{sendMessage}</InitMessageP>
-            )}
-          </InputBtnArea>
-
-          <TextForm>
-            <label htmlFor="">
-              <p>인증번호</p>
-              <div className="code">
-                <input
-                  name={"authCode"}
-                  type="text"
-                  value={formData.authCode}
-                  {...register("authCode")}
-                  onChange={e => {
-                    handleInputChange(e);
-                  }}
-                />
-
-                <em
-                  className="codecheck"
-                  style={{ color: isCodeCorrect ? "#17A1FA" : "#ddd" }}
-                >
-                  <FaRegCircleCheck />
-                </em>
-              </div>
-              {errors?.authCode ? (
-                <ErrorP>{errors.authCode?.message}</ErrorP>
-              ) : (
-                <InitMessageP>이메일로 받은 인증번호를 입력하세요</InitMessageP>
-              )}
-            </label>
-          </TextForm>
-        </form>
+        <CodeCheck email={email} setEmail={setEmail} />
         {/* ----------------------------------------------------------- */}
-        <form>
-          {/* 닉네임 */}
-          <TextForm>
-            <label htmlFor="">
-              <p>Name</p>
-              <input
-                name="Name"
-                type="text"
-                {...register("username")}
-                // onChange={e => {
-                //   handleChangeFormData(e);
-                // }}
-              />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <NameNickNameDiv>
+            {/* 닉네임 */}
+            <TextForm>
+              <label htmlFor="">
+                <p>Name</p>
+                <input name="name" type="text" {...register("name")} />
 
-              {errors?.nickName ? (
-                <ErrorP>{errors.nickName?.message}</ErrorP>
-              ) : (
-                <InitMessageP>4자 이상 닉네임을 입력해주세요.</InitMessageP>
-              )}
-            </label>
-          </TextForm>
-          {/* 닉네임 */}
-          <TextForm>
-            <label htmlFor="">
-              <p>NickName</p>
-              <input
-                name="nickName"
-                type="text"
-                {...register("nickName")}
-                // onChange={e => {
-                //   handleChangeFormData(e);
-                // }}
-              />
+                {errors?.nickName ? (
+                  <ErrorP>{errors.nickName?.message}</ErrorP>
+                ) : (
+                  <InitMessageP>4자 이상 닉네임을 입력해주세요.</InitMessageP>
+                )}
+              </label>
+            </TextForm>
+            {/* 닉네임 */}
+            <TextForm>
+              <label htmlFor="">
+                <p>NickName</p>
+                <input name="nickName" type="text" {...register("nickName")} />
 
-              {errors?.nickName ? (
-                <ErrorP>{errors.nickName?.message}</ErrorP>
-              ) : (
-                <InitMessageP>4자 이상 닉네임을 입력해주세요.</InitMessageP>
-              )}
-            </label>
-          </TextForm>
-
+                {errors?.nickName ? (
+                  <ErrorP>{errors.nickName?.message}</ErrorP>
+                ) : (
+                  <InitMessageP>4자 이상 닉네임을 입력해주세요.</InitMessageP>
+                )}
+              </label>
+            </TextForm>
+          </NameNickNameDiv>
           {/* 비밀번호 */}
           <TextForm>
             <label htmlFor="">
               <p>비밀번호</p>
-              <input
-                name="upw"
-                type="password"
-                {...register("upw")}
-                // value={formData.upw}
-                // onChange={e => {
-                //   handleChangeFormData(e);
-                // }}
-              />
+              <input name="upw" type="password" {...register("upw")} />
 
               {errors?.upw ? (
                 <ErrorP>{errors.upw?.message}</ErrorP>
@@ -262,12 +146,19 @@ const SignupForm = () => {
           <TextForm>
             <label htmlFor="">
               <p>비밀번호 확인</p>
-              <input
-                name="pwconfirm"
-                type="password"
-                value={formData.pwconfirm}
-                // onChange={e => {}}
-              />
+              <div className="pw">
+                <input
+                  name="pwconfirm"
+                  type="password"
+                  {...register("pwconfirm")}
+                />
+                <em
+                  className="pwcheck"
+                  style={{ color: isCodeCorrect ? "#17A1FA" : "#ddd" }}
+                >
+                  <FaRegCircleCheck />
+                </em>
+              </div>
               {errors?.pwconfirm ? (
                 <ErrorP>{errors.pwconfirm?.message}</ErrorP>
               ) : (

@@ -84,3 +84,12 @@ export const AgreementDocumentDiv = styled.div`
     }
   }
 `;
+
+// 회원가입 - 네임 닉네임 박스
+export const NameNickNameDiv = styled.div`
+  display: flex;
+  gap: 10px;
+  > div {
+    width: 50%;
+  }
+`;

@@ -69,10 +69,44 @@ export const ProvideDiv = styled.div`
   /* 스와이퍼 */
   .mySwiper {
     padding: 60px 0;
+    height: 100%;
     .mcont {
-      height: 320px;
+      height: 280px;
       border: 1px solid #eee;
       border-radius: 12px;
+      overflow: hidden;
+
+      .item {
+        border: 1px solid #eee;
+        height: 100%;
+        .thum {
+          height: 220px;
+          overflow: hidden;
+          background: #eee;
+        }
+        .txt-box {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          div {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            em {
+              display: inline-block;
+              padding: 3px 6px;
+              border-radius: 4px;
+              background-color: #17a1fa;
+              color: #fff;
+              font-size: 14px;
+            }
+            h4 {
+              font-size: 20px;
+              font-weight: 600;
+            }
+          }
+        }
+      }
     }
   }
 
