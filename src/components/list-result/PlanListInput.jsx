@@ -4,12 +4,14 @@ import { PostCity } from "../../pages/planning/plan";
 
 const PlanTitleDiv = styled.div`
   margin: 0 auto;
-  background-color: #ffff80;
+  background-color: #1180ff50;
+  border-radius: 5px;
+  border: 2px solid #1180ff;
   max-width: 1024px;
   height: 60px;
   display: flex;
   justify-content: space-between;
-  color: #009800;
+  color: #003b63;
   align-items: center;
   font-weight: 700;
   text-align: center;
@@ -18,7 +20,8 @@ const PlanTitleDiv = styled.div`
 
 const CostSummaryDiv = styled.div`
   margin: 0 auto;
-  background-color: #7f8edf;
+  background-color: #1270b0;
+  border-radius: 5px;
   max-width: 1024px;
   height: 60px;
   display: flex;
@@ -33,8 +36,9 @@ const CostSummaryDiv = styled.div`
 const PlanContentDiv = styled.div`
   margin: 0 auto;
   padding: 15px 0;
-  margin-bottom: 30px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+  border: 1px solid rgba(0, 31, 209, 0.1);
+  border-radius: 5px;
   max-width: 1024px;
   display: flex;
   justify-content: space-between;
@@ -42,6 +46,10 @@ const PlanContentDiv = styled.div`
   font-size: 14px;
   text-align: center;
   font-weight: 700;
+  &:nth-of-type(2n) {
+    background-color: #1180ff14;
+    border: 1px solid transparent;
+  }
 `;
 const TimeDiv = styled.div`
   width: 20%;
@@ -75,11 +83,9 @@ const PlanListInput = () => {
   return (
     <WrapDiv
       style={{
-        margin: 0,
-        marginLeft: 600,
-        marginTop: 100,
+        margin: "100px 0 0 700px",
         width: 1024,
-        height: 800,
+        height: 850,
       }}
     >
       <h1 style={{ marginBottom: 30, fontSize: 30, fontWeight: 700 }}>1일차</h1>
@@ -95,7 +101,7 @@ const PlanListInput = () => {
         <SumPriceDiv>총금액</SumPriceDiv>
         <MemoDiv>메모</MemoDiv>
       </PlanTitleDiv>
-      <div style={{ overflowY: "scroll", height: 500 }}>
+      <div style={{ overflowY: "auto", height: 600 }}>
         <PlanContentDiv>
           <TimeDiv>09:00 - 10:00</TimeDiv>
           <PlanDiv>

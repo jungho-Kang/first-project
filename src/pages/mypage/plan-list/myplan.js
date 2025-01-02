@@ -41,7 +41,7 @@ export const MyplanlistDiv = styled.a`
       position: absolute;
       width: 100%;
       height: 100%;
-      opacity: 0.5;
+      opacity: 0.35;
       transition: all 0.3s ease;
     }
     .txt-box {
