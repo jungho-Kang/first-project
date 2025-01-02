@@ -2,7 +2,6 @@ import moment from "moment/moment";
 import { useContext, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 
-// import "react-datepicker/dist/react-datepicker.css";
 import styled from "@emotion/styled";
 import { TitleDiv } from "../../components/common";
 import { PickDateDiv } from "./plan";
@@ -35,7 +34,12 @@ const NextBtn = styled.button`
   font-size: 14px;
 `;
 
-function CalendarPickerPage({ setResData, setParamPath }) {
+function CalendarPickerPage({
+  setResData,
+  setParamPath,
+  resDetailData,
+  setResDetailData,
+}) {
   const { user } = useContext(LoginContext);
 
   console.log("유저 ID", user.userId);
@@ -48,10 +52,16 @@ function CalendarPickerPage({ setResData, setParamPath }) {
     endDate: "",
     peopleCnt: "",
   };
+  // 날짜 관련
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(null);
   const [maxDate, setMaxDate] = useState(null);
+
+  // 보낼 데이터
   const [formData, setFormData] = useState(initData);
+
+  // 인원수 state
+  const [count, setCount] = useState(0);
 
   const onChange = dates => {
     const [start, end] = dates;
@@ -65,10 +75,12 @@ function CalendarPickerPage({ setResData, setParamPath }) {
   const postPlan = async item => {
     try {
       const res = await axios.post(`${API_URL}/plan`, item);
-
-      // 얘를 state?에 담아서 사용하기 res.data.resultData
-      // console.log(res.data.resultData);
-      setResData(res.data.resultData);
+      setResData({ ...item, planDate: res.data.resultData.planDate });
+      console.log("planMasterID : ", res.data.resultData.planMasterId);
+      setResDetailData({
+        ...resDetailData,
+        planMasterId: res.data.resultData.planMasterId,
+      });
       setFormData(initData);
       navigate(`/planning/makeplanner/${id}`);
     } catch (error) {
@@ -78,7 +90,10 @@ function CalendarPickerPage({ setResData, setParamPath }) {
 
   const handleSubmitDate = () => {
     console.log(formData);
-    postPlan({ ...formData });
+    // console.log(formData.peopleCnt);
+    if (count > 0) {
+      postPlan({ ...formData });
+    }
     if (
       moment(endDate).format("YYYY-MM-DD") ===
       moment(startDate).format("YYYY-MM-DD")
@@ -86,6 +101,9 @@ function CalendarPickerPage({ setResData, setParamPath }) {
       alert("여행기간을 선택해주세요.");
     } else if (endDate === null) {
       alert("여행기간을 선택해주세요.");
+    }
+    if (count <= 0) {
+      alert("인원수를 입력해주세요.");
     }
   };
 
@@ -106,14 +124,14 @@ function CalendarPickerPage({ setResData, setParamPath }) {
 
   useEffect(() => {
     setFormData({
-      userId: 1,
+      // userId: user.userId,
+      userId: 58,
       cityId: id,
       startDate: moment(startDate).format("YYYY-MM-DD"),
       endDate: moment(endDate).format("YYYY-MM-DD"),
-      peopleCnt: "3",
+      peopleCnt: count,
     });
-    // console.log(user.userId, id);
-  }, [endDate]);
+  }, [endDate, count]);
 
   return (
     <form onSubmit={handleSubmit(handleSubmitDate)}>
@@ -131,6 +149,31 @@ function CalendarPickerPage({ setResData, setParamPath }) {
           inline
           showDisabledMonthNavigation
         />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+            marginTop: 30,
+            marginRight: 145,
+          }}
+        >
+          <span style={{ fontWeight: 700 }}>인원수 : </span>
+          <input
+            type="number"
+            min={0}
+            max={50}
+            value={count}
+            onChange={e => setCount(parseInt(e.target.value))}
+            style={{
+              width: 50,
+              height: 30,
+              paddingLeft: 10,
+              textAlign: "center",
+              marginLeft: 10,
+            }}
+          />
+        </div>
         <FlexBtnDiv>
           <NextBtn type="submit">다음</NextBtn>
         </FlexBtnDiv>

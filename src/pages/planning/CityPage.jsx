@@ -31,7 +31,7 @@ function CityPage({ setCityName }) {
       <TitleDiv>일정 계획</TitleDiv>
       <ImgUl>
         {cityData.map(item => {
-          const imgUrl = `http://192.168.0.144:5212/pic/city/${item.cityId}/${item.cityPic}`;
+          const imgUrl = `http://112.222.157.156:5212/pic/city/${item.cityId}/${item.cityPic}`;
           console.log(imgUrl);
           if (item.cityId <= 3) {
             return (
@@ -46,7 +46,7 @@ function CityPage({ setCityName }) {
                 <img
                   src={imgUrl}
                   style={{ width: "100%", height: "100%", borderRadius: 20 }}
-                  alt="안떠"
+                  alt="지역 이미지"
                 />
                 <div
                   style={{
@@ -66,7 +66,7 @@ function CityPage({ setCityName }) {
       </ImgUl>
       <ImgUl>
         {cityData.map(item => {
-          const imgUrl = `http://192.168.0.144:5212/pic/city/${item.cityId}/${item.cityPic}`;
+          const imgUrl = `http://112.222.157.156:5212/pic/city/${item.cityId}/${item.cityPic}`;
           if (item.cityId > 3) {
             return (
               <ImgLi
@@ -80,7 +80,7 @@ function CityPage({ setCityName }) {
                 <img
                   src={imgUrl}
                   style={{ width: "100%", height: "100%", borderRadius: 20 }}
-                  alt="안떠"
+                  alt="지역 이미지"
                 />
                 <div
                   style={{

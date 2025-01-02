@@ -113,17 +113,15 @@ const AddScheduleDiv = styled.div`
   }
 `;
 
-function MakePlannerPage({ resData, cityName }) {
+function MakePlannerPage({ resData, cityName, resDetailData }) {
   const { id } = useParams();
-  console.log(id);
-  console.log(resData);
 
   const [isSlide, setIsSlide] = useState(false);
   const [activeTab, setActiveTab] = useState("추천항목");
 
   // 12-17 : 검색 관련 키워드 입력 및 출력 목록
   const [mapResultList, setMapResultList] = useState([]);
-  const [searchWord, setSearchWord] = useState(`${cityName}역`);
+  const [searchWord, setSearchWord] = useState(`${cityName} 맛집`);
 
   // 팝업창 띄우기 버튼
   const [isClick, setIsClick] = useState(false);
@@ -138,13 +136,21 @@ function MakePlannerPage({ resData, cityName }) {
   });
 
   // 선택된 카테고리
-  const [selectedCate, setSelectedCate] = useState("명소");
+  const [selectedCate, setSelectedCate] = useState("place");
 
   // 선택된 항목 위도 경도
   const [itemLatLng, setItemLatLng] = useState({
     lat: "",
     lng: "",
   });
+
+  // 장소 리스트 가져오기
+  const [placeData, setPlaceData] = useState([]);
+  // 장소 btnClick 초기화
+  const [initData, setInitData] = useState([]);
+
+  // 선택된 일차
+  const [selectedOption, setSelectedOption] = useState("1일차");
 
   const handleTabClick = tab => {
     setActiveTab(tab);
@@ -201,7 +207,12 @@ function MakePlannerPage({ resData, cityName }) {
           </MenuDiv>
           <AddScheduleDiv isSlide={isSlide}>
             <div className="inner">
-              <PlanTop resData={resData} cityName={cityName} />
+              <PlanTop
+                resData={resData}
+                cityName={cityName}
+                selectedOption={selectedOption}
+                setSelectedOption={setSelectedOption}
+              />
               <div>
                 <PlanTabsUl>
                   <li
@@ -221,9 +232,16 @@ function MakePlannerPage({ resData, cityName }) {
               </div>
               {activeTab === "추천항목" ? (
                 <RecommendItem
+                  isClick={isClick}
+                  setIsClick={setIsClick}
                   selectedCate={selectedCate}
                   setSelectedCate={setSelectedCate}
                   setSelectedItem={setSelectedItem}
+                  cityId={id}
+                  setPlaceData={setPlaceData}
+                  setInitData={setInitData}
+                  placeData={placeData}
+                  setItemLatLng={setItemLatLng}
                 />
               ) : (
                 <AddPlace
@@ -266,11 +284,31 @@ function MakePlannerPage({ resData, cityName }) {
       </LayoutDiv>
       {isClick ? (
         <SchedulePush
+          resDetailData={resDetailData}
           selectedItem={selectedItem}
           setIsClick={setIsClick}
           selectedCate={selectedCate}
           setSelectedCate={setSelectedCate}
+          initData={initData}
+          setPlaceData={setPlaceData}
+          itemLatLng={itemLatLng}
+          selectedOption={selectedOption}
         />
+      ) : (
+        <></>
+      )}
+
+      {isClick ? (
+        <div
+          style={{
+            position: "absolute",
+            bottom: 20,
+            left: 500,
+            width: 50,
+            height: 650,
+            zIndex: 99,
+          }}
+        ></div>
       ) : (
         <></>
       )}

@@ -25,9 +25,12 @@ import { LoginProvider } from "./contexts/LoginContext";
 import { useState } from "react";
 
 function App() {
+  // 일정 등록(날짜, 도시정보 등등)
   const [resData, setResData] = useState({});
   const [paramPath, setParamPath] = useState("");
   const [cityName, setCityName] = useState("");
+  // 상세 일정 등록하기(위치, 주소, 금액 등등)
+  const [resDetailData, setResDetailData] = useState({});
 
   return (
     <Router>
@@ -57,12 +60,19 @@ function App() {
                   <CalendarPicker
                     setResData={setResData}
                     setParamPath={setParamPath}
+                    setResDetailData={setResDetailData}
                   />
                 }
               ></Route>
               <Route
                 path="makeplanner/:id"
-                element={<MakePlanner resData={resData} cityName={cityName} />}
+                element={
+                  <MakePlanner
+                    resData={resData}
+                    cityName={cityName}
+                    resDetailData={resDetailData}
+                  />
+                }
               ></Route>
             </Route>
 

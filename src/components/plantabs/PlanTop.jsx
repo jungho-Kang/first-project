@@ -75,15 +75,13 @@ const LinkbtnAreaDiv = styled.div`
   }
 `;
 
-const PlanTop = ({ resData, cityName }) => {
+const PlanTop = ({ resData, cityName, selectedOption, setSelectedOption }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("1일차");
 
   const [dayList, setDayList] = useState([]);
 
   const handleOptionClick = option => {
     setSelectedOption(option);
-    console.log(option);
     setIsOpen(false);
   };
 
@@ -92,8 +90,6 @@ const PlanTop = ({ resData, cityName }) => {
       Array.from({ length: resData.planDate + 1 }, (_, i) => `${i + 1}일차`),
     );
   }, []);
-
-  console.log(dayList);
 
   return (
     <Wrapper>
