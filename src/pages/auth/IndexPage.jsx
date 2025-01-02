@@ -86,7 +86,7 @@ function IndexPage() {
 
       if (!response.data.resultData.nickName) {
         alert(response.data.resultData.message);
-        navigate("/auth/signup");
+        navigate("/auth");
       } else {
         handleClickLogin(userData);
         navigate("/");

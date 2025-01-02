@@ -26,7 +26,7 @@ const schema = yup.object({
 });
 function EditProfilePage() {
   const navigate = useNavigate();
-  const { user } = useContext(LoginContext);
+  const { user, setUser } = useContext(LoginContext);
   const [editNickName, setEditNickName] = useState(user.nickName);
   const {
     register,
@@ -48,10 +48,12 @@ function EditProfilePage() {
   const fetchApi = async data => {
     data.userId = user.userId;
     console.log("보낼 데이터", data);
+    console.log("=====>", data.nickName);
     try {
       const res = await axios.patch("/api/user/nickname", data);
       console.log("닉네임 수정 성공시 받은 데이터", res.data);
-      alert(res.data.resultData.message);
+      setUser({ ...user, nickName: data.nickName });
+      alert(res.data.resultMessage);
       navigate("/myinfo");
     } catch (error) {
       console.log(error);

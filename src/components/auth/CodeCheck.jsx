@@ -20,7 +20,7 @@ const CodeCheck = ({ email, setEmail }) => {
   const [inputCode, setInputCode] = useState(""); // 인증번호 입력 값
   const [inputEmail, setInputEmail] = useState("");
   const [sendMessage, setSendMessage] = useState("이메일 주소를 입력해주세요."); // input 메세지 관리(이메일 버튼 인증)
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [putData, setPutData] = useState({
     email: "",
@@ -57,7 +57,7 @@ const CodeCheck = ({ email, setEmail }) => {
       console.log(res.data);
       setSendMessage("해당 이메일로 인증번호가 발송되었습니다.");
       setPutData({ ...putData, email: email });
-      setEmail(email);
+      setEmail({ email: email });
       setCode(res.data);
       console.log("PutData updated:", putData);
     } catch (error) {
@@ -77,7 +77,8 @@ const CodeCheck = ({ email, setEmail }) => {
         `/api/auth-check?email=${data.email}&authCode=${data.authCode}`,
       );
       if (res.data) {
-        console.log("비밀번호 수정");
+        console.log("코드 인증완료");
+        setEmail({ email: data.email });
       } else {
         alert("인증번호가 틀렸습니다. 다시 시도해주세요.");
       }

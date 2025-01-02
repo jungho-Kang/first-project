@@ -57,13 +57,15 @@ export const ProvideDiv = styled.div`
   /* 타이틀 */
   .tit {
     text-align: center;
+
     h3 {
       font-size: 32px;
-      font-weight: 600;
+      font-weight: 500;
       padding: 0.8em 0;
+      color: #fff;
     }
     span {
-      color: #555;
+      color: rgba(255, 255, 255, 0.8);
     }
   }
   /* 스와이퍼 */
@@ -71,42 +73,10 @@ export const ProvideDiv = styled.div`
     padding: 60px 0;
     height: 100%;
     .mcont {
-      height: 280px;
+      /* height: 280px; */
       border: 1px solid #eee;
       border-radius: 12px;
       overflow: hidden;
-
-      .item {
-        border: 1px solid #eee;
-        height: 100%;
-        .thum {
-          height: 220px;
-          overflow: hidden;
-          background: #eee;
-        }
-        .txt-box {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          div {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            em {
-              display: inline-block;
-              padding: 3px 6px;
-              border-radius: 4px;
-              background-color: #17a1fa;
-              color: #fff;
-              font-size: 14px;
-            }
-            h4 {
-              font-size: 20px;
-              font-weight: 600;
-            }
-          }
-        }
-      }
     }
   }
 
@@ -119,6 +89,73 @@ export const ProvideDiv = styled.div`
       border-radius: 5px;
       background-color: #333;
       color: #fff;
+    }
+  }
+`;
+export const SwiperItemDiv = styled.div`
+  border: 1px solid #eee;
+  /* height: 100%; */
+  position: relative;
+  .thum {
+    width: 100%;
+    z-index: 999;
+    height: 330px;
+    background: #000;
+    overflow: hidden;
+    background: #eee;
+  }
+  .txt-box {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    background: linear-gradient(to top, #1270b0, rgba(0, 0, 0, 0));
+    height: 85px;
+    padding: 0px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .top {
+      /* border: 1px solid; */
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      > div {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+
+        em {
+          display: inline-block;
+          padding: 3px 6px;
+          border-radius: 4px;
+          background-color: #17a1fa;
+          color: #fff;
+          font-size: 14px;
+        }
+        h4 {
+          font-size: 18px;
+          font-weight: 600;
+        }
+      }
+      .like {
+        color: red;
+        font-size: 16px;
+        span {
+          color: #555;
+          font-weight: 600;
+        }
+      }
+    }
+    .date {
+      /* border: 1px solid; */
+      width: 100%;
+      margin-top: 0.8em;
+      text-align: right;
+      color: rgba(0, 0, 0, 0.5);
+      font-size: 14px;
     }
   }
 `;

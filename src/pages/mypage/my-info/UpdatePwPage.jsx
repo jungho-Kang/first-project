@@ -58,8 +58,8 @@ function UpdatePwPage() {
 
     try {
       console.log(data);
-      const res = await axios.put("/api/user/password", data);
-      if (res.data) {
+      const res = await axios.patch("/api/user/password", data);
+      if (res.data.resultData) {
         console.log("비밀번호 수정 완료");
         navigate("/myinfo");
       } else {

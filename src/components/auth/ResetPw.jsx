@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 
 // yup
@@ -26,6 +27,7 @@ const schema = yup.object({
 });
 
 const ResetPw = ({ putPwEmail, setPutPwEmail }) => {
+  const navigate = useNavigate();
   const [pw, setPw] = useState("");
   // react-hook-form
   const {
@@ -51,6 +53,7 @@ const ResetPw = ({ putPwEmail, setPutPwEmail }) => {
 
       if (res.data) {
         console.log("비밀번호 수정");
+        navigate("/auth");
       } else {
         alert("인증번호가 틀렸습니다. 다시 시도해주세요.");
       }

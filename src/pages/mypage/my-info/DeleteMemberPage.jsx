@@ -34,7 +34,7 @@ const schema = yup.object({
 function DeleteMemberPage() {
   const [deletePw, setDeletePw] = useState("");
   const navigate = useNavigate();
-  const { user, setIsLogin, setUser } = useContext(LoginContext);
+  const { user, handleClickLogout } = useContext(LoginContext);
   const {
     register,
     handleSubmit,
@@ -47,13 +47,12 @@ function DeleteMemberPage() {
   const fetchApi = async data => {
     console.log("탈퇴를 위해 보내는 데이터", data);
     try {
-      const res = await axios.patch(
+      const res = await axios.delete(
         `/api/user?userId=${data.userId}&upw=${data.upw}`,
       );
       console.log(res.data);
-      setIsLogin(false);
-      setUser();
-      user;
+      // setIsLogin(false);
+      handleClickLogout();
       alert("탈퇴되었습니다.");
       navigate("/");
     } catch (error) {

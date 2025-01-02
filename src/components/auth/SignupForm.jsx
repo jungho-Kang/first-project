@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import axios from "axios";
@@ -68,18 +68,24 @@ const SignupForm = () => {
     mode: "onChange",
     resolver: yupResolver(schema),
   });
-
+  // email에 객체로 담겨있나요?
+  useEffect(() => {
+    console.log("email 객체인가", email);
+  }, [email]);
   const onSubmit = async data => {
     console.log("보내는데이터!!!", data);
     const { pwconfirm, ...submitData } = data;
+    console.log("email의 정체는:", typeof email);
     submitData.email = email.email;
+    console.log(submitData);
+
     console.log("보내는데이터--1", submitData);
     try {
       const res = await axios.post("/api/user/sign-up", submitData);
       console.log("회원가입 성공시 받아온 데이터 : ", res.data);
       if (res.data.resultData) {
         alert("회원가입이 완료되었습니다.");
-        navigate("/login");
+        navigate("/auth");
       } else {
         alert("회원가입을 다시 시도해주세요.");
       }
@@ -89,7 +95,7 @@ const SignupForm = () => {
     }
   };
 
-  console.log(email);
+  console.log("aaaaaaa", email);
   return (
     <SignupDiv>
       <LayerLogo />
@@ -99,16 +105,16 @@ const SignupForm = () => {
         {/* ----------------------------------------------------------- */}
         <form onSubmit={handleSubmit(onSubmit)}>
           <NameNickNameDiv>
-            {/* 닉네임 */}
+            {/* 이름 */}
             <TextForm>
               <label htmlFor="">
                 <p>Name</p>
                 <input name="name" type="text" {...register("name")} />
 
-                {errors?.nickName ? (
-                  <ErrorP>{errors.nickName?.message}</ErrorP>
+                {errors?.name ? (
+                  <ErrorP>{errors.name?.message}</ErrorP>
                 ) : (
-                  <InitMessageP>4자 이상 닉네임을 입력해주세요.</InitMessageP>
+                  <InitMessageP>이름을 입력해주세요.</InitMessageP>
                 )}
               </label>
             </TextForm>
@@ -121,7 +127,7 @@ const SignupForm = () => {
                 {errors?.nickName ? (
                   <ErrorP>{errors.nickName?.message}</ErrorP>
                 ) : (
-                  <InitMessageP>4자 이상 닉네임을 입력해주세요.</InitMessageP>
+                  <InitMessageP>3자 이상 닉네임을 입력해주세요.</InitMessageP>
                 )}
               </label>
             </TextForm>

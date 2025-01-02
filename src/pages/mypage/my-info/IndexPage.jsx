@@ -17,7 +17,7 @@ import {
 function IndexPage() {
   const navigate = useNavigate();
   const { user } = useContext(LoginContext);
-  console.log(user.nickName);
+  console.log(user);
   return (
     <div>
       <MypageTop />
@@ -34,7 +34,7 @@ function IndexPage() {
             {/* 프로필정보 */}
             <FormItemDiv>
               <p>Name</p>
-              <span>{user.userName}</span>
+              <span>{user.name}</span>
             </FormItemDiv>
             <FormItemDiv>
               <p>NickName</p>

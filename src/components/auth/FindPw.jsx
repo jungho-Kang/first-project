@@ -52,7 +52,7 @@ const FindPw = ({ setShowResetPw, setPutPwEmail, putPwEmail }) => {
     console.log("이메일 인증코드 요청", email);
     try {
       const res = await axios.post("/api/email-check", { email: email });
-      // console.log(res.data);
+      console.log(res.data);
       setSendMessage("해당 이메일로 인증번호가 발송되었습니다.");
       setPutData({ ...putData, email: email });
       setPutPwEmail({ ...putPwEmail, email: email });

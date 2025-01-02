@@ -17,9 +17,27 @@ import {
   VisualDiv,
 } from ".";
 // icon
-import { IoHeart } from "react-icons/io5";
+
+import SwiperItem from "../components/main/SwiperItem";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 function IndexPage() {
+  const [planList, setPlanList] = useState([]);
+  const fetchApi = async () => {
+    try {
+      const res = await axios.get(`/api/feed/main`);
+      console.log(res.data.resultData);
+      setPlanList(res.data.resultData);
+    } catch (error) {
+      console.log(error);
+      alert("서버 오류가 발생했습니다.");
+    }
+  };
+  useEffect(() => {
+    // console.log()
+    fetchApi();
+  }, []);
   return (
     <>
       <VisualDiv>
@@ -58,126 +76,17 @@ function IndexPage() {
             spaceBetween={60}
             className="mySwiper"
           >
-            <SwiperSlide className="mcont">
-              <div className="item">
-                <div className="thum"></div>
-                <div className="txt-box">
-                  <div>
-                    <em>부산</em>
-                    <h4>부산 맛집 투어</h4>
-                  </div>
-                  <div className="like">
-                    <IoHeart />
-                    <span>200</span>
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide className="mcont">
-              <div className="item">
-                <div className="thum"></div>
-                <div className="txt-box">
-                  <div>
-                    <em>부산</em>
-                    <h4>부산 맛집 투어</h4>
-                  </div>
-                  <div className="like">
-                    <IoHeart />
-                    <span>200</span>
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide className="mcont">
-              <div className="item">
-                <div className="thum"></div>
-                <div className="txt-box">
-                  <div>
-                    <em>부산</em>
-                    <h4>부산 맛집 투어</h4>
-                  </div>
-                  <div className="like">
-                    <IoHeart />
-                    <span>200</span>
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide className="mcont">
-              <div className="item">
-                <div className="thum"></div>
-                <div className="txt-box">
-                  <div>
-                    <em>부산</em>
-                    <h4>부산 맛집 투어</h4>
-                  </div>
-                  <div className="like">
-                    <IoHeart />
-                    <span>200</span>
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide className="mcont">
-              <div className="item">
-                <div className="thum"></div>
-                <div className="txt-box">
-                  <div>
-                    <em>부산</em>
-                    <h4>부산 맛집 투어</h4>
-                  </div>
-                  <div className="like">
-                    <IoHeart />
-                    <span>200</span>
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide className="mcont">
-              <div className="item">
-                <div className="thum"></div>
-                <div className="txt-box">
-                  <div>
-                    <em>부산</em>
-                    <h4>부산 맛집 투어</h4>
-                  </div>
-                  <div className="like">
-                    <IoHeart />
-                    <span>200</span>
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide className="mcont">
-              <div className="item">
-                <div className="thum"></div>
-                <div className="txt-box">
-                  <div>
-                    <em>부산</em>
-                    <h4>부산 맛집 투어</h4>
-                  </div>
-                  <div className="like">
-                    <IoHeart />
-                    <span>200</span>
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide className="mcont">
-              <div className="item">
-                <div className="thum"></div>
-                <div className="txt-box">
-                  <div>
-                    <em>부산</em>
-                    <h4>부산 맛집 투어</h4>
-                  </div>
-                  <div className="like">
-                    <IoHeart />
-                    <span>200</span>
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
+            {planList.map(item => {
+              return (
+                <SwiperSlide
+                  key={item.planMasterId}
+                  item={item}
+                  className="mcont"
+                >
+                  <SwiperItem item={item} />
+                </SwiperSlide>
+              );
+            })}
           </Swiper>
 
           <div className="btn-area">
@@ -187,7 +96,12 @@ function IndexPage() {
         {/* 메인 컨텐츠2 - 링크 버튼 */}
         <LinkContDiv>
           <LinkBoxDiv>
-            <Link to={"/"}>
+            <Link
+              to={"#"}
+              onClick={() => {
+                window.open("https://www.letskorail.com", "_blank");
+              }}
+            >
               <em>교통</em>
               <div className="txt-box">
                 <h4>코레일</h4>
@@ -197,7 +111,12 @@ function IndexPage() {
           </LinkBoxDiv>
 
           <LinkBoxDiv>
-            <Link to={"/"}>
+            <Link
+              to={"#"}
+              onClick={() => {
+                window.open("https://www.koreanair.com/?hl=ko", "_blank");
+              }}
+            >
               <em>교통</em>
               <div className="txt-box">
                 <h4>항공편</h4>
@@ -207,7 +126,12 @@ function IndexPage() {
           </LinkBoxDiv>
 
           <LinkBoxDiv>
-            <Link to={"/"}>
+            <Link
+              to={"#"}
+              onClick={() => {
+                window.open("https://www.airbnb.co.kr/", "_blank");
+              }}
+            >
               <em>숙소</em>
               <div className="txt-box">
                 <h4>숙소</h4>

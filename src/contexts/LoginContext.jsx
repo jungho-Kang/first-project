@@ -5,10 +5,10 @@ export const LoginContext = createContext();
 
 export const LoginProvider = ({ children }) => {
   const initUser = {
-    userId: "1",
-    nickName: "크롱52",
+    userId: "",
+    nickName: "s",
     email: "a@a.net",
-    userName: "오이",
+    name: "오이",
   };
 
   const [isLogin, setIsLogin] = useState(false);
