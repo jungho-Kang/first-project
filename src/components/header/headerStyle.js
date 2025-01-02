@@ -29,6 +29,7 @@ export const HeaderDiv = styled.header`
     /* position: relative; */
   }
 `;
+
 export const HeaderWrapDiv = styled(WrapDiv)`
   display: flex;
   justify-content: space-between;

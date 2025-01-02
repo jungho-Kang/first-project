@@ -34,7 +34,7 @@ const schema = yup.object({
 function DeleteMemberPage() {
   const [deletePw, setDeletePw] = useState("");
   const navigate = useNavigate();
-  const { user, setIsLogin, setUser } = useContext(LoginContext);
+  const { user, handleClickLogout } = useContext(LoginContext);
   const {
     register,
     handleSubmit,
@@ -43,19 +43,16 @@ function DeleteMemberPage() {
     mode: "onChange",
     resolver: yupResolver(schema),
   });
-  const handleChangePw = e => {
-    setDeletePw(e.target.value);
-    console.log(deletePw);
-  };
 
   const fetchApi = async data => {
     console.log("탈퇴를 위해 보내는 데이터", data);
     try {
-      const res = await axios.patch("/api/user", data);
+      const res = await axios.delete(
+        `/api/user?userId=${data.userId}&upw=${data.upw}`,
+      );
       console.log(res.data);
-      setIsLogin(false);
-      setUser();
-      user;
+      // setIsLogin(false);
+      handleClickLogout();
       alert("탈퇴되었습니다.");
       navigate("/");
     } catch (error) {
@@ -65,7 +62,7 @@ function DeleteMemberPage() {
   };
 
   const onSubmit = () => {
-    const payload = { email: user.email, upw: deletePw };
+    const payload = { userId: user.userId, upw: deletePw };
     console.log(payload);
     fetchApi(payload);
   };
@@ -96,9 +93,7 @@ function DeleteMemberPage() {
                   name="upw"
                   {...register("upw")}
                   value={deletePw.upw}
-                  onChange={e => {
-                    handleChangePw(e);
-                  }}
+                  onChange={e => setDeletePw(e.target.value)}
                 />
                 {errors?.upw ? (
                   <ErrorP>{errors.upw?.message}</ErrorP>

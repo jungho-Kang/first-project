@@ -1,51 +1,53 @@
-import axios from "axios";
 import { useState } from "react";
-// styled
-import {
-  BtnBasic,
-  ErrorP,
-  InitMessageP,
-  InputBtnArea,
-  TextForm,
-} from "../common";
-
-// import { postEmailCode } from "../../../fetch/auth";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { ErrorP, InitMessageP, InputBtnArea } from "../common";
+// yup
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 const schema = yup.object({
   email: yup
     .string()
-    .required("이메일을 입력해주세요.")
+    .required("이메일은 필수입니다.")
     .email("올바른 이메일 형식이 아닙니다."),
-
   authCode: yup.string().required("인증번호를 입력해주세요."),
 });
 
-const FindPw = ({ setShowResetPw, setPutPwEmail, putPwEmail }) => {
+const CodeCheck = ({ email, setEmail }) => {
   const [code, setCode] = useState(""); // 서버에서 발송된 인증번호
   const [inputCode, setInputCode] = useState(""); // 인증번호 입력 값
-  const [sendMessage, setSendMessage] = useState(
-    "가입시 등록한 이메일 주소를 입력해주세요.",
-  ); // input 메세지 관리(이메일 버튼 인증)
   const [inputEmail, setInputEmail] = useState("");
+  const [sendMessage, setSendMessage] = useState("이메일 주소를 입력해주세요."); // input 메세지 관리(이메일 버튼 인증)
+  // const navigate = useNavigate();
+
   const [putData, setPutData] = useState({
     email: "",
     authCode: "",
   });
 
+  // react-hook-form
   const {
-    handleSubmit,
     register,
+    handleSubmit,
     formState: { errors },
   } = useForm({
-    mode: "onChange",
-    resolver: yupResolver(schema),
-    defaultValues: {
+    defaultValue: {
       email: "",
       authCode: "",
     },
+    // 나중에 onSubmit으로 전체 바꾸기
+    mode: "onChange",
+    resolver: yupResolver(schema),
   });
+  // 상위페이지로 `이메일` 담아서 전달
+  const handleChangeFormData = e => {
+    const { name, value } = e.target;
+    setInputEmail(e.target.value);
+    setEmail({ ...email, [name]: value });
+    // console.log(formData);
+  };
 
   // 이메일 인증 요청 api 호출
   const handleSendCode = async email => {
@@ -55,7 +57,7 @@ const FindPw = ({ setShowResetPw, setPutPwEmail, putPwEmail }) => {
       console.log(res.data);
       setSendMessage("해당 이메일로 인증번호가 발송되었습니다.");
       setPutData({ ...putData, email: email });
-      setPutPwEmail({ ...putPwEmail, email: email });
+      setEmail({ email: email });
       setCode(res.data);
       console.log("PutData updated:", putData);
     } catch (error) {
@@ -64,17 +66,19 @@ const FindPw = ({ setShowResetPw, setPutPwEmail, putPwEmail }) => {
     }
   };
 
-  // 이메일,코드 보내기
+  //  이메일 인증코드 보내기
   const onSubmit = async data => {
-    console.log("제출된 데이터", data);
+    console.log("보내는데이터--->", data);
+    console.log("보내는데이터--->", putData);
+
     try {
       console.log(putData);
       const res = await axios.put(
-        `/api/auth-check?email=${putData.email}&authCode=${putData.authCode}`,
+        `/api/auth-check?email=${data.email}&authCode=${data.authCode}`,
       );
       if (res.data) {
-        console.log("비밀번호 수정");
-        setShowResetPw(true);
+        console.log("코드 인증완료");
+        setEmail({ email: data.email });
       } else {
         alert("인증번호가 틀렸습니다. 다시 시도해주세요.");
       }
@@ -84,13 +88,6 @@ const FindPw = ({ setShowResetPw, setPutPwEmail, putPwEmail }) => {
     }
   };
 
-  const handleEmailChange = e => {
-    // console.log(e.target.value);
-
-    setInputEmail(e.target.value);
-  };
-  // console.log(inputEmail);
-
   // 버튼 활성화
   const handleInputChange = e => {
     setInputCode(e.target.value);
@@ -99,25 +96,20 @@ const FindPw = ({ setShowResetPw, setPutPwEmail, putPwEmail }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h3>비밀번호 찾기</h3>
-      <span>가입시 등록한 이메일 주소로 인증번호를 발송해 드립니다.</span>
-
-      {/* 이메일 입력 */}
       <InputBtnArea>
         <label htmlFor="email">Email</label>
         <div>
           <input
-            type="email"
             name="email"
+            type="email"
             id="email"
             {...register("email")}
             onChange={e => {
-              handleEmailChange(e);
+              handleChangeFormData(e);
             }}
-            value={inputEmail}
           />
           <button type="button" onClick={() => handleSendCode(inputEmail)}>
-            인증코드
+            인증번호 발송
           </button>
         </div>
         {errors?.email ? (
@@ -126,43 +118,39 @@ const FindPw = ({ setShowResetPw, setPutPwEmail, putPwEmail }) => {
           <InitMessageP>{sendMessage}</InitMessageP>
         )}
       </InputBtnArea>
-
-      {/* 인증코드 입력 */}
-      <TextForm>
-        <label htmlFor="authcode">
-          <p>인증번호</p>
+      {/* 코드 인풋 */}
+      <InputBtnArea>
+        <label htmlFor="authcode">인증번호</label>
+        <div>
           <input
             type="text"
-            id="authcode"
-            name="authCode"
+            name={"authCode"}
+            id="authCode"
+            value={putData.authCode}
             {...register("authCode")}
-            value={inputCode}
             onChange={e => {
               handleInputChange(e);
             }}
           />
-
-          {errors?.authCode ? (
-            <ErrorP>{errors.authCode?.message}</ErrorP>
-          ) : (
-            <InitMessageP>인증번호를 입력해주세요.</InitMessageP>
-          )}
-        </label>
-      </TextForm>
-
-      {/* 확인버튼*/}
-      <BtnBasic
-        type="submit"
-        disabled={inputCode !== code}
-        style={{
-          marginTop: "20px",
-          backgroundColor: inputCode !== code ? "#d3d3d3" : "#5469D4",
-        }}
-      >
-        확인 인증
-      </BtnBasic>
+          {/* submit 버튼*/}
+          <button
+            type="submit"
+            disabled={inputCode !== code}
+            style={{
+              backgroundColor: inputCode !== code ? "#d3d3d3" : "#5469D4",
+            }}
+          >
+            인증번호 확인
+          </button>
+        </div>
+        {errors?.authCode ? (
+          <ErrorP>{errors.authCode?.message}</ErrorP>
+        ) : (
+          <InitMessageP>이메일로 받은 인증번호를 입력하세요</InitMessageP>
+        )}
+      </InputBtnArea>
     </form>
   );
 };
 
-export default FindPw;
+export default CodeCheck;

@@ -5,6 +5,7 @@ import { WrapDiv } from "../components/common";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
+
 // import required modules
 import { Autoplay } from "swiper/modules";
 import {
@@ -15,8 +16,28 @@ import {
   TextareaDiv,
   VisualDiv,
 } from ".";
+// icon
+
+import SwiperItem from "../components/main/SwiperItem";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 function IndexPage() {
+  const [planList, setPlanList] = useState([]);
+  const fetchApi = async () => {
+    try {
+      const res = await axios.get(`/api/feed/main`);
+      console.log(res.data.resultData);
+      setPlanList(res.data.resultData);
+    } catch (error) {
+      console.log(error);
+      alert("서버 오류가 발생했습니다.");
+    }
+  };
+  useEffect(() => {
+    // console.log()
+    fetchApi();
+  }, []);
   return (
     <>
       <VisualDiv>
@@ -55,15 +76,17 @@ function IndexPage() {
             spaceBetween={60}
             className="mySwiper"
           >
-            <SwiperSlide className="mcont">Slide 1</SwiperSlide>
-            <SwiperSlide className="mcont">Slide 2</SwiperSlide>
-            <SwiperSlide className="mcont">Slide 3</SwiperSlide>
-            <SwiperSlide className="mcont">Slide 4</SwiperSlide>
-            <SwiperSlide className="mcont">Slide 5</SwiperSlide>
-            <SwiperSlide className="mcont">Slide 6</SwiperSlide>
-            <SwiperSlide className="mcont">Slide 7</SwiperSlide>
-            <SwiperSlide className="mcont">Slide 8</SwiperSlide>
-            <SwiperSlide className="mcont">Slide 9</SwiperSlide>
+            {planList.map(item => {
+              return (
+                <SwiperSlide
+                  key={item.planMasterId}
+                  item={item}
+                  className="mcont"
+                >
+                  <SwiperItem item={item} />
+                </SwiperSlide>
+              );
+            })}
           </Swiper>
 
           <div className="btn-area">
@@ -73,7 +96,12 @@ function IndexPage() {
         {/* 메인 컨텐츠2 - 링크 버튼 */}
         <LinkContDiv>
           <LinkBoxDiv>
-            <Link to={"/"}>
+            <Link
+              to={"#"}
+              onClick={() => {
+                window.open("https://www.letskorail.com", "_blank");
+              }}
+            >
               <em>교통</em>
               <div className="txt-box">
                 <h4>코레일</h4>
@@ -83,7 +111,12 @@ function IndexPage() {
           </LinkBoxDiv>
 
           <LinkBoxDiv>
-            <Link to={"/"}>
+            <Link
+              to={"#"}
+              onClick={() => {
+                window.open("https://www.koreanair.com/?hl=ko", "_blank");
+              }}
+            >
               <em>교통</em>
               <div className="txt-box">
                 <h4>항공편</h4>
@@ -93,7 +126,12 @@ function IndexPage() {
           </LinkBoxDiv>
 
           <LinkBoxDiv>
-            <Link to={"/"}>
+            <Link
+              to={"#"}
+              onClick={() => {
+                window.open("https://www.airbnb.co.kr/", "_blank");
+              }}
+            >
               <em>숙소</em>
               <div className="txt-box">
                 <h4>숙소</h4>

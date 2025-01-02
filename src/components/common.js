@@ -27,11 +27,11 @@ export const LoginDiv = styled.div`
   justify-content: center;
   align-items: center;
 
-  form {
+  /* form {
     display: block;
     max-width: 1024px;
     width: 100%;
-  }
+  } */
 `;
 export const LayerDiv = styled.div`
   max-width: 460px;
@@ -81,7 +81,7 @@ export const FindPwDiv = styled.div`
   display: flex;
   justify-content: end;
   font-size: 14px;
-  margin-top: -24.5px;
+  margin-top: -21.5px;
 `;
 export const TitleDiv = styled.div`
   margin-top: 60px;
@@ -114,13 +114,13 @@ export const TextForm = styled.div`
     outline: transparent;
   }
   /* 인증코드 */
-  .code {
+  .pw {
     position: relative;
     input {
       padding-right: 50px;
     }
 
-    .codecheck {
+    .pwcheck {
       border-radius: 5px;
       color: #ddd;
       height: 26px;
@@ -134,7 +134,7 @@ export const TextForm = styled.div`
 
 // CustomInputBtn
 export const InputBtnArea = styled.div`
-  padding: 8px 0;
+  padding: 6px 0;
   label {
     font-size: 15px;
     font-weight: 600;
