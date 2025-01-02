@@ -22,12 +22,20 @@ import CalendarPicker from "./pages/planning/CalendarPickerPage";
 import MakePlanner from "./pages/planning/MakePlannerPage";
 
 import { LoginProvider } from "./contexts/LoginContext";
+import { useState } from "react";
 
 function App() {
+  // 일정 등록(날짜, 도시정보 등등)
+  const [resData, setResData] = useState({});
+  const [paramPath, setParamPath] = useState("");
+  const [cityName, setCityName] = useState("");
+  // 상세 일정 등록하기(위치, 주소, 금액 등등)
+  const [resDetailData, setResDetailData] = useState({});
+
   return (
     <Router>
       <LoginProvider>
-        <Layout>
+        <Layout paramPath={paramPath}>
           <Routes>
             {/* 홈 */}
             <Route path="/" element={<Home />} />
@@ -45,9 +53,27 @@ function App() {
 
             {/* 일정계획 */}
             <Route path="planning">
-              <Route index element={<City />}></Route>
-              <Route path="schedule/:id" element={<CalendarPicker />}></Route>
-              <Route path="makeplanner/:id" element={<MakePlanner />}></Route>
+              <Route index element={<City setCityName={setCityName} />}></Route>
+              <Route
+                path="schedule/:id"
+                element={
+                  <CalendarPicker
+                    setResData={setResData}
+                    setParamPath={setParamPath}
+                    setResDetailData={setResDetailData}
+                  />
+                }
+              ></Route>
+              <Route
+                path="makeplanner/:id"
+                element={
+                  <MakePlanner
+                    resData={resData}
+                    cityName={cityName}
+                    resDetailData={resDetailData}
+                  />
+                }
+              ></Route>
             </Route>
 
             {/* 다녀ON 게시판 : 리스트, 디테일페이지, 글쓰기/수정 */}

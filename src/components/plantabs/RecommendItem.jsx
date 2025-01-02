@@ -23,38 +23,52 @@ const OfferListDiv = styled.div`
   overflow-y: auto;
 `;
 
-const RecommendItem = ({ selectedCate, setSelectedCate, setSelectedItem }) => {
+const RecommendItem = ({
+  selectedCate,
+  setSelectedCate,
+  setSelectedItem,
+  cityId,
+  setIsClick,
+  isClick,
+  setPlaceData,
+  setInitData,
+  placeData,
+  setItemLatLng,
+}) => {
   return (
     <>
       <OfferFilterListUl>
         <li
-          onClick={() => setSelectedCate("명소")}
-          style={{ opacity: selectedCate === "명소" ? 1 : 0.5 }}
+          onClick={() => setSelectedCate("place")}
+          style={{ opacity: selectedCate === "place" ? 1 : 0.5 }}
         >
           명소
         </li>
         <li
-          onClick={() => setSelectedCate("숙소")}
-          style={{ opacity: selectedCate === "숙소" ? 1 : 0.5 }}
+          onClick={() => setSelectedCate("hotel")}
+          style={{ opacity: selectedCate === "hotel" ? 1 : 0.5 }}
         >
           숙소
         </li>
         <li
-          onClick={() => setSelectedCate("음식점")}
-          style={{ opacity: selectedCate === "음식점" ? 1 : 0.5 }}
+          onClick={() => setSelectedCate("restaurant")}
+          style={{ opacity: selectedCate === "restaurant" ? 1 : 0.5 }}
         >
           음식점
         </li>
       </OfferFilterListUl>
       <OfferListDiv>
-        <OfferItem setSelectedItem={setSelectedItem} />
-        <OfferItem />
-        <OfferItem />
-        <OfferItem />
-        <OfferItem />
-        <OfferItem />
-        <OfferItem />
-        <OfferItem />
+        <OfferItem
+          setItemLatLng={setItemLatLng}
+          isClick={isClick}
+          setSelectedItem={setSelectedItem}
+          cityId={cityId}
+          selectedCate={selectedCate}
+          setIsClick={setIsClick}
+          setPlaceData={setPlaceData}
+          setInitData={setInitData}
+          placeData={placeData}
+        />
       </OfferListDiv>
     </>
   );

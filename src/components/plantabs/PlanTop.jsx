@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { Link } from "react-router-dom";
@@ -75,20 +75,26 @@ const LinkbtnAreaDiv = styled.div`
   }
 `;
 
-const PlanTop = () => {
+const PlanTop = ({ resData, cityName, selectedOption, setSelectedOption }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("1일차");
+
+  const [dayList, setDayList] = useState([]);
 
   const handleOptionClick = option => {
     setSelectedOption(option);
-    console.log(option);
     setIsOpen(false);
   };
+
+  useEffect(() => {
+    setDayList(
+      Array.from({ length: resData.planDate + 1 }, (_, i) => `${i + 1}일차`),
+    );
+  }, []);
 
   return (
     <Wrapper>
       <div>
-        <h2>서울</h2>
+        <h2>{cityName}</h2>
         <SelectedOption onClick={() => setIsOpen(prev => !prev)}>
           {selectedOption}
           <TiArrowSortedDown
@@ -97,25 +103,15 @@ const PlanTop = () => {
         </SelectedOption>
         {isOpen && (
           <OptionsList>
-            <OptionItem onClick={() => handleOptionClick("1일차")}>
-              1일차
-            </OptionItem>
-            <OptionItem onClick={() => handleOptionClick("2일차")}>
-              2일차
-            </OptionItem>
-            <OptionItem onClick={() => handleOptionClick("3일차")}>
-              3일차
-            </OptionItem>
-            <OptionItem onClick={() => handleOptionClick("4일차")}>
-              4일차
-            </OptionItem>
-            <OptionItem onClick={() => handleOptionClick("5일차")}>
-              5일차
-            </OptionItem>
+            {dayList.map((item, index) => (
+              <OptionItem key={index} onClick={() => handleOptionClick(item)}>
+                {item}
+              </OptionItem>
+            ))}
           </OptionsList>
         )}
       </div>
-      <PlanDateDiv>2024.12.20 - 2024.12.25</PlanDateDiv>
+      <PlanDateDiv>{`${resData.startDate} - ${resData.endDate}`}</PlanDateDiv>
       <LinkbtnAreaDiv>
         <Link
           to="#"
@@ -125,7 +121,7 @@ const PlanTop = () => {
         </Link>
         <Link
           to="#"
-          onClick={() => window.open("https://www.yanolja.com", "_blank")}
+          onClick={() => window.open("https://www.airbnb.co.kr/", "_blank")}
         >
           숙소
         </Link>
