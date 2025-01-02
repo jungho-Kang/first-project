@@ -19,7 +19,6 @@ export const ImgUl = styled.ul`
 export const ImgLi = styled.li`
   width: 400px;
   height: 320px;
-  background-color: yellowgreen;
 `;
 
 export const PostUl = styled(ImgUl)`
@@ -87,7 +86,7 @@ export const PickDateDiv = styled(WrapDiv)`
 
 export const LayoutDiv = styled.div`
   max-width: 100%;
-  background-color: #000;
+  background-color: #fff;
   height: 100vh;
   display: flex;
   overflow: hidden;

@@ -19,6 +19,7 @@ const AddPlace = ({
   mapResultList,
   setIsClick,
   setSelectedItem,
+  setItemLatLng,
 }) => {
   const [word, setWord] = useState("");
 
@@ -73,6 +74,10 @@ const AddPlace = ({
                 setSelectedItem({
                   addressName: item.address_name,
                   placeName: item.place_name,
+                });
+                setItemLatLng({
+                  lat: item.y,
+                  lng: item.x,
                 });
               }}
               key={`item-${item.address_name}-${item.x},${item.y}`}

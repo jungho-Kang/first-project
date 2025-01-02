@@ -1,7 +1,12 @@
 // "일정등록" 모달창 띄우기
 
 import styled from "@emotion/styled";
+import axios from "axios";
+import { useForm } from "react-hook-form";
 import { IoMdCloseCircle } from "react-icons/io";
+import { API_URL } from "../../constants/login";
+import { memo, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const ContentDiv = styled.div`
   max-width: 600px;
@@ -12,9 +17,9 @@ const ContentDiv = styled.div`
   margin-top: 40px;
   z-index: 999;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: calc(50% - 34px);
+  right: 0;
+  transform: translateY(-50%);
   h2 {
     font-size: 24px;
     font-weight: 700;
@@ -60,8 +65,9 @@ const TimeInput = styled.input`
   padding-left: 10px;
 `;
 
-const CostInput = styled(TimeInput)``;
-const CountInput = styled(TimeInput)``;
+const CostInput = styled(TimeInput)`
+  width: 100%;
+`;
 
 const TextInput = styled.input`
   width: 100%;
@@ -95,10 +101,78 @@ const SchedulePush = ({
   setIsClick,
   setSelectedCate,
   selectedCate,
+  initData,
+  setPlaceData,
+  resDetailData,
+  itemLatLng,
+  selectedOption,
 }) => {
+  const { id } = useParams();
+  const initDetailData = {
+    planMasterId: 0,
+    placeId: 0,
+    price: 0,
+    memo: "",
+    startTime: "",
+    endTime: "",
+    date: "",
+    newPlacePostReq: {
+      cityId: 0,
+      placeAddress: "",
+      placeName: "",
+      category: "",
+      lat: 0,
+      lng: 0,
+    },
+  };
+
+  const [detailData, setDetailData] = useState(initDetailData);
+  const [startTime, setStartTime] = useState("10:00");
+  const [endTime, setEndTime] = useState("22:00");
+  const [price, setPrice] = useState();
+  const [memo, setMemo] = useState("");
+
+  const postPlanDetail = async item => {
+    try {
+      const res = await axios.post(`${API_URL}/plan/detail`, item);
+      // console.log(res.data.resultData);
+      setDetailData(initDetailData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const { handleSubmit } = useForm();
+  const handleSubmitData = () => {
+    postPlanDetail({ ...detailData });
+    setIsClick(false);
+  };
+
+  useEffect(() => {
+    setDetailData({
+      planMasterId: resDetailData.planMasterId,
+      price: price,
+      memo: memo,
+      startTime: startTime,
+      endTime: endTime,
+      date: selectedOption.substring(0, 1),
+      newPlacePostReq: {
+        cityId: id,
+        placeAddress: selectedItem.addressName,
+        placeName: selectedItem.placeName,
+        category: selectedCate,
+        lat: itemLatLng.lat,
+        lng: itemLatLng.lng,
+      },
+    });
+    console.log("시작 시간 : ", startTime, "끝 시간 : ", endTime);
+    console.log("보낼 데이터 : ", detailData);
+  }, [startTime, endTime, price, selectedCate, memo, selectedOption]);
   return (
     <ContentDiv>
-      <form style={{ position: "relative" }}>
+      <form
+        onSubmit={handleSubmit(handleSubmitData)}
+        style={{ position: "relative" }}
+      >
         <h2>일정등록</h2>
         <SmallTitleDiv>시간</SmallTitleDiv>
         <TimeTitleDiv>
@@ -106,8 +180,16 @@ const SchedulePush = ({
           <div>종료</div>
         </TimeTitleDiv>
         <TimeDiv>
-          <TimeInput type="time" defaultValue="10:00" />
-          <TimeInput type="time" defaultValue="22:00" />
+          <TimeInput
+            type="time"
+            value={startTime}
+            onChange={e => setStartTime(e.target.value)}
+          />
+          <TimeInput
+            type="time"
+            value={endTime}
+            onChange={e => setEndTime(e.target.value)}
+          />
         </TimeDiv>
         <SmallTitleDiv>장소 이름</SmallTitleDiv>
         <TextInput type="text" value={selectedItem.placeName} readOnly />
@@ -115,37 +197,29 @@ const SchedulePush = ({
         <SmallTitleDiv>분류</SmallTitleDiv>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <CateDiv
-            onClick={() => setSelectedCate("명소")}
+            onClick={() => setSelectedCate("place")}
             style={{
-              backgroundColor: selectedCate === "명소" ? "#5469D4" : "#ddd",
-              color: selectedCate === "명소" ? "#fff" : "#000",
+              backgroundColor: selectedCate === "place" ? "#5469D4" : "#ddd",
+              color: selectedCate === "place" ? "#fff" : "#000",
             }}
           >
             명소
           </CateDiv>
           <CateDiv
-            onClick={() => setSelectedCate("숙소")}
+            onClick={() => setSelectedCate("hotel")}
             style={{
-              backgroundColor: selectedCate === "숙소" ? "#5469D4" : "#ddd",
-              color: selectedCate === "숙소" ? "#fff" : "#000",
+              backgroundColor: selectedCate === "hotel" ? "#5469D4" : "#ddd",
+              color: selectedCate === "hotel" ? "#fff" : "#000",
             }}
           >
             숙소
           </CateDiv>
           <CateDiv
-            onClick={() => setSelectedCate("교통")}
+            onClick={() => setSelectedCate("restaurant")}
             style={{
-              backgroundColor: selectedCate === "교통" ? "#5469D4" : "#ddd",
-              color: selectedCate === "교통" ? "#fff" : "#000",
-            }}
-          >
-            교통
-          </CateDiv>
-          <CateDiv
-            onClick={() => setSelectedCate("음식점")}
-            style={{
-              backgroundColor: selectedCate === "음식점" ? "#5469D4" : "#ddd",
-              color: selectedCate === "음식점" ? "#fff" : "#000",
+              backgroundColor:
+                selectedCate === "restaurant" ? "#5469D4" : "#ddd",
+              color: selectedCate === "restaurant" ? "#fff" : "#000",
             }}
           >
             음식점
@@ -155,15 +229,19 @@ const SchedulePush = ({
         <TextInput type="text" value={selectedItem.addressName} readOnly />
         <div style={{ display: "flex", gap: 235 }}>
           <SmallTitleDiv>비용</SmallTitleDiv>
-          <SmallTitleDiv>인원수</SmallTitleDiv>
         </div>
         <div style={{ display: "flex", gap: 20 }}>
-          <CostInput placeholder="비용을 입력해주세요" />
-          <CountInput placeholder="인원수를 입력해주세요" />
+          <CostInput
+            placeholder="비용을 입력해주세요"
+            value={price}
+            onChange={e => setPrice(e.target.value)}
+          />
         </div>
         <SmallTitleDiv>메모</SmallTitleDiv>
         <textarea
           style={{ padding: 10, width: "100%", height: 120, resize: "none" }}
+          value={memo}
+          onChange={e => setMemo(e.target.value)}
         ></textarea>
         <button type="submit" className="btnSubmit">
           등록
@@ -172,7 +250,8 @@ const SchedulePush = ({
           type="button"
           onClick={() => {
             setIsClick(false);
-            setSelectedCate("명소");
+            setSelectedCate("place");
+            setPlaceData(initData);
           }}
         >
           <IoMdCloseCircle style={{ width: "100%", height: "100%" }} />

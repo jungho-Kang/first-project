@@ -1,8 +1,7 @@
 import moment from "moment/moment";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 
-// import "react-datepicker/dist/react-datepicker.css";
 import styled from "@emotion/styled";
 import { TitleDiv } from "../../components/common";
 import { PickDateDiv } from "./plan";
@@ -11,6 +10,9 @@ import "./react-datepicker.css";
 import { ko } from "date-fns/locale";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
+import { LoginContext } from "../../contexts/LoginContext";
+import axios from "axios";
+import { API_URL } from "../../constants/login";
 
 const FlexBtnDiv = styled.div`
   display: flex;
@@ -32,20 +34,82 @@ const NextBtn = styled.button`
   font-size: 14px;
 `;
 
-function CalendarPickerPage() {
+function CalendarPickerPage({
+  setResData,
+  setParamPath,
+  resDetailData,
+  setResDetailData,
+}) {
+  const { user } = useContext(LoginContext);
+
+  console.log("유저 ID", user.userId);
   const navigate = useNavigate();
   const { id } = useParams();
-  console.log(id);
-
+  const initData = {
+    userId: 0,
+    cityId: 0,
+    startDate: "",
+    endDate: "",
+    peopleCnt: "",
+  };
+  // 날짜 관련
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(null);
   const [maxDate, setMaxDate] = useState(null);
+
+  // 보낼 데이터
+  const [formData, setFormData] = useState(initData);
+
+  // 인원수 state
+  const [count, setCount] = useState(0);
+
   const onChange = dates => {
     const [start, end] = dates;
 
     setStartDate(start);
     setEndDate(end);
   };
+
+  const { handleSubmit } = useForm();
+
+  const postPlan = async item => {
+    try {
+      const res = await axios.post(`${API_URL}/plan`, item);
+      setResData({ ...item, planDate: res.data.resultData.planDate });
+      console.log("planMasterID : ", res.data.resultData.planMasterId);
+      setResDetailData({
+        ...resDetailData,
+        planMasterId: res.data.resultData.planMasterId,
+      });
+      setFormData(initData);
+      navigate(`/planning/makeplanner/${id}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSubmitDate = () => {
+    console.log(formData);
+    // console.log(formData.peopleCnt);
+    if (count > 0) {
+      postPlan({ ...formData });
+    }
+    if (
+      moment(endDate).format("YYYY-MM-DD") ===
+      moment(startDate).format("YYYY-MM-DD")
+    ) {
+      alert("여행기간을 선택해주세요.");
+    } else if (endDate === null) {
+      alert("여행기간을 선택해주세요.");
+    }
+    if (count <= 0) {
+      alert("인원수를 입력해주세요.");
+    }
+  };
+
+  useEffect(() => {
+    setParamPath(id);
+  }, []);
 
   useEffect(() => {
     if (moment(startDate).isSame(endDate, "day")) {
@@ -58,20 +122,16 @@ function CalendarPickerPage() {
     }
   }, [startDate, endDate]);
 
-  const { handleSubmit } = useForm();
-
-  const handleSubmitDate = () => {
-    if (
-      moment(endDate).format("YYYY-MM-DD") ===
-      moment(startDate).format("YYYY-MM-DD")
-    ) {
-      alert("여행기간을 선택해주세요.");
-    } else if (endDate === null) {
-      alert("여행기간을 선택해주세요.");
-    } else {
-      navigate(`/planning/makeplanner/${id}`);
-    }
-  };
+  useEffect(() => {
+    setFormData({
+      // userId: user.userId,
+      userId: 58,
+      cityId: id,
+      startDate: moment(startDate).format("YYYY-MM-DD"),
+      endDate: moment(endDate).format("YYYY-MM-DD"),
+      peopleCnt: count,
+    });
+  }, [endDate, count]);
 
   return (
     <form onSubmit={handleSubmit(handleSubmitDate)}>
@@ -89,6 +149,31 @@ function CalendarPickerPage() {
           inline
           showDisabledMonthNavigation
         />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+            marginTop: 30,
+            marginRight: 145,
+          }}
+        >
+          <span style={{ fontWeight: 700 }}>인원수 : </span>
+          <input
+            type="number"
+            min={0}
+            max={50}
+            value={count}
+            onChange={e => setCount(parseInt(e.target.value))}
+            style={{
+              width: 50,
+              height: 30,
+              paddingLeft: 10,
+              textAlign: "center",
+              marginLeft: 10,
+            }}
+          />
+        </div>
         <FlexBtnDiv>
           <NextBtn type="submit">다음</NextBtn>
         </FlexBtnDiv>

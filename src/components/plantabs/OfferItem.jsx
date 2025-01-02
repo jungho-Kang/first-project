@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { FaCheck, FaPlus, FaStar } from "react-icons/fa";
+import { API_URL } from "../../constants/login";
 const OfferItemA = styled.a`
   display: flex;
   align-items: center;
@@ -69,49 +71,91 @@ const OfferItemA = styled.a`
   }
 `;
 
-const OfferItem = ({ setSelectedItem }) => {
-  const [btnClick, setBtnClick] = useState(false);
+const OfferItem = ({
+  setSelectedItem,
+  cityId,
+  selectedCate,
+  setIsClick,
+  isClick,
+  setPlaceData,
+  setInitData,
+  placeData,
+  setItemLatLng,
+}) => {
+  const getPlace = async () => {
+    try {
+      // http://192.168.0.144:5212/api/city/selsight?cityId=1&category=place
+      const res = await axios.get(
+        `${API_URL}/city/selsight?cityId=${cityId}&category=${selectedCate}`,
+      );
+      res.data.resultData.map(item => ({ ...item, btnClick: false }));
+      setPlaceData(res.data.resultData);
 
-  const handleClickLogin = () => {
-    setBtnClick(prev => !prev);
-    if (btnClick) {
-      setSelectedItem({});
+      setInitData(res.data.resultData);
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  return (
-    <OfferItemA>
-      <div className="img-box">
-        <img src="" alt="" />
-      </div>
-      <div className="text-box">
-        <h3>항목이름</h3>
-        <span>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab, dolorum!
-          adipisicing elit. Ab, dolorum!
-        </span>
-        <div className="rating">
-          <span>
-            <em>
-              <FaStar />
-            </em>
-            4.5
-          </span>
-        </div>
-      </div>
-      <button
-        type="button"
-        className="btn-box"
+  const handleClickAdd = itemId => {
+    const tempData = placeData.map(item =>
+      item.placeId === itemId ? { ...item, btnClick: !item.btnClick } : item,
+    );
+    setPlaceData(tempData);
+    setIsClick(prev => !prev);
+  };
 
-        onClick={() => handleClick()}
-        style={{
-          backgroundColor: btnClick ? "#5469d4" : "#f5f4f4",
-          color: btnClick ? "#fff" : "#333",
-        }}
-      >
-        {btnClick ? <FaCheck /> : <FaPlus />}
-      </button>
-    </OfferItemA>
+  useEffect(() => {
+    getPlace();
+  }, [selectedCate]);
+
+  return (
+    <>
+      {placeData.map(item => {
+        const imgUrl = `http://112.222.157.156:5212/pic/city/${cityId}/${selectedCate}/${item.placePic}`;
+        return (
+          <OfferItemA key={item.placeId}>
+            <div className="img-box">
+              <img src={imgUrl} alt="신규 장소" />
+            </div>
+            <div className="text-box">
+              <h3>{item.placeName}</h3>
+              <span>{item.placeAddress}</span>
+              <div className="rating">
+                <span>
+                  <em>
+                    <FaStar />
+                  </em>
+                  {item.placeStar}
+                </span>
+              </div>
+            </div>
+            <button
+              type="button"
+              className="btn-box"
+              onClick={() => {
+                handleClickAdd(item.placeId);
+                setSelectedItem({
+                  addressName: item.placeAddress,
+                  placeName: item.placeName,
+                });
+                setItemLatLng({
+                  lat: item.lat,
+                  lng: item.lng,
+                });
+              }}
+              style={{
+                backgroundColor:
+                  item.btnClick && isClick ? "#5469d4" : "#f5f4f4",
+                color: item.btnClick && isClick ? "#fff" : "#333",
+              }}
+            >
+              {item.btnClick && isClick ? <FaCheck /> : <FaPlus />}
+            </button>
+          </OfferItemA>
+        );
+      })}
+    </>
   );
 };
 
