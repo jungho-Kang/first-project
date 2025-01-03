@@ -60,17 +60,17 @@ export const ProvideDiv = styled.div`
 
     h3 {
       font-size: 32px;
-      font-weight: 500;
+      font-weight: 600;
       padding: 0.8em 0;
-      color: #fff;
+      color: #000;
     }
     span {
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(0, 0, 0, 0.65);
     }
   }
   /* 스와이퍼 */
   .mySwiper {
-    padding: 60px 0;
+    padding: 80px 0;
     height: 100%;
     .mcont {
       /* height: 280px; */
@@ -93,13 +93,21 @@ export const ProvideDiv = styled.div`
   }
 `;
 export const SwiperItemDiv = styled.div`
-  border: 1px solid #eee;
+  cursor: pointer;
+  display: block;
+  transition: all 0.3s;
+  &:hover {
+    opacity: 0.9;
+    box-shadow:
+      rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
+      rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  }
   /* height: 100%; */
   position: relative;
   .thum {
     width: 100%;
     z-index: 999;
-    height: 330px;
+    height: 320px;
     background: #000;
     overflow: hidden;
     background: #eee;
@@ -109,7 +117,7 @@ export const SwiperItemDiv = styled.div`
     width: 100%;
     left: 0;
     bottom: 0;
-    background: linear-gradient(to top, #1270b0, rgba(0, 0, 0, 0));
+    background: linear-gradient(to top, #000, rgba(0, 0, 0, 0));
     height: 85px;
     padding: 0px 10px;
     display: flex;
@@ -126,26 +134,29 @@ export const SwiperItemDiv = styled.div`
         display: flex;
         align-items: center;
         gap: 4px;
+        color: #fff;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
 
         em {
           display: inline-block;
           padding: 3px 6px;
           border-radius: 4px;
           background-color: #17a1fa;
-          color: #fff;
+          color: #000;
           font-size: 14px;
+          text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
         }
         h4 {
           font-size: 18px;
-          font-weight: 600;
+          font-weight: 500;
         }
       }
       .like {
         color: red;
         font-size: 16px;
         span {
-          color: #555;
-          font-weight: 600;
+          color: #fff;
+          font-weight: 500;
         }
       }
     }
@@ -154,7 +165,7 @@ export const SwiperItemDiv = styled.div`
       width: 100%;
       margin-top: 0.8em;
       text-align: right;
-      color: rgba(0, 0, 0, 0.5);
+      color: rgba(255, 255, 255, 0.5);
       font-size: 14px;
     }
   }

@@ -84,11 +84,17 @@ export const FindPwDiv = styled.div`
   margin-top: -21.5px;
 `;
 export const TitleDiv = styled.div`
-  margin-top: 60px;
+  padding: 120px 0 80px;
   font-size: 38px;
-  margin-bottom: 60px;
   text-align: center;
   font-weight: 700;
+  p {
+    font-size: 18px;
+    line-height: 1.5em;
+    font-weight: 400;
+    margin-top: 15px;
+    color: rgba(0, 0, 0, 0.65s);
+  }
 `;
 export const LineDiv = styled.div`
   width: 100%;

@@ -13,6 +13,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { LoginContext } from "../../contexts/LoginContext";
 import axios from "axios";
 import { API_URL } from "../../constants/login";
+import { AboutTopDiv } from "../about/about";
 
 const FlexBtnDiv = styled.div`
   display: flex;
@@ -135,8 +136,14 @@ function CalendarPickerPage({
 
   return (
     <form onSubmit={handleSubmit(handleSubmitDate)}>
+      <AboutTopDiv>
+        <h2 className="txt">다녀ALL 일정 계획</h2>
+      </AboutTopDiv>
       <PickDateDiv>
-        <TitleDiv>여행 기간을 선택해주세요</TitleDiv>
+        <TitleDiv>
+          <h3>날짜 및 인원 선택</h3>
+          <p>여행 기간 및 여행 인원을 선택해주세요</p>
+        </TitleDiv>
         <DatePicker
           locale={ko}
           selected={startDate}
