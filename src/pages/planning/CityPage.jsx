@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { TitleDiv, WrapDiv } from "../../components/common";
 import { API_URL } from "../../constants/login";
 import { ImgLi, ImgUl } from "./plan";
+import { AboutTopDiv } from "../about/about";
 
 function CityPage({ setCityName }) {
   const navigate = useNavigate();
@@ -27,8 +28,16 @@ function CityPage({ setCityName }) {
   console.log(cityData);
 
   return (
-    <WrapDiv>
-      <TitleDiv>일정 계획</TitleDiv>
+
+     <>
+      <AboutTopDiv>
+        <h2 className="txt">다녀ALL 일정 계획</h2>
+      </AboutTopDiv>
+      <WrapDiv style={{ paddingBottom: 160 }}>
+        <TitleDiv>
+          <h3>지역 선택</h3>
+          <p>다녀올 지역을 선택해주세요.</p>
+        </TitleDiv>
       <ImgUl>
         {cityData.map(item => {
           const imgUrl = `http://112.222.157.156:5212/pic/city/${item.cityId}/${item.cityPic}`;
@@ -54,50 +63,37 @@ function CityPage({ setCityName }) {
                     textAlign: "center",
                     color: "#412B6D",
                     fontWeight: 700,
+
                   }}
                 >
-                  {item.cityKorName}
-                </div>
-              </ImgLi>
-            );
-          }
-        })}
-      </ImgUl>
-      <ImgUl>
-        {cityData.map(item => {
-          const imgUrl = `http://112.222.157.156:5212/pic/city/${item.cityId}/${item.cityPic}`;
-          if (item.cityId > 3) {
-            return (
-              <ImgLi
-                key={item.cityId}
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  navigate(`/planning/schedule/${item.cityId}`);
-                  setCityName(item.cityKorName);
-                }}
-              >
-                <img
-                  src={imgUrl}
-                  style={{ width: "100%", height: "100%", borderRadius: 20 }}
-                  alt="지역 이미지"
-                />
-                <div
-                  style={{
-                    marginTop: 10,
-                    fontSize: 20,
-                    textAlign: "center",
-                    color: "#412B6D",
-                    fontWeight: 700,
+                  <img src={imgUrl} alt="지역 이미지" />
+                  <div className="city-name">{item.cityKorName}</div>
+                </ImgLi>
+              );
+            }
+          })}
+        </ImgUl>
+        <ImgUl>
+          {cityData.map(item => {
+            const imgUrl = `http://112.222.157.156:5212/pic/city/${item.cityId}/${item.cityPic}`;
+            if (item.cityId > 3) {
+              return (
+                <ImgLi
+                  key={item.cityId}
+                  onClick={() => {
+                    navigate(`/planning/schedule/${item.cityId}`);
+                    setCityName(item.cityKorName);
                   }}
                 >
-                  {item.cityKorName}
-                </div>
-              </ImgLi>
-            );
-          }
-        })}
-      </ImgUl>
-    </WrapDiv>
+                  <img src={imgUrl} alt="지역 이미지" />
+                  <div className="city-name">{item.cityKorName}</div>
+                </ImgLi>
+              );
+            }
+          })}
+        </ImgUl>
+      </WrapDiv>
+    </>
   );
 }
 export default CityPage;

@@ -9,16 +9,46 @@ export const FlexDiv = styled.div`
 
 export const ImgUl = styled.ul`
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  max-width: 1360px;
-  margin-left: 40px;
-  margin-right: 40px;
+  gap: 35px;
   margin-bottom: 80px;
+  cursor: pointer;
+
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+  }
+  .city-name {
+    margin-top: 10px;
+    font-size: 20px;
+    text-align: center;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.65);
+    font-weight: 700;
+    transition: all 0.3s;
+    font-size: 60px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 `;
 export const ImgLi = styled.li`
-  width: 400px;
+  width: calc(100% / 3);
   height: 320px;
+  transition: all 0.3s;
+  border-radius: 20px;
+  position: relative;
+  &:hover {
+    transform: scale(1.01);
+    box-shadow:
+      rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+      rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  }
+  &:hover .city-name {
+    color: yellow;
+  }
 `;
 
 export const PostUl = styled(ImgUl)`
@@ -51,16 +81,20 @@ export const PostDate = styled.div`
 `;
 
 export const PostCity = styled.div`
+
   width: 60px;
   height: 25px;
   font-size: 14px;
+
+  padding: 5px 10px;
+
   border-radius: 5px;
   background-color: #6666ff;
+  font-size: 14px;
   color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
 `;
 
 export const ButtonDiv = styled.div`

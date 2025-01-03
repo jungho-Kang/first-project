@@ -98,7 +98,7 @@ function App() {
             <Route path="myplanlist">
               {/* 마이페이지 - 내일정, 일정디테일 */}
               <Route index element={<MyPlanList />} />
-              <Route path="detail" element={<MyPlanDetail />} />
+              <Route path=":id" element={<MyPlanDetail />} />
             </Route>
             {/* 마이페이지 - 내프로필, 수정, 비번재설정, 탈퇴 */}
             <Route path="myinfo">

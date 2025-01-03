@@ -47,7 +47,7 @@ function MyPlanListPage() {
             myScheduleList.map(item =>
               item.cityKorName && item.startDate ? (
                 <MyplanlistItem
-                  key={item.cityId}
+                  key={item.planMasterId}
                   item={item}
                   setMyScheduleList={setMyScheduleList}
                   myScheduleList={myScheduleList}
