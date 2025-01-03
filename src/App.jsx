@@ -39,6 +39,17 @@ function App() {
   // 인원수
   const [peopleCnt, setPeopleCnt] = useState(0);
 
+  // 선택된 일차
+  const [selectedOption, setSelectedOption] = useState("1일차");
+
+  // 일차 정보 state
+  const [isOpen, setIsOpen] = useState(false);
+  const [dayList, setDayList] = useState([]);
+
+  // 일차별 가격, 총 가격 정보
+  const [datePrice, setDatePrice] = useState(0);
+  const [allPrice, setAllPrice] = useState(0);
+
   return (
     <Router>
       <LoginProvider>
@@ -83,6 +94,12 @@ function App() {
                     cityName={cityName}
                     resDetailData={resDetailData}
                     peopleCnt={peopleCnt}
+                    selectedOption={selectedOption}
+                    setSelectedOption={setSelectedOption}
+                    setDayList={setDayList}
+                    dayList={dayList}
+                    datePrice={datePrice}
+                    setDatePrice={setDatePrice}
                   />
                 }
               ></Route>
@@ -91,14 +108,30 @@ function App() {
             {/* 다녀ON 게시판 : 리스트, 디테일페이지, 글쓰기/수정 */}
             <Route path="board">
               <Route index element={<BoardIndex />} />
-              <Route path="detail" element={<BoardDetail />} />
+              <Route path="detail/:id" element={<BoardDetail />} />
               <Route path="writepost" element={<WritePost />} />
             </Route>
 
             <Route path="myplanlist">
               {/* 마이페이지 - 내일정, 일정디테일 */}
               <Route index element={<MyPlanList />} />
-              <Route path=":id" element={<MyPlanDetail />} />
+              <Route
+                path=":id"
+                element={
+                  <MyPlanDetail
+                    selectedOption={selectedOption}
+                    setSelectedOption={setSelectedOption}
+                    setIsOpen={setIsOpen}
+                    isOpen={isOpen}
+                    dayList={dayList}
+                    setDayList={setDayList}
+                    datePrice={datePrice}
+                    setDatePrice={setDatePrice}
+                    allPrice={allPrice}
+                    setAllPrice={setAllPrice}
+                  />
+                }
+              />
             </Route>
             {/* 마이페이지 - 내프로필, 수정, 비번재설정, 탈퇴 */}
             <Route path="myinfo">

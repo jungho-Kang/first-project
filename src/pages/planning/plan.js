@@ -55,16 +55,22 @@ export const PostUl = styled(ImgUl)`
   max-width: 1440px;
   margin: 0;
   margin-bottom: 60px;
+  cursor: default;
 `;
 
 export const PostLi = styled(ImgLi)`
-  width: 300px;
-  height: 400px;
+  width: 100%;
+  height: 100%;
   background-color: #fff;
+
+  &:hover {
+    transform: none;
+    box-shadow: none;
+  }
 `;
 export const PostImg = styled.div`
   border-radius: 20px;
-  background-color: #f01;
+  background-color: #ddd;
   width: 300px;
   height: 320px;
 `;
@@ -81,17 +87,13 @@ export const PostDate = styled.div`
 `;
 
 export const PostCity = styled.div`
-
   width: 60px;
   height: 25px;
   font-size: 14px;
 
   padding: 5px 10px;
-
   border-radius: 5px;
-  background-color: #6666ff;
   font-size: 14px;
-  color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;

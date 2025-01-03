@@ -28,8 +28,7 @@ function CityPage({ setCityName }) {
   console.log(cityData);
 
   return (
-
-     <>
+    <>
       <AboutTopDiv>
         <h2 className="txt">다녀ALL 일정 계획</h2>
       </AboutTopDiv>
@@ -38,32 +37,16 @@ function CityPage({ setCityName }) {
           <h3>지역 선택</h3>
           <p>다녀올 지역을 선택해주세요.</p>
         </TitleDiv>
-      <ImgUl>
-        {cityData.map(item => {
-          const imgUrl = `http://112.222.157.156:5212/pic/city/${item.cityId}/${item.cityPic}`;
-          if (item.cityId <= 3) {
-            return (
-              <ImgLi
-                key={item.cityId}
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  navigate(`/planning/schedule/${item.cityId}`);
-                  setCityName(item.cityKorName);
-                }}
-              >
-                <img
-                  src={imgUrl}
-                  style={{ width: "100%", height: "100%", borderRadius: 20 }}
-                  alt="지역 이미지"
-                />
-                <div
-                  style={{
-                    marginTop: 10,
-                    fontSize: 20,
-                    textAlign: "center",
-                    color: "#412B6D",
-                    fontWeight: 700,
-
+        <ImgUl>
+          {cityData.map(item => {
+            const imgUrl = `http://112.222.157.156:5212/pic/city/${item.cityId}/${item.cityPic}`;
+            if (item.cityId <= 3) {
+              return (
+                <ImgLi
+                  key={item.cityId}
+                  onClick={() => {
+                    navigate(`/planning/schedule/${item.cityId}`);
+                    setCityName(item.cityKorName);
                   }}
                 >
                   <img src={imgUrl} alt="지역 이미지" />
