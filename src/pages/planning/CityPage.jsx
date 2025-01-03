@@ -32,7 +32,6 @@ function CityPage({ setCityName }) {
       <ImgUl>
         {cityData.map(item => {
           const imgUrl = `http://112.222.157.156:5212/pic/city/${item.cityId}/${item.cityPic}`;
-          console.log(imgUrl);
           if (item.cityId <= 3) {
             return (
               <ImgLi

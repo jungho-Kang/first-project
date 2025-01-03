@@ -51,8 +51,8 @@ export const PostDate = styled.div`
 `;
 
 export const PostCity = styled.div`
-  width: 40px;
-  height: 20px;
+  width: 60px;
+  height: 25px;
   font-size: 14px;
   border-radius: 5px;
   background-color: #6666ff;

@@ -39,10 +39,11 @@ function CalendarPickerPage({
   setParamPath,
   resDetailData,
   setResDetailData,
+  setPlanMasterId,
+  setPeopleCnt,
 }) {
   const { user } = useContext(LoginContext);
 
-  console.log("유저 ID", user.userId);
   const navigate = useNavigate();
   const { id } = useParams();
   const initData = {
@@ -76,12 +77,14 @@ function CalendarPickerPage({
     try {
       const res = await axios.post(`${API_URL}/plan`, item);
       setResData({ ...item, planDate: res.data.resultData.planDate });
-      console.log("planMasterID : ", res.data.resultData.planMasterId);
+      setPlanMasterId(res.data.resultData.planMasterId);
+      setPeopleCnt(item.peopleCnt);
       setResDetailData({
         ...resDetailData,
         planMasterId: res.data.resultData.planMasterId,
       });
       setFormData(initData);
+
       navigate(`/planning/makeplanner/${id}`);
     } catch (error) {
       console.log(error);
@@ -89,8 +92,6 @@ function CalendarPickerPage({
   };
 
   const handleSubmitDate = () => {
-    console.log(formData);
-    // console.log(formData.peopleCnt);
     if (count > 0) {
       postPlan({ ...formData });
     }
@@ -124,8 +125,7 @@ function CalendarPickerPage({
 
   useEffect(() => {
     setFormData({
-      // userId: user.userId,
-      userId: 58,
+      userId: user.userId,
       cityId: id,
       startDate: moment(startDate).format("YYYY-MM-DD"),
       endDate: moment(endDate).format("YYYY-MM-DD"),
