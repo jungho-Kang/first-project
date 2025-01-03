@@ -135,7 +135,10 @@ function CalendarPickerPage({
   }, [endDate, count]);
 
   return (
-    <form onSubmit={handleSubmit(handleSubmitDate)}>
+    <form
+      onSubmit={handleSubmit(handleSubmitDate)}
+      style={{ marginBottom: 160 }}
+    >
       <AboutTopDiv>
         <h2 className="txt">다녀ALL 일정 계획</h2>
       </AboutTopDiv>
@@ -144,6 +147,7 @@ function CalendarPickerPage({
           <h3>날짜 및 인원 선택</h3>
           <p>여행 기간 및 여행 인원을 선택해주세요</p>
         </TitleDiv>
+
         <DatePicker
           locale={ko}
           selected={startDate}
@@ -159,31 +163,46 @@ function CalendarPickerPage({
         <div
           style={{
             display: "flex",
-            justifyContent: "flex-end",
+            gap: 10,
             alignItems: "center",
-            marginTop: 30,
-            marginRight: 145,
+            margin: "10px auto",
+            maxWidth: "620px",
+            position: "relative",
           }}
         >
-          <span style={{ fontWeight: 700 }}>인원수 : </span>
+          <span
+            style={{
+              fontWeight: 700,
+              width: 70,
+              position: "absolute",
+              left: 10,
+            }}
+          >
+            여행 인원
+          </span>
           <input
             type="number"
             min={0}
             max={50}
-            value={count}
+            value={count || ""}
             onChange={e => setCount(parseInt(e.target.value))}
+            placeholder="인원수를 입력하세요"
             style={{
-              width: 50,
-              height: 30,
-              paddingLeft: 10,
+              maxWidth: "80%",
+              width: "100%",
+              height: 50,
               textAlign: "center",
-              marginLeft: 10,
+              borderRadius: 5,
+              border: "1px solid #ddd",
             }}
           />
+          <NextBtn
+            type="submit"
+            style={{ width: 140, backgroundColor: "#1270b0" }}
+          >
+            다음
+          </NextBtn>
         </div>
-        <FlexBtnDiv>
-          <NextBtn type="submit">다음</NextBtn>
-        </FlexBtnDiv>
       </PickDateDiv>
     </form>
   );
