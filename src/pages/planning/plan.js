@@ -81,7 +81,13 @@ export const PostDate = styled.div`
 `;
 
 export const PostCity = styled.div`
+
+  width: 60px;
+  height: 25px;
+  font-size: 14px;
+
   padding: 5px 10px;
+
   border-radius: 5px;
   background-color: #6666ff;
   font-size: 14px;

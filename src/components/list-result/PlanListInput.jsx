@@ -1,6 +1,9 @@
 import styled from "@emotion/styled";
-import { WrapDiv } from "../common";
+import axios from "axios";
+import { useEffect } from "react";
+import { API_URL } from "../../constants/login";
 import { PostCity } from "../../pages/planning/plan";
+import { WrapDiv } from "../common";
 
 const PlanTitleDiv = styled.div`
   margin: 0 auto;
@@ -71,18 +74,111 @@ const SubLocationDiv = styled.div`
   color: #999;
 `;
 
-const PlanListInput = () => {
+const PlanListInput = ({
+  planListData,
+  setPlanListData,
+  selectedOption,
+  datePrice,
+  setDatePrice,
+  planMasterId,
+  peopleCnt,
+}) => {
+  const getPrice = async () => {
+    try {
+      const res = await axios.get(
+        `${API_URL}/plan/day?planMasterId=${planMasterId}`,
+      );
+      datePriceChange(res);
+      console.log("getPrice 응답 데이터:", res.data);
+
+      console.log("get 받아왔다", res.data.resultData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getPlanData = async () => {
+    try {
+      const res = await axios.get(
+        `${API_URL}/plan?planMasterId=${planMasterId}`,
+      );
+      planListDataChange(res.data.resultData.selPlanDtoList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const cateChange = item => {
+    if (item.category === "hotel") {
+      return "호텔";
+    }
+    if (item.category === "place") {
+      return "명소";
+    }
+    if (item.category === "restaurant") {
+      return "음식점";
+    }
+  };
+
+  const planListDataChange = data => {
+    if (selectedOption === "1일차") {
+      const filterData = data.filter(item => item.date === 1);
+      setPlanListData(filterData);
+    }
+    if (selectedOption === "2일차") {
+      const filterData = data.filter(item => item.date === 2);
+      setPlanListData(filterData);
+    }
+    if (selectedOption === "3일차") {
+      const filterData = data.filter(item => item.date === 3);
+      setPlanListData(filterData);
+    }
+    if (selectedOption === "4일차") {
+      const filterData = data.filter(item => item.date === 4);
+      setPlanListData(filterData);
+    }
+    if (selectedOption === "5일차") {
+      const filterData = data.filter(item => item.date === 5);
+      setPlanListData(filterData);
+    }
+  };
+
+  const datePriceChange = res => {
+    if (selectedOption === "1일차") {
+      setDatePrice(res.data.resultData[0].price);
+    }
+    if (selectedOption === "2일차") {
+      setDatePrice(res.data.resultData[1].price);
+    }
+    if (selectedOption === "3일차") {
+      setDatePrice(res.data.resultData[2].price);
+    }
+    if (selectedOption === "4일차") {
+      setDatePrice(res.data.resultData[3].price);
+    }
+    if (selectedOption === "5일차") {
+      setDatePrice(res.data.resultData[4].price);
+    }
+  };
+
+  useEffect(() => {
+    getPrice();
+    getPlanData();
+  }, [selectedOption, datePrice]);
+
   return (
     <WrapDiv
       style={{
         margin: 0,
-        marginLeft: 600,
+        marginLeft: 200,
         marginTop: 100,
         width: 1024,
         height: 800,
       }}
     >
-      <h1 style={{ marginBottom: 30, fontSize: 30, fontWeight: 700 }}>1일차</h1>
+      <h1 style={{ marginBottom: 30, fontSize: 30, fontWeight: 700 }}>
+        {selectedOption}
+      </h1>
       <PlanTitleDiv>
         <TimeDiv>시간</TimeDiv>
         <PlanDiv>일정</PlanDiv>
@@ -95,85 +191,27 @@ const PlanListInput = () => {
         <SumPriceDiv>총금액</SumPriceDiv>
         <MemoDiv>메모</MemoDiv>
       </PlanTitleDiv>
-      <div style={{ overflowY: "scroll", height: 500 }}>
-        <PlanContentDiv>
-          <TimeDiv>09:00 - 10:00</TimeDiv>
-          <PlanDiv>
-            <PostCity>숙소</PostCity>
-          </PlanDiv>
-          <LocationDiv>
-            신라호텔
-            <SubLocationDiv>서울 중구 동호로 249</SubLocationDiv>
-          </LocationDiv>
-          <PriceDiv>250,000</PriceDiv>
-          <SumPriceDiv>250,000</SumPriceDiv>
-          <MemoDiv>6시 조식, 11시 체크아웃 핸드폰 충전하기...</MemoDiv>
-        </PlanContentDiv>
-        <PlanContentDiv>
-          <TimeDiv>09:00 - 10:00</TimeDiv>
-          <PlanDiv>
-            <PostCity>숙소</PostCity>
-          </PlanDiv>
-          <LocationDiv>
-            신라호텔
-            <SubLocationDiv>서울 중구 동호로 249</SubLocationDiv>
-          </LocationDiv>
-          <PriceDiv>250,000</PriceDiv>
-          <SumPriceDiv>250,000</SumPriceDiv>
-          <MemoDiv>6시 조식, 11시 체크아웃 핸드폰 충전하기...</MemoDiv>
-        </PlanContentDiv>
-        <PlanContentDiv>
-          <TimeDiv>09:00 - 10:00</TimeDiv>
-          <PlanDiv>
-            <PostCity>숙소</PostCity>
-          </PlanDiv>
-          <LocationDiv>
-            신라호텔
-            <SubLocationDiv>서울 중구 동호로 249</SubLocationDiv>
-          </LocationDiv>
-          <PriceDiv>250,000</PriceDiv>
-          <SumPriceDiv>250,000</SumPriceDiv>
-          <MemoDiv>6시 조식, 11시 체크아웃 핸드폰 충전하기...</MemoDiv>
-        </PlanContentDiv>
-        <PlanContentDiv>
-          <TimeDiv>09:00 - 10:00</TimeDiv>
-          <PlanDiv>
-            <PostCity>숙소</PostCity>
-          </PlanDiv>
-          <LocationDiv>
-            신라호텔
-            <SubLocationDiv>서울 중구 동호로 249</SubLocationDiv>
-          </LocationDiv>
-          <PriceDiv>250,000</PriceDiv>
-          <SumPriceDiv>250,000</SumPriceDiv>
-          <MemoDiv>6시 조식, 11시 체크아웃 핸드폰 충전하기...</MemoDiv>
-        </PlanContentDiv>
-        <PlanContentDiv>
-          <TimeDiv>09:00 - 10:00</TimeDiv>
-          <PlanDiv>
-            <PostCity>숙소</PostCity>
-          </PlanDiv>
-          <LocationDiv>
-            신라호텔
-            <SubLocationDiv>서울 중구 동호로 249</SubLocationDiv>
-          </LocationDiv>
-          <PriceDiv>250,000</PriceDiv>
-          <SumPriceDiv>250,000</SumPriceDiv>
-          <MemoDiv>6시 조식, 11시 체크아웃 핸드폰 충전하기...</MemoDiv>
-        </PlanContentDiv>
-        <PlanContentDiv>
-          <TimeDiv>09:00 - 10:00</TimeDiv>
-          <PlanDiv>
-            <PostCity>숙소</PostCity>
-          </PlanDiv>
-          <LocationDiv>
-            신라호텔
-            <SubLocationDiv>서울 중구 동호로 249</SubLocationDiv>
-          </LocationDiv>
-          <PriceDiv>250,000</PriceDiv>
-          <SumPriceDiv>250,000</SumPriceDiv>
-          <MemoDiv>6시 조식, 11시 체크아웃 핸드폰 충전하기...</MemoDiv>
-        </PlanContentDiv>
+      <div style={{ overflowY: "auto", height: 500 }}>
+        {planListData.map(item => {
+          console.log("응?", planMasterId);
+          return (
+            <PlanContentDiv key={`${item.planId}`}>
+              <TimeDiv>
+                {item.startTime} - {item.endTime}
+              </TimeDiv>
+              <PlanDiv>
+                <PostCity>{cateChange(item)}</PostCity>
+              </PlanDiv>
+              <LocationDiv>
+                {item.placeName}
+                <SubLocationDiv>{item.placeAddress}</SubLocationDiv>
+              </LocationDiv>
+              <PriceDiv>{item.price / peopleCnt}</PriceDiv>
+              <SumPriceDiv>{item.price}</SumPriceDiv>
+              <MemoDiv>{item.memo}</MemoDiv>
+            </PlanContentDiv>
+          );
+        })}
       </div>
       <CostSummaryDiv>
         <div
@@ -182,9 +220,9 @@ const PlanListInput = () => {
           <PostCity style={{ backgroundColor: "#000" }}>전체</PostCity>
         </div>
         <div style={{ width: "20%" }}>1인당 비용</div>
-        <PriceDiv>250,000</PriceDiv>
+        <PriceDiv>{datePrice / peopleCnt}</PriceDiv>
         <div style={{ width: "20%" }}>총 비용</div>
-        <SumPriceDiv>250,000</SumPriceDiv>
+        <SumPriceDiv>{datePrice}</SumPriceDiv>
       </CostSummaryDiv>
     </WrapDiv>
   );

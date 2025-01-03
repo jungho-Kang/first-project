@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { LayoutDiv } from "./plan";
 
@@ -113,8 +113,36 @@ const AddScheduleDiv = styled.div`
   }
 `;
 
-function MakePlannerPage({ resData, cityName, resDetailData }) {
+function MakePlannerPage({
+  resData,
+  cityName,
+  resDetailData,
+  planMasterId,
+  peopleCnt,
+}) {
   const { id } = useParams();
+
+  // 보낼 Plan 데이터 초기 값
+  const initDetailData = {
+    planMasterId: 0,
+    placeId: 0,
+    price: 0,
+    memo: "",
+    startTime: "",
+    endTime: "",
+    date: "",
+    newPlacePostReq: {
+      cityId: 0,
+      placeAddress: "",
+      placeName: "",
+      category: "",
+      lat: 0,
+      lng: 0,
+    },
+  };
+
+  // 보낼 Plan 데이터 (위치, 시간, 주소, 비용 등등)
+  const [detailData, setDetailData] = useState(initDetailData);
 
   const [isSlide, setIsSlide] = useState(false);
   const [activeTab, setActiveTab] = useState("추천항목");
@@ -152,9 +180,23 @@ function MakePlannerPage({ resData, cityName, resDetailData }) {
   // 선택된 일차
   const [selectedOption, setSelectedOption] = useState("1일차");
 
+  // 일정 탭에 띄울 데이터
+  const [planListData, setPlanListData] = useState([]);
+
+  // 총 가격 정보
+  const [datePrice, setDatePrice] = useState(0);
+
+  useEffect(() => {
+    console.log("planMasterId : ", planMasterId);
+  }, [planMasterId]);
+
   const handleTabClick = tab => {
     setActiveTab(tab);
   };
+
+  useEffect(() => {
+    console.log("플랜 리스트 데이터다", planListData);
+  }, [planListData]);
 
   return (
     <div
@@ -279,7 +321,15 @@ function MakePlannerPage({ resData, cityName, resDetailData }) {
             isClick={isClick}
           />
         ) : (
-          <PlanListInput />
+          <PlanListInput
+            planListData={planListData}
+            setPlanListData={setPlanListData}
+            selectedOption={selectedOption}
+            datePrice={datePrice}
+            setDatePrice={setDatePrice}
+            planMasterId={planMasterId}
+            peopleCnt={peopleCnt}
+          />
         )}
       </LayoutDiv>
       {isClick ? (
@@ -293,6 +343,10 @@ function MakePlannerPage({ resData, cityName, resDetailData }) {
           setPlaceData={setPlaceData}
           itemLatLng={itemLatLng}
           selectedOption={selectedOption}
+          detailData={detailData}
+          setDetailData={setDetailData}
+          setPlanListData={setPlanListData}
+          planListData={planListData}
         />
       ) : (
         <></>

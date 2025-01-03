@@ -29,8 +29,15 @@ function App() {
   const [resData, setResData] = useState({});
   const [paramPath, setParamPath] = useState("");
   const [cityName, setCityName] = useState("");
+
   // 상세 일정 등록하기(위치, 주소, 금액 등등)
   const [resDetailData, setResDetailData] = useState({});
+
+  // 플랜 마스터 아이디
+  const [planMasterId, setPlanMasterId] = useState(0);
+
+  // 인원수
+  const [peopleCnt, setPeopleCnt] = useState(0);
 
   return (
     <Router>
@@ -61,6 +68,9 @@ function App() {
                     setResData={setResData}
                     setParamPath={setParamPath}
                     setResDetailData={setResDetailData}
+                    resDetailData={resDetailData}
+                    setPlanMasterId={setPlanMasterId}
+                    setPeopleCnt={setPeopleCnt}
                   />
                 }
               ></Route>
@@ -68,9 +78,11 @@ function App() {
                 path="makeplanner/:id"
                 element={
                   <MakePlanner
+                    planMasterId={planMasterId}
                     resData={resData}
                     cityName={cityName}
                     resDetailData={resDetailData}
+                    peopleCnt={peopleCnt}
                   />
                 }
               ></Route>

@@ -2,11 +2,11 @@
 
 import styled from "@emotion/styled";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoMdCloseCircle } from "react-icons/io";
-import { API_URL } from "../../constants/login";
-import { memo, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { API_URL } from "../../constants/login";
 
 const ContentDiv = styled.div`
   max-width: 600px;
@@ -106,27 +106,30 @@ const SchedulePush = ({
   resDetailData,
   itemLatLng,
   selectedOption,
+  detailData,
+  setDetailData,
 }) => {
   const { id } = useParams();
-  const initDetailData = {
-    planMasterId: 0,
-    placeId: 0,
-    price: 0,
-    memo: "",
-    startTime: "",
-    endTime: "",
-    date: "",
-    newPlacePostReq: {
-      cityId: 0,
-      placeAddress: "",
-      placeName: "",
-      category: "",
-      lat: 0,
-      lng: 0,
-    },
-  };
 
-  const [detailData, setDetailData] = useState(initDetailData);
+  // // 보낼 Plan 데이터 초기 값
+  // const initDetailData = {
+  //   planMasterId: 0,
+  //   placeId: 0,
+  //   price: 0,
+  //   memo: "",
+  //   startTime: "",
+  //   endTime: "",
+  //   date: "",
+  //   newPlacePostReq: {
+  //     cityId: 0,
+  //     placeAddress: "",
+  //     placeName: "",
+  //     category: "",
+  //     lat: 0,
+  //     lng: 0,
+  //   },
+  // };
+
   const [startTime, setStartTime] = useState("10:00");
   const [endTime, setEndTime] = useState("22:00");
   const [price, setPrice] = useState();
@@ -134,9 +137,7 @@ const SchedulePush = ({
 
   const postPlanDetail = async item => {
     try {
-      const res = await axios.post(`${API_URL}/plan/detail`, item);
-      // console.log(res.data.resultData);
-      setDetailData(initDetailData);
+      await axios.post(`${API_URL}/plan/detail`, item);
     } catch (error) {
       console.log(error);
     }
@@ -164,8 +165,6 @@ const SchedulePush = ({
         lng: itemLatLng.lng,
       },
     });
-    console.log("시작 시간 : ", startTime, "끝 시간 : ", endTime);
-    console.log("보낼 데이터 : ", detailData);
   }, [startTime, endTime, price, selectedCate, memo, selectedOption]);
   return (
     <ContentDiv>
