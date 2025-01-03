@@ -26,7 +26,7 @@
   background-color: #fff;
   color: #000;
   border: 1px solid #aeaeae;
-  border-radius: 20px;
+  border-radius: 12px;
   overflow: hidden;
   display: inline-block;
   position: relative;
@@ -63,7 +63,7 @@
   background-color: #f0f0f0;
   border-bottom: 1px solid #aeaeae;
   border-top-left-radius: 0.3rem;
-  padding: 8px 0;
+  padding: 1px 0;
   position: relative;
 }
 .react-datepicker__header--time {
@@ -120,8 +120,8 @@ h2.react-datepicker__current-month {
   padding: 0;
   border: none;
   z-index: 1;
-  height: 40px;
-  width: 40px;
+  height: 35px;
+  width: 35px;
   text-indent: -999em;
   overflow: hidden;
 }
@@ -928,7 +928,6 @@ h2.react-datepicker__current-month {
   height: 40px; /* 요일 높이 */
   line-height: 40px; /* 요일 텍스트 세로 정렬 */
   background-color: #f1f1f1; /* 요일 배경색 */
-  border: 1px solid #ddd; /* 요일 테두리 */
 }
 
 /* 날짜 버튼 스타일 (1, 2, 3, ..., 31) */
@@ -958,7 +957,7 @@ h2.react-datepicker__current-month {
 /* 여기서 부터에요.. */
 /* 달력의 너비, 높이를 조절함 */
 .react-datepicker {
-  max-width: 1024px;
+  max-width: 620px;
   width: 100%;
   margin: 0 auto;
 }
@@ -970,7 +969,7 @@ h2.react-datepicker__current-month {
   background-color: #333 !important;
 }
 h2.react-datepicker__current-month {
-  font-size: 26px;
+  font-size: 20px;
   margin: 20px 0;
   color: #fff;
 }
@@ -980,7 +979,7 @@ h2.react-datepicker__current-month {
   margin: 0;
   height: 45px;
   line-height: 45px;
-  background-color: #cbd50d;
+  background-color: #eee;
 }
 .react-datepicker__day-name[aria-label*="Saturday"] {
   color: orange;
@@ -993,8 +992,8 @@ h2.react-datepicker__current-month {
 /* 날짜 버튼 스타일 */
 .react-datepicker__day {
   font-size: 20px;
-  height: 100px;
-  line-height: 100px;
+  height: 80px;
+  line-height: 80px;
   text-align: center;
   border-radius: 8px;
   margin: 5px;
@@ -1010,7 +1009,7 @@ h2.react-datepicker__current-month {
 
 /* 비활성화 날짜 스타일 */
 .react-datepicker__day--disabled[aria-disabled="true"] {
-  color: #ccc !important;
+  color: #e8e8e8 !important;
 }
 
 /* 주말 날짜 스타일 */
@@ -1028,12 +1027,12 @@ h2.react-datepicker__current-month {
 }
 /* 선택된 날짜 스타일 */
 .react-datepicker__day--selected {
-  background-color: #292d32;
+  background-color: #2061b3;
   color: #fff !important;
 }
 /* 끝 날짜 스타일 */
 .react-datepicker__day--range-end {
-  background-color: #292d32 !important;
+  background-color: #2061b3 !important;
   color: #fff !important;
 }
 

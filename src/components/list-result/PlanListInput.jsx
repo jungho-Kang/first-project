@@ -193,7 +193,6 @@ const PlanListInput = ({
       </PlanTitleDiv>
       <div style={{ overflowY: "auto", height: 500 }}>
         {planListData.map(item => {
-          console.log("응?", planMasterId);
           return (
             <PlanContentDiv key={`${item.planId}`}>
               <TimeDiv>
