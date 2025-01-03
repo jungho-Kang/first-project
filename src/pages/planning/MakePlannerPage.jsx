@@ -119,6 +119,14 @@ function MakePlannerPage({
   resDetailData,
   planMasterId,
   peopleCnt,
+  selectedOption,
+  setSelectedOption,
+  isOpen,
+  setIsOpen,
+  dayList,
+  setDayList,
+  datePrice,
+  setDatePrice,
 }) {
   const { id } = useParams();
 
@@ -177,14 +185,8 @@ function MakePlannerPage({
   // 장소 btnClick 초기화
   const [initData, setInitData] = useState([]);
 
-  // 선택된 일차
-  const [selectedOption, setSelectedOption] = useState("1일차");
-
   // 일정 탭에 띄울 데이터
   const [planListData, setPlanListData] = useState([]);
-
-  // 총 가격 정보
-  const [datePrice, setDatePrice] = useState(0);
 
   useEffect(() => {
     console.log("planMasterId : ", planMasterId);
@@ -254,6 +256,10 @@ function MakePlannerPage({
                 cityName={cityName}
                 selectedOption={selectedOption}
                 setSelectedOption={setSelectedOption}
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                setDayList={setDayList}
+                dayList={dayList}
               />
               <div>
                 <PlanTabsUl>

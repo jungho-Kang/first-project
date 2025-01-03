@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
+import { useEffect } from "react";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { Link } from "react-router-dom";
 
@@ -75,11 +75,16 @@ const LinkbtnAreaDiv = styled.div`
   }
 `;
 
-const PlanTop = ({ resData, cityName, selectedOption, setSelectedOption }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const [dayList, setDayList] = useState([]);
-
+const PlanTop = ({
+  resData,
+  cityName,
+  selectedOption,
+  setSelectedOption,
+  setIsOpen,
+  isOpen,
+  dayList,
+  setDayList,
+}) => {
   const handleOptionClick = option => {
     setSelectedOption(option);
     setIsOpen(false);
