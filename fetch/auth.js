@@ -17,10 +17,6 @@ export const postLoginMember = async data => {
 //  인증번호 발송 API
 export const postEmailCode = async email => {
   try {
-    //http://192.168.0.15:8080/emailCheck
-    // http://localhost:5173/emailCheck
-    // {"email":"by5028@naver.com"}
-    // {"email":" "}
     console.log("postEmailCode : ", email);
     const res = await axios.post(`${API_URL}/emailCheck`, { email });
     console.log(res);

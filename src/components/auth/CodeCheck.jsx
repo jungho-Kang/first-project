@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { ErrorP, InitMessageP, InputBtnArea } from "../common";
 // yup
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { LoginContext } from "../../contexts/LoginContext";
+import ConfirmPopup from "../popup/ConfirmPopup";
 
 const schema = yup.object({
   email: yup
@@ -20,8 +21,9 @@ const CodeCheck = ({ email, setEmail }) => {
   const [inputCode, setInputCode] = useState(""); // 인증번호 입력 값
   const [inputEmail, setInputEmail] = useState("");
   const [sendMessage, setSendMessage] = useState("이메일 주소를 입력해주세요."); // input 메세지 관리(이메일 버튼 인증)
-  // const navigate = useNavigate();
-
+  const [codeBtnDisable, setCodeBtnDisable] = useState(true); // 인증번호 버튼 비활성화
+  const { setIsPopup, isPopup, handleClickPopupClose } =
+    useContext(LoginContext);
   const [putData, setPutData] = useState({
     email: "",
     authCode: "",
@@ -57,12 +59,14 @@ const CodeCheck = ({ email, setEmail }) => {
       console.log(res.data);
       setSendMessage("해당 이메일로 인증번호가 발송되었습니다.");
       setPutData({ ...putData, email: email });
+      setCodeBtnDisable(false);
       setEmail({ email: email });
       setCode(res.data);
       console.log("PutData updated:", putData);
     } catch (error) {
       console.log("인증코드 발송 실패", error);
-      alert("인증번호 발송에 실패했습니다. 다시 시도해주세요.");
+      setIsPopup(true);
+      // alert("인증번호 발송에 실패했습니다. 다시 시도해주세요.");
     }
   };
 
@@ -135,9 +139,9 @@ const CodeCheck = ({ email, setEmail }) => {
           {/* submit 버튼*/}
           <button
             type="submit"
-            disabled={inputCode !== code}
+            disabled={codeBtnDisable}
             style={{
-              backgroundColor: inputCode !== code ? "#d3d3d3" : "#5469D4",
+              backgroundColor: codeBtnDisable ? "#d3d3d3" : "#5469D4",
             }}
           >
             인증번호 확인
@@ -149,6 +153,13 @@ const CodeCheck = ({ email, setEmail }) => {
           <InitMessageP>이메일로 받은 인증번호를 입력하세요</InitMessageP>
         )}
       </InputBtnArea>
+      {isPopup && (
+        <ConfirmPopup
+          message="인증번호 발송에 실패했습니다. 이메일을 확인후 다시 시도해주세요."
+          onClose={handleClickPopupClose}
+          popupTit={"인증번호 발송실패"}
+        />
+      )}
     </form>
   );
 };

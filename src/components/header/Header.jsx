@@ -73,7 +73,11 @@ const Header = ({ isScrolled }) => {
                 <FaCircleUser />
               </button>
               {myMenuOpen ? (
-                <ul>
+                <ul
+                  onClick={() => {
+                    handleMyMenuToggle();
+                  }}
+                >
                   <li>
                     <Link to={"/myplanlist"}>
                       <BsFillSuitcase2Fill />

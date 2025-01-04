@@ -110,7 +110,7 @@ const PlanListInput = ({
 
   const cateChange = item => {
     if (item.category === "hotel") {
-      return "호텔";
+      return "숙소";
     }
     if (item.category === "place") {
       return "명소";

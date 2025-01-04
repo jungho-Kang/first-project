@@ -138,6 +138,7 @@ export const ChoiceDiv = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 10px 0;
+  position: relative;
   .date {
     font-size: 16px;
     font-weight: 500;
@@ -150,13 +151,14 @@ export const ChoiceDiv = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
 
     button {
       padding: 6px 12px;
       border-radius: 5px;
       border: transparent;
       color: #fff;
+      font-size: 14px;
       transition: all 0.3s;
       &:hover {
         opacity: 0.85;
@@ -178,6 +180,38 @@ export const ChoiceDiv = styled.div`
 `;
 
 export const TableDiv = styled.div`
+  .empty-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 460px;
+    color: #999;
+  }
+  /* 컨텐츠의 사이즈 */
+  .t-title,
+  ul.t-content {
+    li {
+      text-align: center;
+      &:nth-child(1) {
+        width: 12%;
+      }
+      &:nth-child(2) {
+        width: 8%;
+      }
+      &:nth-child(3) {
+        width: 20%;
+      }
+      &:nth-child(4) {
+        width: 10%;
+      }
+      &:nth-child(5) {
+        width: 10%;
+      }
+      &:nth-child(6) {
+        width: 40%;
+      }
+    }
+  }
   /* 테이블 제목 */
   .t-title {
     display: flex;
@@ -185,26 +219,20 @@ export const TableDiv = styled.div`
     height: 45px;
     border-radius: 5px;
     padding: 0 20px;
-    /* border: 1px solid; */
-    background-color: #555;
+    background-color: #777;
     color: #fff;
-
-    li {
-      flex: 1;
-      text-align: center;
-    }
   }
   /* 테이블 컨텐츠 */
   > ul.t-content {
-    /* border: 1px solid #eee; */
     margin: 10px 0;
     padding: 10px;
     height: 440px;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+
     > li.item {
-      margin: 10px 0;
+      margin: 6px 0;
       width: 100%;
 
       width: 100%;
@@ -218,13 +246,42 @@ export const TableDiv = styled.div`
         display: flex;
         align-items: center;
         border: 1px solid #ddd;
-
         li {
-          flex: 1;
-          text-align: center;
+          &:nth-child(1) p {
+            font-weight: 500;
+          }
+          &:nth-child(2) p {
+          }
+          &:nth-child(3) p {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            b {
+              font-size: 15px;
+              font-weight: 600;
+              display: block;
+              margin-bottom: 3px;
+            }
+            strong {
+              font-size: 12px;
+              color: #777;
+            }
+          }
+          &:nth-child(4) p {
+          }
+          &:nth-child(5) p {
+          }
+          &:nth-child(6) p {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
         }
+
         p {
           padding: 10px 0;
+          color: #333;
+          font-size: 14px;
         }
       }
     }
@@ -232,15 +289,62 @@ export const TableDiv = styled.div`
 
   > ul.t-result {
     border-radius: 5px;
+    overflow: hidden;
     color: #fff;
-    background-color: #333;
+    background-color: #555;
+    color: #fff;
     display: flex;
     align-items: center;
+
     li {
       flex: 1;
       text-align: center;
-      height: 65px;
-      line-height: 65px;
+      height: 50px;
+      line-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+
+      &:nth-of-type(1) {
+        background-color: #000;
+        color: #fff;
+      }
+      &:nth-of-type(2n) {
+        border-left: 2px solid #777;
+      }
+      &:nth-of-type(2n)::before {
+        content: ":";
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+  }
+`;
+
+export const TableTopDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+export const BtnAreaDiv = styled.div`
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+  /* margin-top: 20px; */
+  a {
+    height: 38px;
+    line-height: 38px;
+    min-width: 80px;
+    padding: 0 20px;
+    text-align: center;
+    border-radius: 5px;
+    background-color: #1270b0;
+    color: #fff;
+    &:nth-of-type(1) {
+      background-color: #333;
     }
   }
 `;

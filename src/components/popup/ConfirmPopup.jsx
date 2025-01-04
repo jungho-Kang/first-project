@@ -1,27 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import { PopupDiv } from "./popup";
 
-const ConfirmPopup = ({ onClose, navi }) => {
+const ConfirmPopup = ({ style, onClose, message, popupTit, onClickOk }) => {
   const navigate = useNavigate();
 
   return (
     <PopupDiv>
       <div className="layer">
-        <h1>팝업제목</h1>
-        <span>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci,
-          quidem sit. Excepturi nobis doloribus corrupti?
-        </span>
+        <h1>{popupTit}</h1>
+        <span style={style}>{message}</span>
         <div className="btn-area">
           <button className="btn-close" onClick={onClose}>
             취소
           </button>
-          <button
-            className="btn-confirm"
-            onClick={() => {
-              navigate(navi);
-            }}
-          >
+          <button className="btn-confirm" onClick={onClose}>
             확인
           </button>
         </div>

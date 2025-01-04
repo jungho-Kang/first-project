@@ -24,7 +24,7 @@ function MyPlanDetail({
       <MyPageWrapDiv>
         <MypageTab />
         <TitleAreaDiv>
-          <h3>상세정보</h3>
+          <h3>{selectedOption} 일정</h3>
         </TitleAreaDiv>
         <MyPlanTable
           selectedOption={selectedOption}

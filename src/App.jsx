@@ -100,6 +100,8 @@ function App() {
                     dayList={dayList}
                     datePrice={datePrice}
                     setDatePrice={setDatePrice}
+                    isOpen={isOpen}
+                    setIsOpen={setIsOpen}
                   />
                 }
               ></Route>
