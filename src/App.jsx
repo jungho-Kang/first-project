@@ -23,6 +23,7 @@ import MakePlanner from "./pages/planning/MakePlannerPage";
 
 import { LoginProvider } from "./contexts/LoginContext";
 import { useState } from "react";
+import { PopupProvider } from "./contexts/PopupContext";
 
 function App() {
   // 일정 등록(날짜, 도시정보 등등)

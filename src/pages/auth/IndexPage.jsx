@@ -44,8 +44,6 @@ function IndexPage() {
   const [error, setError] = useState(null); // API 호출 오류 저장
   const [loading, setLoading] = useState(false); // API 진행 상태 관리
 
-  // 팝업상태관리
-  const [isPopup, setIsPopup] = useState(false);
   const navigate = useNavigate();
   const { handleClickLogin, setIsLogin } = useContext(LoginContext);
 
@@ -58,8 +56,8 @@ function IndexPage() {
     mode: "onSubmit",
     resolver: yupResolver(schema),
     defaultValues: {
-      email: "by5028@naver.com",
-      upw: "testtest1212!",
+      email: "o52o.suhyun@gmail.com",
+      upw: "rrrr4444%",
     },
   });
 
@@ -73,16 +71,6 @@ function IndexPage() {
       const response = await axios.post("/api/user/sign-in", _formData);
       console.log("로그인 성공시 받아온 데이터:", response.data);
       const { upw, message, ...userData } = response.data.resultData;
-      // 받아온 데이터
-      //   {
-      //     "resultMessage": "회원정보 조회 수행을 완료하였습니다.",
-      //     "resultData": {
-      //         "userId": 0,
-      //         "upw": null,
-      //         "nickName": null,
-      //         "message": "이메일/비밀번호를 확인해 주세요."
-      //     }
-      // }
 
       if (!response.data.resultData.nickName) {
         alert(response.data.resultData.message);
@@ -103,15 +91,6 @@ function IndexPage() {
   const onSubmit = async formData => {
     console.log("onSubmit 호출됨", formData);
     fetchApi(formData);
-  };
-
-  // 팝업
-  const handleClickPopup = () => {
-    setIsPopup(true);
-    console.log(isPopup);
-  };
-  const handleClickPopupClose = () => {
-    setIsPopup(false);
   };
 
   return (
@@ -170,27 +149,27 @@ function IndexPage() {
               <Link to={"/auth/signup"}>회원가입</Link>
             </JoinDiv>
             {/* start 팝업버튼 사용시 버튼 */}
-            <button
+            {/* <button
               type="button"
               onClick={() => {
                 handleClickPopup();
               }}
             >
               이거
-            </button>
+            </button> */}
             {/* //end 팝업버튼 사용시 버튼 */}
           </LayerDiv>
         </LoginDiv>
       </form>
       {/* start 팝업버튼 사용시 */}
-      {isPopup && (
+      {/* {isPopup && (
         <ConfirmPopup
           navi={"/"}
           onClose={() => {
             handleClickPopupClose();
           }}
         />
-      )}
+      )} */}
       {/* //end 팝업버튼 사용시 */}
     </>
   );

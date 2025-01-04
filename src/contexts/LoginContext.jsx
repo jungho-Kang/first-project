@@ -1,18 +1,22 @@
 import { createContext, useEffect, useState } from "react";
 import { LOGIN_SESSION_KEY, USER_SESSION_KEY } from "../constants/login";
+import { useNavigate } from "react-router-dom";
 
 export const LoginContext = createContext();
 
 export const LoginProvider = ({ children }) => {
   const initUser = {
     userId: "",
-    nickName: "s",
+    nickName: "",
     email: "a@a.net",
     name: "오이",
   };
 
   const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState(initUser);
+  const [isPopup, setIsPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState(""); // 팝업에 띄울 메시지
+  const navigate = useNavigate();
 
   // 로그인
   const handleClickLogin = userInfo => {
@@ -26,8 +30,18 @@ export const LoginProvider = ({ children }) => {
   const handleClickLogout = () => {
     setIsLogin(false);
     setUser(initUser);
+    navigate("/");
     sessionStorage.removeItem(LOGIN_SESSION_KEY);
     sessionStorage.removeItem(USER_SESSION_KEY);
+  };
+
+  // 팝업
+  const handleClickPopup = () => {
+    setIsPopup(true);
+    console.log(isPopup);
+  };
+  const handleClickPopupClose = () => {
+    setIsPopup(false);
   };
 
   // 페이지 로드 시 sessionStorage에서 값 읽어오기
@@ -56,6 +70,12 @@ export const LoginProvider = ({ children }) => {
         setUser,
         handleClickLogin,
         handleClickLogout,
+        setIsPopup,
+        isPopup,
+        handleClickPopup,
+        handleClickPopupClose,
+        setPopupMessage,
+        popupMessage,
       }}
     >
       {children}

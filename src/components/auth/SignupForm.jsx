@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import axios from "axios";
@@ -10,17 +10,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 // styled
 import { NameNickNameDiv, SignupDiv } from "../../pages/auth/login";
-import {
-  BtnBasic,
-  ErrorP,
-  InitMessageP,
-  InputBtnArea,
-  JoinDiv,
-  TextForm,
-} from "../common";
+import { BtnBasic, ErrorP, InitMessageP, JoinDiv, TextForm } from "../common";
 // icon
 import { FaRegCircleCheck } from "react-icons/fa6";
 import CodeCheck from "./CodeCheck";
+import { LoginContext } from "../../contexts/LoginContext";
+import ConfirmPopup from "../popup/ConfirmPopup";
 
 const schema = yup.object({
   name: yup
@@ -50,11 +45,18 @@ const schema = yup.object({
 const SignupForm = () => {
   const [email, setEmail] = useState({ email: "" });
   const navigate = useNavigate();
-
+  const {
+    isPopup,
+    setIsPopup,
+    popupMessage,
+    setPopupMessage,
+    handleClickPopupClose,
+  } = useContext(LoginContext);
   const [isCodeCorrect, setIsCodeCorrect] = useState(false); // 인증번호 일치 여부
 
   const {
     register,
+    watch,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -68,34 +70,40 @@ const SignupForm = () => {
     mode: "onChange",
     resolver: yupResolver(schema),
   });
-  // email에 객체로 담겨있나요?
-  useEffect(() => {
-    console.log("email 객체인가", email);
-  }, [email]);
+
   const onSubmit = async data => {
-    console.log("보내는데이터!!!", data);
+    // console.log("보내는데이터!!!", data);
     const { pwconfirm, ...submitData } = data;
-    console.log("email의 정체는:", typeof email);
     submitData.email = email.email;
-    console.log(submitData);
+    // console.log(submitData);
 
     console.log("보내는데이터--1", submitData);
     try {
       const res = await axios.post("/api/user/sign-up", submitData);
       console.log("회원가입 성공시 받아온 데이터 : ", res.data);
       if (res.data.resultData) {
-        alert("회원가입이 완료되었습니다.");
-        navigate("/auth");
+        // alert("회원가입이 완료되었습니다.");
+        setIsPopup(true);
+        setPopupMessage(res.data.resultMessage);
       } else {
-        alert("회원가입을 다시 시도해주세요.");
+        setIsPopup(true);
+        setPopupMessage(res.data.resultMessage);
       }
     } catch (error) {
       console.log("회원가입 실패", error);
       alert("로그인 중 오류가 발생했습니다. 다시 시도해주세요.");
     }
   };
-
-  console.log("aaaaaaa", email);
+  const upw = watch("upw");
+  const pwconfirm = watch("pwconfirm");
+  useEffect(() => {
+    if (upw && pwconfirm && upw === pwconfirm) {
+      setIsCodeCorrect(true);
+    } else {
+      setIsCodeCorrect(false);
+    }
+  }, [[upw, pwconfirm]]);
+  // console.log("aaaaaaa", email);
   return (
     <SignupDiv>
       <LayerLogo />
@@ -181,6 +189,15 @@ const SignupForm = () => {
           <Link to={"/auth"}>로그인화면 이동</Link>
         </JoinDiv>
       </div>
+      {isPopup && (
+        <ConfirmPopup
+          popupTit={"회원가입"}
+          message={popupMessage}
+          onClose={handleClickPopupClose}
+          onNav={`navigate("/auth")`}
+          style={{ textAlign: "center" }}
+        />
+      )}
     </SignupDiv>
   );
 };

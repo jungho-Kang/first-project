@@ -4,7 +4,6 @@ import { ErrorP, InitMessageP, InputBtnArea } from "../common";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const schema = yup.object({
@@ -20,7 +19,7 @@ const CodeCheck = ({ email, setEmail }) => {
   const [inputCode, setInputCode] = useState(""); // 인증번호 입력 값
   const [inputEmail, setInputEmail] = useState("");
   const [sendMessage, setSendMessage] = useState("이메일 주소를 입력해주세요."); // input 메세지 관리(이메일 버튼 인증)
-  // const navigate = useNavigate();
+  const [codeBtnDisable, setCodeBtnDisable] = useState(true); // 인증번호 버튼 비활성화
 
   const [putData, setPutData] = useState({
     email: "",
@@ -55,14 +54,20 @@ const CodeCheck = ({ email, setEmail }) => {
     try {
       const res = await axios.post("/api/email-check", { email: email });
       console.log(res.data);
-      setSendMessage("해당 이메일로 인증번호가 발송되었습니다.");
-      setPutData({ ...putData, email: email });
-      setEmail({ email: email });
-      setCode(res.data);
-      console.log("PutData updated:", putData);
+      if (res.data.resultData) {
+        setSendMessage("해당 이메일로 인증번호가 발송되었습니다.");
+        setPutData({ ...putData, email: email });
+        setCodeBtnDisable(false);
+        setEmail({ email: email });
+        setCode(res.data);
+        console.log("PutData updated:", putData);
+      } else {
+        console.log("이메일 다름");
+      }
     } catch (error) {
       console.log("인증코드 발송 실패", error);
-      alert("인증번호 발송에 실패했습니다. 다시 시도해주세요.");
+
+      // alert("인증번호 발송에 실패했습니다. 다시 시도해주세요.");
     }
   };
 
@@ -135,9 +140,9 @@ const CodeCheck = ({ email, setEmail }) => {
           {/* submit 버튼*/}
           <button
             type="submit"
-            disabled={inputCode !== code}
+            disabled={codeBtnDisable}
             style={{
-              backgroundColor: inputCode !== code ? "#d3d3d3" : "#5469D4",
+              backgroundColor: codeBtnDisable ? "#d3d3d3" : "#5469D4",
             }}
           >
             인증번호 확인
