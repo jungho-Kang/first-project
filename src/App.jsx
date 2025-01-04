@@ -12,18 +12,17 @@ import DeleteMember from "./pages/mypage/my-info/DeleteMemberPage";
 import EditProfile from "./pages/mypage/my-info/EditProfilePage";
 import MyInfoIndex from "./pages/mypage/my-info/IndexPage";
 import UpdatePw from "./pages/mypage/my-info/UpdatePwPage";
+import MyPlanDetail from "./pages/mypage/plan-list/MyPlanDetailPage";
+import MyPlanList from "./pages/mypage/plan-list/MyPlanListPage";
+import CalendarPicker from "./pages/planning/CalendarPickerPage";
+import City from "./pages/planning/CityPage";
+import MakePlanner from "./pages/planning/MakePlannerPage";
 import BoardDetail from "./pages/travel-board/DetailPage";
 import BoardIndex from "./pages/travel-board/IndexPage";
 import WritePost from "./pages/travel-board/WritePostPage";
-import MyPlanList from "./pages/mypage/plan-list/MyPlanListPage";
-import MyPlanDetail from "./pages/mypage/plan-list/MyPlanDetailPage";
-import City from "./pages/planning/CityPage";
-import CalendarPicker from "./pages/planning/CalendarPickerPage";
-import MakePlanner from "./pages/planning/MakePlannerPage";
 
-import { LoginProvider } from "./contexts/LoginContext";
 import { useState } from "react";
-import { PopupProvider } from "./contexts/PopupContext";
+import { LoginProvider } from "./contexts/LoginContext";
 
 function App() {
   // 일정 등록(날짜, 도시정보 등등)
@@ -101,6 +100,8 @@ function App() {
                     dayList={dayList}
                     datePrice={datePrice}
                     setDatePrice={setDatePrice}
+                    isOpen={isOpen}
+                    setIsOpen={setIsOpen}
                   />
                 }
               ></Route>
@@ -148,7 +149,23 @@ function App() {
                   />
                 }
               />
-              <Route path="writepost/:id" element={<WritePost />} />
+              <Route
+                path="writepost/:id"
+                element={
+                  <WritePost
+                    selectedOption={selectedOption}
+                    setSelectedOption={setSelectedOption}
+                    setIsOpen={setIsOpen}
+                    isOpen={isOpen}
+                    dayList={dayList}
+                    setDayList={setDayList}
+                    datePrice={datePrice}
+                    setDatePrice={setDatePrice}
+                    allPrice={allPrice}
+                    setAllPrice={setAllPrice}
+                  />
+                }
+              />
             </Route>
             {/* 마이페이지 - 내프로필, 수정, 비번재설정, 탈퇴 */}
             <Route path="myinfo">

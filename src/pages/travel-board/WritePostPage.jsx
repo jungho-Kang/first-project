@@ -2,11 +2,14 @@ import { TitleDiv, WrapDiv } from "../../components/common";
 import PlanListResult from "../../components/list-result/PlanListResult";
 import { PostCity } from "../planning/plan";
 import { FlexLayoutDiv } from "./board";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import DOMPurify from "dompurify";
 import styled from "@emotion/styled";
+import { useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const ReviewContentDiv = styled.div`
   margin: 0 auto;
@@ -31,8 +34,35 @@ const ReviewContentDiv = styled.div`
   }
 `;
 
-function WritePostPage() {
+function WritePostPage({
+  selectedOption,
+  setSelectedOption,
+  setIsOpen,
+  isOpen,
+  dayList,
+  setDayList,
+  datePrice,
+  setDatePrice,
+  allPrice,
+  setAllPrice,
+}) {
+  const { id } = useParams();
+
   const [review, setReview] = useState("");
+  const { handleSubmit } = useForm();
+
+  const postFeed = async item => {
+    try {
+      await axios.post(`/api/feed`, item);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // const handleSubmitFeed = () => {
+  //   postFeed({})
+  // }
+
   const modules = useMemo(
     () => ({
       toolbar: {
@@ -87,9 +117,11 @@ function WritePostPage() {
     }),
     [],
   );
+
+  // useEffect
   return (
     <WrapDiv>
-      <form>
+      <form onSubmit={handleSubmit()}>
         <TitleDiv>다녀ON</TitleDiv>
         <FlexLayoutDiv style={{ position: "relative", height: 60 }}>
           <PostCity style={{ position: "absolute", zIndex: 9, marginLeft: 10 }}>
@@ -109,7 +141,20 @@ function WritePostPage() {
             }}
           />
         </FlexLayoutDiv>
-        <PlanListResult />
+        <PlanListResult
+          selectedOption={selectedOption}
+          setSelectedOption={setSelectedOption}
+          setIsOpen={setIsOpen}
+          isOpen={isOpen}
+          dayList={dayList}
+          setDayList={setDayList}
+          datePrice={datePrice}
+          setDatePrice={setDatePrice}
+          allPrice={allPrice}
+          setAllPrice={setAllPrice}
+          id={id}
+          content={""}
+        />
         <div
           style={{
             display: "flex",

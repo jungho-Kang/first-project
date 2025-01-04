@@ -53,7 +53,7 @@ const PlanListResult = ({
       />
 
       <ReviewTitleDiv>여행 후기</ReviewTitleDiv>
-      {pathname === "/board/writepost" ? (
+      {pathname === `/myplanlist/writepost/${id}` ? (
         <></>
       ) : (
         <ReviewDiv>{content}</ReviewDiv>
