@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 // comp
 import axios from "axios";
-import { useParams } from "react-router-dom";
 // styled
 import styled from "@emotion/styled";
 import { TiArrowSortedDown } from "react-icons/ti";
@@ -55,13 +54,11 @@ const MyPlanTable = ({
   setDatePrice,
   allPrice,
   setAllPrice,
+  id,
 }) => {
-  const { id } = useParams();
   const [myPlan, setMyPlan] = useState([]);
   const [cnt, setCnt] = useState(0);
   const [planDate, setPlanDate] = useState();
-
-  console.log(id);
 
   const cateChange = item => {
     if (item.category === "hotel") {
@@ -139,19 +136,19 @@ const MyPlanTable = ({
 
   const datePriceChange = res => {
     if (selectedOption === "1일차") {
-      setDatePrice(res.data.resultData[0].price);
+      setDatePrice(res.data.resultData[0]?.price);
     }
     if (selectedOption === "2일차") {
-      setDatePrice(res.data.resultData[1].price);
+      setDatePrice(res.data.resultData[1]?.price);
     }
     if (selectedOption === "3일차") {
-      setDatePrice(res.data.resultData[2].price);
+      setDatePrice(res.data.resultData[2]?.price);
     }
     if (selectedOption === "4일차") {
-      setDatePrice(res.data.resultData[3].price);
+      setDatePrice(res.data.resultData[3]?.price);
     }
     if (selectedOption === "5일차") {
-      setDatePrice(res.data.resultData[4].price);
+      setDatePrice(res.data.resultData[4]?.price);
     }
   };
   useEffect(() => {
@@ -233,7 +230,7 @@ const MyPlanTable = ({
                       </p>
                     </li>
                     <li>
-                      <p>{item.price / cnt}</p>
+                      <p>{Math.ceil(item.price / cnt / 100) * 100}</p>
                     </li>
                     <li>
                       <p>{item.price}</p>
@@ -254,7 +251,7 @@ const MyPlanTable = ({
               <p>1인당 비용</p>
             </li>
             <li>
-              <p>{datePrice / cnt} 원</p>
+              <p>{Math.ceil(datePrice / cnt / 100) * 100} 원</p>
             </li>
             <li>
               <p>총 비용</p>

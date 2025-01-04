@@ -97,6 +97,8 @@ export const TitleDiv = styled.div`
   }
 `;
 export const LineDiv = styled.div`
+  margin: 0 auto;
+  max-width: 1200px;
   width: 100%;
   border: 1px solid rgba(0, 0, 0, 0.1);
   margin-bottom: 30px;
