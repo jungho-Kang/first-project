@@ -7,12 +7,11 @@ import { AgreementDocumentDiv, SignupDiv } from "../../pages/auth/login";
 import { BtnBasic, CheckBoxDiv } from "../common";
 // icon
 import { FaCheck } from "react-icons/fa";
-import { LoginContext } from "../../contexts/LoginContext";
-import ConfirmPopup from "../popup/ConfirmPopup";
+
+import { PopupContext } from "../../contexts/PopupContext";
 
 const Agreement = ({ setIsAgreementStep }) => {
-  const { isPopup, setIsPopup, handleClickPopupClose } =
-    useContext(LoginContext);
+  const { showPopup } = useContext(PopupContext);
   const [agreeChecked, setAgreeChecked] = useState({
     agree01: false,
     agree02: false,
@@ -45,8 +44,7 @@ const Agreement = ({ setIsAgreementStep }) => {
     if (isAllChecked) {
       setIsAgreementStep(false);
     } else {
-      setIsPopup(true);
-      // alert("모든항목에 동의해주세요.");
+      alert("모든항목에 동의해주세요.");
     }
   };
   const [isAllChecked, setIsAllChecked] = useState(false);
@@ -167,14 +165,6 @@ const Agreement = ({ setIsAgreementStep }) => {
       >
         다음
       </BtnBasic>
-      {isPopup && (
-        <ConfirmPopup
-          popupTit={"약관동의"}
-          message="모든 항목에 동의해주세요."
-          onClose={handleClickPopupClose}
-          style={{ textAlign: "center" }}
-        />
-      )}
     </SignupDiv>
   );
 };
