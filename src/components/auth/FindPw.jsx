@@ -72,8 +72,8 @@ const FindPw = ({ setShowResetPw, setPutPwEmail, putPwEmail }) => {
       const res = await axios.put(
         `/api/auth-check?email=${putData.email}&authCode=${putData.authCode}`,
       );
-      if (res.data) {
-        console.log("비밀번호 수정");
+      if (res.data.resultData) {
+        console.log("코드 인증 성공");
         setShowResetPw(true);
       } else {
         alert("인증번호가 틀렸습니다. 다시 시도해주세요.");

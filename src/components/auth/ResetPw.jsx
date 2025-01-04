@@ -51,11 +51,12 @@ const ResetPw = ({ putPwEmail, setPutPwEmail }) => {
       const res = await axios.patch("/api/user/upw", putPwEmail);
       console.log("서버 응답:", res);
 
-      if (res.data) {
-        console.log("비밀번호 수정");
+      if (res.data.resultData) {
+        console.log("비밀번호 수정 성공");
         navigate("/auth");
       } else {
         alert("인증번호가 틀렸습니다. 다시 시도해주세요.");
+        navigate("/auth/findpw");
       }
     } catch (error) {
       console.log(error);

@@ -1,7 +1,7 @@
-import { useEffect, useState, useLocation } from "react";
+import { useEffect, useState } from "react";
 // comp
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 // styled
 import { TiArrowSortedDown } from "react-icons/ti";
@@ -42,7 +42,6 @@ const MyPlanTable = ({
 
   const { pathname } = useLocation();
 
-  
   const cateChange = item => {
     if (item.category === "hotel") {
       return "숙소";
@@ -152,28 +151,28 @@ const MyPlanTable = ({
   };
 
   // 일정 데이터 필터링
-  //  const planListDataChange = data => {
-  //   if (selectedOption === "1일차") {
-  //     const filterData = data.filter(item => item.date === 1);
-  //     setMyPlan(filterData);
-  //   }
-  //   if (selectedOption === "2일차") {
-  //     const filterData = data.filter(item => item.date === 2);
-  //     setMyPlan(filterData);
-  //   }
-  //   if (selectedOption === "3일차") {
-  //     const filterData = data.filter(item => item.date === 3);
-  //     setMyPlan(filterData);
-  //   }
-  //   if (selectedOption === "4일차") {
-  //     const filterData = data.filter(item => item.date === 4);
-  //     setMyPlan(filterData);
-  //   }
-  //   if (selectedOption === "5일차") {
-  //     const filterData = data.filter(item => item.date === 5);
-  //     setMyPlan(filterData);
-  //   }
-  // };
+  const planListDataChange = data => {
+    if (selectedOption === "1일차") {
+      const filterData = data.filter(item => item.date === 1);
+      setMyPlan(filterData);
+    }
+    if (selectedOption === "2일차") {
+      const filterData = data.filter(item => item.date === 2);
+      setMyPlan(filterData);
+    }
+    if (selectedOption === "3일차") {
+      const filterData = data.filter(item => item.date === 3);
+      setMyPlan(filterData);
+    }
+    if (selectedOption === "4일차") {
+      const filterData = data.filter(item => item.date === 4);
+      setMyPlan(filterData);
+    }
+    if (selectedOption === "5일차") {
+      const filterData = data.filter(item => item.date === 5);
+      setMyPlan(filterData);
+    }
+  };
 
   // 일정 목록 상태 업데이트
   useEffect(() => {
@@ -253,14 +252,14 @@ const MyPlanTable = ({
           {pathname === `/myplanlist/${id}` ? (
             <BtnAreaDiv>
               <Link to={"/"}>일정 수정</Link>
-              <Link to={"/board/writepost"}>다녀ON 리뷰작성</Link>
+              <Link to={`/myplanlist/writepost/${id}`}>다녀ON 리뷰작성</Link>
             </BtnAreaDiv>
           ) : (
             <></>
           )}
         </TableTopDiv>
         <TableDiv>
-         <ul className="t-title">
+          <ul className="t-title">
             {tableTitle.map((item, index) => {
               return (
                 <li key={index}>

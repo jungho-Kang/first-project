@@ -23,7 +23,7 @@ import MakePlanner from "./pages/planning/MakePlannerPage";
 
 import { LoginProvider } from "./contexts/LoginContext";
 import { useState } from "react";
-import { PopupProvider } from "./contexts/PopupContext";
+// import { PopupProvider } from "./contexts/PopupContext";
 
 function App() {
   // 일정 등록(날짜, 도시정보 등등)
@@ -101,6 +101,8 @@ function App() {
                     dayList={dayList}
                     datePrice={datePrice}
                     setDatePrice={setDatePrice}
+                    isOpen={isOpen}
+                    setIsOpen={setIsOpen}
                   />
                 }
               ></Route>
