@@ -108,8 +108,23 @@ function App() {
             {/* 다녀ON 게시판 : 리스트, 디테일페이지, 글쓰기/수정 */}
             <Route path="board">
               <Route index element={<BoardIndex />} />
-              <Route path="detail/:id" element={<BoardDetail />} />
-              <Route path="writepost" element={<WritePost />} />
+              <Route
+                path="detail/:id"
+                element={
+                  <BoardDetail
+                    selectedOption={selectedOption}
+                    setSelectedOption={setSelectedOption}
+                    setIsOpen={setIsOpen}
+                    isOpen={isOpen}
+                    dayList={dayList}
+                    setDayList={setDayList}
+                    datePrice={datePrice}
+                    setDatePrice={setDatePrice}
+                    allPrice={allPrice}
+                    setAllPrice={setAllPrice}
+                  />
+                }
+              />
             </Route>
 
             <Route path="myplanlist">
@@ -132,6 +147,7 @@ function App() {
                   />
                 }
               />
+              <Route path="writepost/:id" element={<WritePost />} />
             </Route>
             {/* 마이페이지 - 내프로필, 수정, 비번재설정, 탈퇴 */}
             <Route path="myinfo">
