@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLocation } from "react";
 // comp
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
+
 // styled
 import { TiArrowSortedDown } from "react-icons/ti";
 import {
@@ -29,15 +30,19 @@ const MyPlanTable = ({
   setDatePrice,
   allPrice,
   setAllPrice,
+  id,
 }) => {
-  const { id } = useParams();
   const [myPlan, setMyPlan] = useState([]);
   const [filterPlan, setFilterPlan] = useState([]); // 필터링된 일정
   const [cnt, setCnt] = useState(0);
   const [planDate, setPlanDate] = useState();
+
   const tableTitle = ["시간", "일정", "위치", "1일비용", "총비용", "메모"];
   // console.log(id);
 
+  const { pathname } = useLocation();
+
+  
   const cateChange = item => {
     if (item.category === "hotel") {
       return "숙소";
@@ -98,19 +103,19 @@ const MyPlanTable = ({
   // 가격 변경
   const datePriceChange = res => {
     if (selectedOption === "1일차") {
-      setDatePrice(res.data.resultData[0].price);
+      setDatePrice(res.data.resultData[0]?.price);
     }
     if (selectedOption === "2일차") {
-      setDatePrice(res.data.resultData[1].price);
+      setDatePrice(res.data.resultData[1]?.price);
     }
     if (selectedOption === "3일차") {
-      setDatePrice(res.data.resultData[2].price);
+      setDatePrice(res.data.resultData[2]?.price);
     }
     if (selectedOption === "4일차") {
-      setDatePrice(res.data.resultData[3].price);
+      setDatePrice(res.data.resultData[3]?.price);
     }
     if (selectedOption === "5일차") {
-      setDatePrice(res.data.resultData[4].price);
+      setDatePrice(res.data.resultData[4]?.price);
     }
   };
 
@@ -147,7 +152,7 @@ const MyPlanTable = ({
   };
 
   // 일정 데이터 필터링
-  // const planListDataChange = data => {
+  //  const planListDataChange = data => {
   //   if (selectedOption === "1일차") {
   //     const filterData = data.filter(item => item.date === 1);
   //     setMyPlan(filterData);
@@ -245,13 +250,17 @@ const MyPlanTable = ({
               </button>
             </div>
           </ChoiceDiv>
-          <BtnAreaDiv>
-            <Link to={"/"}>일정 수정</Link>
-            <Link to={"/board/writepost"}>다녀ON 리뷰작성</Link>
-          </BtnAreaDiv>
+          {pathname === `/myplanlist/${id}` ? (
+            <BtnAreaDiv>
+              <Link to={"/"}>일정 수정</Link>
+              <Link to={"/board/writepost"}>다녀ON 리뷰작성</Link>
+            </BtnAreaDiv>
+          ) : (
+            <></>
+          )}
         </TableTopDiv>
         <TableDiv>
-          <ul className="t-title">
+         <ul className="t-title">
             {tableTitle.map((item, index) => {
               return (
                 <li key={index}>
@@ -314,7 +323,7 @@ const MyPlanTable = ({
               <p>1인당 비용</p>
             </li>
             <li>
-              <p>{datePrice / cnt} 원</p>
+              <p>{Math.ceil(datePrice / cnt / 100) * 100} 원</p>
             </li>
             <li>
               <p>총 비용</p>

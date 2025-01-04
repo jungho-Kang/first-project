@@ -5,8 +5,6 @@ import { TitleDiv, WrapDiv } from "../../components/common";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import {
-  ActionButton,
-  ButtonDiv,
   FlexDiv,
   PostCity,
   PostDate,
@@ -81,12 +79,6 @@ function IndexPage() {
           })}
         </PostUl>
       ))}
-
-      <ButtonDiv>
-        <Link to={"/board/writepost"}>
-          <ActionButton>글쓰기</ActionButton>
-        </Link>
-      </ButtonDiv>
     </WrapDiv>
   );
 }

@@ -1,4 +1,5 @@
 // comp
+import { useParams } from "react-router-dom";
 import MypageTab from "../../../components/mypage/MypageTab";
 import MypageTop from "../../../components/mypage/MypageTop";
 // styled
@@ -18,6 +19,7 @@ function MyPlanDetail({
   allPrice,
   setAllPrice,
 }) {
+  const { id } = useParams();
   return (
     <div>
       <MypageTop />
@@ -37,6 +39,7 @@ function MyPlanDetail({
           setDatePrice={setDatePrice}
           allPrice={allPrice}
           setAllPrice={setAllPrice}
+          id={id}
         />
       </MyPageWrapDiv>
     </div>
