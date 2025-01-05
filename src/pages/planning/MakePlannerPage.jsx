@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { LayoutDiv } from "./plan";
 
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
@@ -188,6 +188,8 @@ function MakePlannerPage({
   // 일정 탭에 띄울 데이터
   const [planListData, setPlanListData] = useState([]);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     console.log("planMasterId : ", planMasterId);
   }, [planMasterId]);
@@ -244,7 +246,13 @@ function MakePlannerPage({
               </EventBtn>
             </div>
             <BtnSortDiv>
-              <EventBtn style={{ backgroundColor: "#D1373A", color: "#fff" }}>
+              <EventBtn
+                style={{ backgroundColor: "#D1373A", color: "#fff" }}
+                onClick={() => {
+                  alert("저장되었습니다.");
+                  navigate("/");
+                }}
+              >
                 저장
               </EventBtn>
             </BtnSortDiv>

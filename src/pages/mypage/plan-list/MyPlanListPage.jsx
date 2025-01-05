@@ -50,7 +50,6 @@ function MyPlanListPage() {
                   key={item.planMasterId}
                   item={item}
                   setMyScheduleList={setMyScheduleList}
-                  myScheduleList={myScheduleList}
                 />
               ) : null,
             )

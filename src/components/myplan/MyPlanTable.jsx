@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
+
 // styled
 import {
   BtnAreaDiv,
@@ -37,8 +38,10 @@ const MyPlanTable = ({
   const [filterPlan, setFilterPlan] = useState([]); // 필터링된 일정
   const [cnt, setCnt] = useState(0); // 인원
   const [planDate, setPlanDate] = useState();
+
   const [planDetailPop, setPlanDetailPop] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+
   const { pathname } = useLocation();
   const tableTitle = ["시간", "일정", "위치", "1인비용", "총비용", "메모"];
   // console.log(id);
@@ -90,6 +93,7 @@ const MyPlanTable = ({
       // console.log(allPrice);
       const result = res.data.resultData;
       setAllPrice(result.price);
+
     } catch (error) {
       console.log(error);
     }
@@ -111,7 +115,10 @@ const MyPlanTable = ({
   // 날짜 목록 업데이트
   useEffect(() => {
     setDayList(Array.from({ length: planDate + 1 }, (_, i) => `${i + 1}일차`));
-  }, [planDate]);
+    if (!datePrice) {
+      setDatePrice(0);
+    }
+  }, [planDate, datePrice]);
 
   // 일정 목록 상태 업데이트 (일차와 카테고리 필터링)
   useEffect(() => {
@@ -152,7 +159,6 @@ const MyPlanTable = ({
     getPlanDetail(id);
     getPriceDate(id);
     getPriceAll(id);
-    // console.log("몇명??", cnt);
   }, [cnt, selectedOption]);
 
   // 카테고리 색상 지정
@@ -285,7 +291,7 @@ const MyPlanTable = ({
                         </p>
                       </li>
                       <li>
-                        <p>{item.price / cnt}</p>
+                        <p>{Math.ceil(item.price / cnt / 100) * 100}</p>
                       </li>
                       <li>
                         <p>{item.price}</p>

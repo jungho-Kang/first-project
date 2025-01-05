@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 // comp
 import LayerLogo from "../ui/logo/LayerLogo";
 import AgreementDetail from "./AgreementDetail";
@@ -8,10 +8,7 @@ import { BtnBasic, CheckBoxDiv } from "../common";
 // icon
 import { FaCheck } from "react-icons/fa";
 
-import { PopupContext } from "../../contexts/PopupContext";
-
 const Agreement = ({ setIsAgreementStep }) => {
-  const { showPopup } = useContext(PopupContext);
   const [agreeChecked, setAgreeChecked] = useState({
     agree01: false,
     agree02: false,

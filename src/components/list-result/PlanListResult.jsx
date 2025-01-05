@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { SubTitleDiv } from "../../pages/travel-board/board";
 import { WrapDiv } from "../common";
 import MyPlanTable from "../myplan/MyPlanTable";
+import DOMPurify from "dompurify";
 
 const ReviewDiv = styled.div`
   margin: 0 auto;
@@ -13,6 +14,18 @@ const ReviewDiv = styled.div`
   line-height: 1.5em;
   margin-top: 30px;
   margin-bottom: 30px;
+  strong {
+    font-weight: 700;
+  }
+  em {
+    font-style: italic;
+  }
+  h1 {
+    font-size: 30px;
+  }
+  h2 {
+    font-size: 24px;
+  }
 `;
 
 const ReviewTitleDiv = styled(SubTitleDiv)`
@@ -53,10 +66,15 @@ const PlanListResult = ({
       />
 
       <ReviewTitleDiv>여행 후기</ReviewTitleDiv>
-      {pathname === "/board/writepost" ? (
+      {pathname === `/myplanlist/writepost/${id}` ||
+      pathname === `/board/writeput/${id}` ? (
         <></>
       ) : (
-        <ReviewDiv>{content}</ReviewDiv>
+        <ReviewDiv
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(String(content)),
+          }}
+        ></ReviewDiv>
       )}
     </WrapDiv>
   );
