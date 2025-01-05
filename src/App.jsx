@@ -23,6 +23,7 @@ import WritePost from "./pages/travel-board/WritePostPage";
 
 import { useState } from "react";
 import { LoginProvider } from "./contexts/LoginContext";
+import WritePutPage from "./pages/travel-board/WritePutPage";
 
 function App() {
   // 일정 등록(날짜, 도시정보 등등)
@@ -114,6 +115,23 @@ function App() {
                 path="detail/:id"
                 element={
                   <BoardDetail
+                    selectedOption={selectedOption}
+                    setSelectedOption={setSelectedOption}
+                    setIsOpen={setIsOpen}
+                    isOpen={isOpen}
+                    dayList={dayList}
+                    setDayList={setDayList}
+                    datePrice={datePrice}
+                    setDatePrice={setDatePrice}
+                    allPrice={allPrice}
+                    setAllPrice={setAllPrice}
+                  />
+                }
+              />
+              <Route
+                path="writeput/:id"
+                element={
+                  <WritePutPage
                     selectedOption={selectedOption}
                     setSelectedOption={setSelectedOption}
                     setIsOpen={setIsOpen}

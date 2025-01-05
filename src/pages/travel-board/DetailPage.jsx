@@ -25,9 +25,9 @@ function DetailPage({
   const { id } = useParams();
   const [feedDetail, setFeedDetail] = useState({});
 
-  const getFeedDetail = async () => {
+  const getFeedDetail = async _id => {
     try {
-      const res = await axios.get(`/api/feed/detail?planMasterId=${id}`);
+      const res = await axios.get(`/api/feed/detail?planMasterId=${_id}`);
       setFeedDetail(res.data.resultData);
       console.log("피드 디테일 가져와!!", res.data.resultData);
     } catch (error) {
@@ -35,8 +35,18 @@ function DetailPage({
     }
   };
 
+  const deletFeedDetail = async () => {
+    try {
+      await axios.delete(`/api/feed?planMasterId=${id}`);
+      alert("삭제 되었습니다.");
+      navigate("/board");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    getFeedDetail();
+    getFeedDetail(id);
   }, []);
 
   return (
@@ -77,7 +87,7 @@ function DetailPage({
         {isLogin && user.userId === feedDetail.userId ? (
           <>
             <button
-              onClick={() => navigate("/board/writepost")}
+              onClick={() => navigate(`/board/writeput/${id}`)}
               style={{
                 width: 100,
                 height: 50,
@@ -98,6 +108,7 @@ function DetailPage({
                 color: "#fff",
                 border: "none",
               }}
+              onClick={() => deletFeedDetail(id)}
             >
               삭제
             </button>
