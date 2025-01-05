@@ -20,8 +20,6 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-// import { useAxios } from "../../hooks/Axios";
-// import { postLoginMember } from "../../../fetch/auth";
 
 const schema = yup.object({
   email: yup
@@ -66,11 +64,11 @@ function IndexPage() {
 
   const fetchApi = async _formData => {
     try {
-      // 데이터 연동 로딩 중임을 표현
       setLoading(true);
       const response = await axios.post("/api/user/sign-in", _formData);
       console.log("로그인 성공시 받아온 데이터:", response.data);
       const { upw, message, ...userData } = response.data.resultData;
+      console.log("로그인 성공시 받아온 데이터 userData:", userData);
 
       if (!response.data.resultData.nickName) {
         alert(response.data.resultData.message);

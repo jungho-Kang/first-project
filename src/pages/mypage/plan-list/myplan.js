@@ -191,6 +191,7 @@ export const TableDiv = styled.div`
   .t-title,
   ul.t-content {
     li {
+      cursor: pointer;
       text-align: center;
       &:nth-child(1) {
         width: 12%;
@@ -219,7 +220,7 @@ export const TableDiv = styled.div`
     height: 45px;
     border-radius: 5px;
     padding: 0 20px;
-    background-color: #777;
+    background-color: #002d61;
     color: #fff;
   }
   /* 테이블 컨텐츠 */
@@ -237,7 +238,7 @@ export const TableDiv = styled.div`
 
       width: 100%;
       &:nth-child(2n) {
-        background-color: #eee;
+        background-color: rgb(243, 243, 243);
       }
       ul {
         width: 100%;
@@ -245,7 +246,11 @@ export const TableDiv = styled.div`
         border-radius: 5px;
         display: flex;
         align-items: center;
-        border: 1px solid #ddd;
+        border: 1px solid rgb(233, 233, 233);
+        transition: all 0.3s;
+        &:hover {
+          background-color: rgba(0, 45, 97, 0.05);
+        }
         li {
           &:nth-child(1) p {
             font-weight: 500;
@@ -291,7 +296,7 @@ export const TableDiv = styled.div`
     border-radius: 5px;
     overflow: hidden;
     color: #fff;
-    background-color: #555;
+    background-color: #c7c7c7;
     color: #fff;
     display: flex;
     align-items: center;
@@ -305,13 +310,17 @@ export const TableDiv = styled.div`
       align-items: center;
       justify-content: center;
       position: relative;
+      color: #333;
+      /* text-shadow: 1px 0px 1px rgb(0, 0, 0, 0.25); */
+      font-weight: 600;
 
       &:nth-of-type(1) {
-        background-color: #000;
+        background-color: #002d61;
         color: #fff;
+        font-weight: 500;
       }
       &:nth-of-type(2n) {
-        border-left: 2px solid #777;
+        border-left: 2px solid #ccc;
       }
       &:nth-of-type(2n)::before {
         content: ":";
@@ -343,8 +352,12 @@ export const BtnAreaDiv = styled.div`
     border-radius: 5px;
     background-color: #1270b0;
     color: #fff;
+    transition: all 0.3s;
     &:nth-of-type(1) {
       background-color: #333;
+    }
+    &:hover {
+      opacity: 0.85;
     }
   }
 `;

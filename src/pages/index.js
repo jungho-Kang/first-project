@@ -95,6 +95,9 @@ export const ProvideDiv = styled.div`
 export const SwiperItemDiv = styled.div`
   cursor: pointer;
   display: block;
+  height: 320px;
+  width: 100%;
+  background: #eee;
   transition: all 0.3s;
   &:hover {
     opacity: 0.9;
@@ -108,7 +111,6 @@ export const SwiperItemDiv = styled.div`
     width: 100%;
     z-index: 999;
     height: 320px;
-    background: #000;
     overflow: hidden;
     background: #eee;
   }

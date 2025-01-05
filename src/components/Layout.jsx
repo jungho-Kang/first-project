@@ -22,7 +22,6 @@ const Layout = ({ children, paramPath }) => {
     );
   }, []);
 
-
   const { pathname } = useLocation();
 
   // console.log(pathname);

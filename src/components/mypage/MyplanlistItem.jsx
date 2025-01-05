@@ -1,10 +1,13 @@
-import { Link } from "react-router-dom";
 
-import axios from "axios";
 import { useContext } from "react";
-import { IoClose } from "react-icons/io5";
+import { Link } from "react-router-dom";
 import { LoginContext } from "../../contexts/LoginContext";
+import axios from "axios";
+// styled
 import { DeleteBtn } from "../../pages/mypage/plan-list/myplan";
+// icon
+import { IoClose } from "react-icons/io5";
+
 
 const MyplanlistItem = ({ item, setMyScheduleList }) => {
   const planDateAddOne = parseInt(item?.planDate) + 1;
@@ -12,15 +15,14 @@ const MyplanlistItem = ({ item, setMyScheduleList }) => {
   const { user } = useContext(LoginContext);
 
   const deleteItem = _Id => {
-    // const arr = myScheduleList.filter(item => item.planMasterId !== _Id);
     setMyScheduleList(prev => prev.filter(item => item.planMasterId !== _Id));
-    // navigate("/auth");
   };
   // http://112.222.157.156:5212/api/plan?planMasterId=0&userId=0
   const deleteListItem = async data => {
     try {
       const res = await axios.delete(
         `/api/plan?planMasterId=${data}&userId=${user.userId}`,
+        alert("일정이 삭제되었습니다."),
       );
       console.log(res);
     } catch (error) {
@@ -32,8 +34,13 @@ const MyplanlistItem = ({ item, setMyScheduleList }) => {
 
   const handleClickbtn = e => {
     e.preventDefault();
-    deleteItem(item.planMasterId);
-    deleteListItem(item.planMasterId);
+    const isConfirm = confirm("선택한 일정을 삭제하시겠습니까?");
+    if (isConfirm) {
+      deleteItem(item.planMasterId);
+      deleteListItem(item.planMasterId);
+    } else {
+      console.log("일정 삭제 취소됨");
+    }
   };
 
   return (

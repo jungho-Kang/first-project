@@ -60,7 +60,7 @@ const FindPw = ({ setShowResetPw, setPutPwEmail, putPwEmail }) => {
       console.log("PutData updated:", putData);
     } catch (error) {
       console.log("인증코드 발송 실패", error);
-      alert("인증번호 발송에 실패했습니다. 다시 시도해주세요.");
+      alert("인증번호 발송 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
     }
   };
 
@@ -72,24 +72,22 @@ const FindPw = ({ setShowResetPw, setPutPwEmail, putPwEmail }) => {
       const res = await axios.put(
         `/api/auth-check?email=${putData.email}&authCode=${putData.authCode}`,
       );
-      if (res.data) {
-        console.log("비밀번호 수정");
+      if (res.data.resultData) {
+        console.log("코드 인증:", res.data.resultMessage);
         setShowResetPw(true);
       } else {
-        alert("인증번호가 틀렸습니다. 다시 시도해주세요.");
+        console.log("코드 인증:", res.data.resultMessage);
+        alert("코드인증에 실패했습니다. 다시 시도해주세요.");
       }
     } catch (error) {
       console.log(error);
-      alert("서버 오류가 발생했습니다.");
+      alert("서버 오류가 발생했습니다. 잠시후 다시 시도해주세요.");
     }
   };
 
   const handleEmailChange = e => {
-    // console.log(e.target.value);
-
     setInputEmail(e.target.value);
   };
-  // console.log(inputEmail);
 
   // 버튼 활성화
   const handleInputChange = e => {

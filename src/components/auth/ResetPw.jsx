@@ -44,18 +44,21 @@ const ResetPw = ({ putPwEmail, setPutPwEmail }) => {
   });
 
   const onSubmit = async data => {
-    console.log("data---!!", data);
-    console.log("putPwEmail---!!", putPwEmail);
+    // console.log("받아온 data", data);
+    // console.log("putPwEmail 에 담은 데이터", putPwEmail);
 
     try {
       const res = await axios.patch("/api/user/upw", putPwEmail);
       console.log("서버 응답:", res);
 
-      if (res.data) {
-        console.log("비밀번호 수정");
+      if (res.data.resultData) {
+        console.log("비밀번호 수정 :", res.data.resultMessage);
+        alert("비밀번호 수정이 완료되었습니다. 로그인창으로 이동합니다.");
         navigate("/auth");
       } else {
-        alert("인증번호가 틀렸습니다. 다시 시도해주세요.");
+        console.log("비밀번호 수정 :", res.data.resultMessage);
+        alert("가입된 이메일이 아닙니다. 확인후 다시 시도해주세요.");
+        navigate("/auth/findpw");
       }
     } catch (error) {
       console.log(error);

@@ -20,10 +20,16 @@ import MakePlanner from "./pages/planning/MakePlannerPage";
 import BoardDetail from "./pages/travel-board/DetailPage";
 import BoardIndex from "./pages/travel-board/IndexPage";
 import WritePost from "./pages/travel-board/WritePostPage";
+import WritePutPage from "./pages/travel-board/WritePutPage";
 
 import { useState } from "react";
-import { LoginProvider } from "./contexts/LoginContext";
-import WritePutPage from "./pages/travel-board/WritePutPage";
+
+import { PopupProvider } from "./contexts/PopupContext";
+// import { LoginProvider } from "./contexts/LoginContext";
+
+
+
+
 
 function App() {
   // 일정 등록(날짜, 도시정보 등등)

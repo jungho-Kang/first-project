@@ -1,4 +1,6 @@
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { LoginContext } from "../../../contexts/LoginContext";
 import axios from "axios";
 
 // comp
@@ -14,8 +16,6 @@ import { BtnAreaDiv, FormDiv, FormInnerDiv, MyPageWrapDiv } from "./myinfo";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { useContext, useState } from "react";
-import { LoginContext } from "../../../contexts/LoginContext";
 
 const schema = yup.object({
   nickName: yup
@@ -41,23 +41,28 @@ function EditProfilePage() {
   });
 
   const handleChangeData = e => {
-    console.log(e.target.value);
     setEditNickName(e.target.value);
   };
 
   const fetchApi = async data => {
     data.userId = user.userId;
     console.log("보낼 데이터", data);
-    console.log("=====>", data.nickName);
     try {
       const res = await axios.patch("/api/user/nickname", data);
       console.log("닉네임 수정 성공시 받은 데이터", res.data);
-      setUser({ ...user, nickName: data.nickName });
-      alert(res.data.resultMessage);
-      navigate("/myinfo");
+      if (res.data.resultData) {
+        console.log(res.data.resultMessage);
+        setUser({ ...user, nickName: data.nickName });
+        alert("닉네임이 정상적으로 수정되었습니다.");
+        navigate("/myinfo");
+        console.log(user);
+      } else {
+        console.log(res.data.resultMessage);
+        alert("다른 닉네임으로 다시 시도해주세요.");
+      }
     } catch (error) {
       console.log(error);
-      alert("닉네임 수정 중 오류가 발생했습니다. 다시 시도해주세요.");
+      alert("닉네임 수정 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
     }
   };
   const onSubmit = _nickname => {

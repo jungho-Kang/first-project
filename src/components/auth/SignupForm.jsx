@@ -1,9 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import { LoginContext } from "../../contexts/LoginContext";
 import axios from "axios";
 // comp
 import LayerLogo from "../ui/logo/LayerLogo";
+import CodeCheck from "./CodeCheck";
+import ConfirmPopup from "../popup/ConfirmPopup";
 // yup
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -13,9 +15,6 @@ import { NameNickNameDiv, SignupDiv } from "../../pages/auth/login";
 import { BtnBasic, ErrorP, InitMessageP, JoinDiv, TextForm } from "../common";
 // icon
 import { FaRegCircleCheck } from "react-icons/fa6";
-import CodeCheck from "./CodeCheck";
-import { LoginContext } from "../../contexts/LoginContext";
-import ConfirmPopup from "../popup/ConfirmPopup";
 
 const schema = yup.object({
   name: yup
@@ -72,26 +71,24 @@ const SignupForm = () => {
   });
 
   const onSubmit = async data => {
-    // console.log("보내는데이터!!!", data);
+    // console.log("보내는데이터 data:", data);
     const { pwconfirm, ...submitData } = data;
     submitData.email = email.email;
-    // console.log(submitData);
-
-    console.log("보내는데이터--1", submitData);
+    console.log("보내는데이터 submitData : ", submitData);
     try {
       const res = await axios.post("/api/user/sign-up", submitData);
       console.log("회원가입 성공시 받아온 데이터 : ", res.data);
       if (res.data.resultData) {
-        // alert("회원가입이 완료되었습니다.");
-        setIsPopup(true);
-        setPopupMessage(res.data.resultMessage);
+        alert("회원가입이 완료되었습니다. 로그인 화면으로 이동합니다.");
+        navigate("/auth");
       } else {
-        setIsPopup(true);
-        setPopupMessage(res.data.resultMessage);
+        alert("회원가입에 실패했습니다. 다시 시도해주세요.");
       }
     } catch (error) {
-      console.log("회원가입 실패", error);
-      alert("로그인 중 오류가 발생했습니다. 다시 시도해주세요.");
+      console.log("회원가입 에러", error);
+      alert(
+        "회원가입 과정에서 문제가 발생했습니다. 잠시 후 다시 시도해주세요.",
+      );
     }
   };
   const upw = watch("upw");
@@ -189,15 +186,14 @@ const SignupForm = () => {
           <Link to={"/auth"}>로그인화면 이동</Link>
         </JoinDiv>
       </div>
-      {isPopup && (
+      {/* {isPopup && (
         <ConfirmPopup
-          popupTit={"회원가입"}
-          message={popupMessage}
+          message={"회원가입이 완료되었습니다. 로그인 창으로 이동합니다"}
           onClose={handleClickPopupClose}
           onNav={`navigate("/auth")`}
           style={{ textAlign: "center" }}
         />
-      )}
+      )} */}
     </SignupDiv>
   );
 };

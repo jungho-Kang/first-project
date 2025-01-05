@@ -1,4 +1,7 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { LoginContext } from "../../../contexts/LoginContext";
 // comp
 import MypageTop from "../../../components/mypage/MypageTop";
 import MypageTab from "../../../components/mypage/MypageTab";
@@ -10,9 +13,6 @@ import { BtnAreaDiv, FormDiv, FormInnerDiv, MyPageWrapDiv } from "./myinfo";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { useContext } from "react";
-import { LoginContext } from "../../../contexts/LoginContext";
-import axios from "axios";
 
 const schema = yup.object({
   upw: yup
@@ -60,14 +60,16 @@ function UpdatePwPage() {
       console.log(data);
       const res = await axios.patch("/api/user/password", data);
       if (res.data.resultData) {
-        console.log("비밀번호 수정 완료");
+        console.log("비밀번호 수정 :", res.data.resultData);
+        alert("비밀번호가 정상적으로 수정완료 되었습니다.");
         navigate("/myinfo");
       } else {
-        alert("인증번호가 틀렸습니다. 다시 시도해주세요.");
+        console.log("비밀번호 수정 :", res.data.resultData);
+        alert("비밀번호 수정에 실패하였습니다. 다시 시도해주세요.");
       }
     } catch (error) {
       console.log(error);
-      alert("서버 오류가 발생했습니다.");
+      alert("비밀번호 수정중 문제가 발생하였습니다. 잠시후 다시 시도해주세요.");
     }
   };
 

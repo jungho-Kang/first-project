@@ -16,8 +16,7 @@ import { FaUser, FaCircleUser } from "react-icons/fa6";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 
 const Header = ({ isScrolled }) => {
-  const { isLogin, handleClickLogin, handleClickLogout } =
-    useContext(LoginContext);
+  const { isLogin, handleClickLogout } = useContext(LoginContext);
   const [myMenuOpen, setMyMenuOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -94,6 +93,7 @@ const Header = ({ isScrolled }) => {
                     <button
                       onClick={() => {
                         handleClickLogout();
+                        alert("로그아웃 되었습니다.");
                       }}
                     >
                       <RiLogoutBoxRLine />
