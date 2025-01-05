@@ -54,42 +54,36 @@ const CodeCheck = ({ email, setEmail }) => {
     try {
       const res = await axios.post("/api/email-check", { email: email });
       console.log(res.data);
-      if (res.data.resultData) {
-        setSendMessage("해당 이메일로 인증번호가 발송되었습니다.");
-        setPutData({ ...putData, email: email });
-        setCodeBtnDisable(false);
-        setEmail({ email: email });
-        setCode(res.data);
-        console.log("PutData updated:", putData);
-      } else {
-        console.log("이메일 다름");
-      }
+
+      setSendMessage("해당 이메일로 인증번호가 발송되었습니다.");
+      setPutData({ ...putData, email: email });
+      setCodeBtnDisable(false);
+      setEmail({ email: email });
+      setCode(res.data);
+      console.log("PutData updated:", putData);
     } catch (error) {
       console.log("인증코드 발송 실패", error);
-
-      // alert("인증번호 발송에 실패했습니다. 다시 시도해주세요.");
+      alert("인증번호 발송 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
     }
   };
 
   //  이메일 인증코드 보내기
   const onSubmit = async data => {
-    console.log("보내는데이터--->", data);
-    console.log("보내는데이터--->", putData);
-
+    console.log("보내는data--->", data);
     try {
-      console.log(putData);
       const res = await axios.put(
         `/api/auth-check?email=${data.email}&authCode=${data.authCode}`,
       );
-      if (res.data) {
-        console.log("코드 인증완료");
+      if (res.data.resultData) {
+        console.log("코드 인증:", res.data.resultMessage);
         setEmail({ email: data.email });
       } else {
+        console.log("코드 인증:", res.data.resultMessage);
         alert("인증번호가 틀렸습니다. 다시 시도해주세요.");
       }
     } catch (error) {
       console.log(error);
-      alert("서버 오류가 발생했습니다.");
+      alert("서버 오류가 발생했습니다. 잠시후 다시 시도해주세요.");
     }
   };
 

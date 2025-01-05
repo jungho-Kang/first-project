@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
-// comp
-import axios from "axios";
 import { Link, useLocation } from "react-router-dom";
-
+import axios from "axios";
 // styled
-import { TiArrowSortedDown } from "react-icons/ti";
 import {
   BtnAreaDiv,
   ChoiceDiv,
@@ -14,10 +11,14 @@ import {
 } from "../../pages/mypage/plan-list/myplan";
 import {
   CateEm,
+  MemoPopupDiv,
   OptionItem,
   OptionsList,
   SelectedOption,
 } from "./mydetailplan";
+// icon
+import { TiArrowSortedDown } from "react-icons/ti";
+import { IoClose } from "react-icons/io5";
 
 const MyPlanTable = ({
   selectedOption,
@@ -34,13 +35,13 @@ const MyPlanTable = ({
 }) => {
   const [myPlan, setMyPlan] = useState([]);
   const [filterPlan, setFilterPlan] = useState([]); // 필터링된 일정
-  const [cnt, setCnt] = useState(0);
+  const [cnt, setCnt] = useState(0); // 인원
   const [planDate, setPlanDate] = useState();
-
-  const tableTitle = ["시간", "일정", "위치", "1일비용", "총비용", "메모"];
-  // console.log(id);
-
+  const [planDetailPop, setPlanDetailPop] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
   const { pathname } = useLocation();
+  const tableTitle = ["시간", "일정", "위치", "1인비용", "총비용", "메모"];
+  // console.log(id);
 
   const cateChange = item => {
     if (item.category === "hotel") {
@@ -62,13 +63,13 @@ const MyPlanTable = ({
   // 데이터 가져오기
   const getPlanDetail = async _id => {
     // http://112.222.157.156:5212/api/plan?planMasterId=1
-
     try {
       const res = await axios.get(`/api/plan?planMasterId=${_id}`);
-      setPlanDate(res.data.resultData.planDate);
-      setCnt(res.data.resultData.peopleCnt);
-      setMyPlan(res.data.resultData.selPlanDtoList);
-      planListDataChange(res.data.resultData.selPlanDtoList);
+      const result = res.data.resultData;
+      setPlanDate(result.planDate);
+      setCnt(result.peopleCnt);
+      setMyPlan(result.selPlanDtoList);
+      planListDataChange(result.selPlanDtoList);
     } catch (error) {
       console.log(error);
     }
@@ -86,9 +87,9 @@ const MyPlanTable = ({
   const getPriceAll = async _id => {
     try {
       const res = await axios.get(`/api/plan/sum?planMasterId=${_id}`);
-      // console.log("이거 어디갔냐!!!!!!!!!!", res.data.resultData.price);
-      console.log(allPrice);
-      setAllPrice(res.data.resultData.price);
+      // console.log(allPrice);
+      const result = res.data.resultData;
+      setAllPrice(result.price);
     } catch (error) {
       console.log(error);
     }
@@ -101,23 +102,12 @@ const MyPlanTable = ({
 
   // 가격 변경
   const datePriceChange = res => {
-    if (selectedOption === "1일차") {
-      setDatePrice(res.data.resultData[0]?.price);
-    }
-    if (selectedOption === "2일차") {
-      setDatePrice(res.data.resultData[1]?.price);
-    }
-    if (selectedOption === "3일차") {
-      setDatePrice(res.data.resultData[2]?.price);
-    }
-    if (selectedOption === "4일차") {
-      setDatePrice(res.data.resultData[3]?.price);
-    }
-    if (selectedOption === "5일차") {
-      setDatePrice(res.data.resultData[4]?.price);
+    const result = res.data.resultData;
+    const dayIndex = parseInt(selectedOption.replace("일차", "")) - 1;
+    if (dayIndex >= 0 && dayIndex < result.length) {
+      setDatePrice(result[dayIndex]?.price);
     }
   };
-
   // 날짜 목록 업데이트
   useEffect(() => {
     setDayList(Array.from({ length: planDate + 1 }, (_, i) => `${i + 1}일차`));
@@ -152,26 +142,9 @@ const MyPlanTable = ({
 
   // 일정 데이터 필터링
   const planListDataChange = data => {
-    if (selectedOption === "1일차") {
-      const filterData = data.filter(item => item.date === 1);
-      setMyPlan(filterData);
-    }
-    if (selectedOption === "2일차") {
-      const filterData = data.filter(item => item.date === 2);
-      setMyPlan(filterData);
-    }
-    if (selectedOption === "3일차") {
-      const filterData = data.filter(item => item.date === 3);
-      setMyPlan(filterData);
-    }
-    if (selectedOption === "4일차") {
-      const filterData = data.filter(item => item.date === 4);
-      setMyPlan(filterData);
-    }
-    if (selectedOption === "5일차") {
-      const filterData = data.filter(item => item.date === 5);
-      setMyPlan(filterData);
-    }
+    const dayIndex = parseInt(selectedOption.replace("일차", ""));
+    const filterData = data.filter(item => item.date === dayIndex);
+    setMyPlan(filterData);
   };
 
   // 일정 목록 상태 업데이트
@@ -181,6 +154,7 @@ const MyPlanTable = ({
     getPriceAll(id);
     // console.log("몇명??", cnt);
   }, [cnt, selectedOption]);
+
   // 카테고리 색상 지정
   const getCateColor = category => {
     switch (category) {
@@ -197,6 +171,10 @@ const MyPlanTable = ({
     }
   };
 
+  // 팝업
+  const togglePlanPop = () => {
+    setPlanDetailPop(!planDetailPop);
+  };
   return (
     <div>
       <DetailContentDiv>
@@ -275,7 +253,14 @@ const MyPlanTable = ({
               {filterPlan.map(item => {
                 const cateColor = getCateColor(cateChange(item));
                 return (
-                  <li key={item.planId} className="item">
+                  <li
+                    key={item.planId}
+                    className="item"
+                    onClick={() => {
+                      setSelectedItem(item);
+                      togglePlanPop();
+                    }}
+                  >
                     <ul>
                       <li>
                         <p>
@@ -339,6 +324,54 @@ const MyPlanTable = ({
           </ul>
         </TableDiv>
       </DetailContentDiv>
+      {planDetailPop && selectedItem && (
+        <MemoPopupDiv>
+          <div className="layer">
+            <h4 className="tit">
+              <em>[{cateChange(selectedItem)}]</em> {selectedItem.placeName}{" "}
+              상세 일정
+            </h4>
+            <div className="scheduleInfo">
+              <div>
+                <b>기간</b>
+                <p> 2025.01.01 - 2025.01.03 ( {selectedItem.date}일차 )</p>
+              </div>
+              <div>
+                <b>시간</b>
+                <p>
+                  {selectedItem.startTime} - {selectedItem.endTime}
+                </p>
+              </div>
+              <div>
+                <b>장소</b>
+                <p> {selectedItem.placeName}</p>
+              </div>
+            </div>
+
+            <div className="price">
+              <div>
+                <b>1인 기준 비용</b>
+                <p>{selectedItem.price / cnt} 원</p>
+              </div>
+              <div>
+                <b>전체 비용 </b>
+                <p>{selectedItem.price} 원</p>
+              </div>
+            </div>
+            <div className="memo">
+              <b>메모</b>
+              <span>{selectedItem.memo}</span>
+            </div>
+            <button
+              onClick={() => {
+                togglePlanPop();
+              }}
+            >
+              <IoClose />
+            </button>
+          </div>
+        </MemoPopupDiv>
+      )}
     </div>
   );
 };

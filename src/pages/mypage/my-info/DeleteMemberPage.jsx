@@ -62,9 +62,14 @@ function DeleteMemberPage() {
   };
 
   const onSubmit = () => {
-    const payload = { userId: user.userId, upw: deletePw };
-    console.log(payload);
-    fetchApi(payload);
+    const isConfirmed = confirm("정말 탈퇴하시겠습니까?");
+    if (isConfirmed) {
+      const payload = { userId: user.userId, upw: deletePw };
+      console.log(payload);
+      fetchApi(payload);
+    } else {
+      console.log("탈퇴가 취소되었습니다.");
+    }
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

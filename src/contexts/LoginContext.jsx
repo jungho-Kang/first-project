@@ -30,6 +30,7 @@ export const LoginProvider = ({ children }) => {
   const handleClickLogout = () => {
     setIsLogin(false);
     setUser(initUser);
+
     navigate("/");
     sessionStorage.removeItem(LOGIN_SESSION_KEY);
     sessionStorage.removeItem(USER_SESSION_KEY);
