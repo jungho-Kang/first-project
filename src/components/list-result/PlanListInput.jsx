@@ -7,12 +7,13 @@ import { WrapDiv } from "../common";
 
 const PlanTitleDiv = styled.div`
   margin: 0 auto;
-  background-color: #ffff80;
+  background-color: #5469d4;
+  border-radius: 8px;
   max-width: 1024px;
   height: 60px;
   display: flex;
   justify-content: space-between;
-  color: #009800;
+  color: #fff;
   align-items: center;
   font-weight: 700;
   text-align: center;
@@ -25,6 +26,7 @@ const CostSummaryDiv = styled.div`
   max-width: 1024px;
   height: 60px;
   display: flex;
+  border-radius: 8px;
   justify-content: space-between;
   color: #fff;
   align-items: center;
@@ -36,7 +38,8 @@ const CostSummaryDiv = styled.div`
 const PlanContentDiv = styled.div`
   margin: 0 auto;
   padding: 15px 0;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+  border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   max-width: 1024px;
   display: flex;
@@ -45,6 +48,10 @@ const PlanContentDiv = styled.div`
   font-size: 14px;
   text-align: center;
   font-weight: 700;
+  &:nth-of-type(2n) {
+    background-color: #efefef;
+    border-color: transparent;
+  }
 `;
 const TimeDiv = styled.div`
   width: 20%;
@@ -82,6 +89,7 @@ const PlanListInput = ({
   setDatePrice,
   planMasterId,
   peopleCnt,
+  isSlide,
 }) => {
   const getPrice = async () => {
     try {
@@ -174,6 +182,7 @@ const PlanListInput = ({
         marginTop: 100,
         width: 1024,
         height: 800,
+        marginLeft: isSlide ? "340px" : "620px",
       }}
     >
       <h1 style={{ marginBottom: 30, fontSize: 30, fontWeight: 700 }}>

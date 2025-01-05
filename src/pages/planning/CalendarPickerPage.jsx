@@ -166,16 +166,22 @@ function CalendarPickerPage({
             gap: 10,
             alignItems: "center",
             margin: "10px auto",
-            maxWidth: "620px",
+            maxWidth: "520px",
             position: "relative",
+            borderRadius: "6px",
+            overflow: "hidden",
           }}
         >
           <span
             style={{
               fontWeight: 700,
-              width: 70,
+              padding: "0 50px",
+              height: "100%",
+              backgroundColor: "#333",
+              color: "#fff",
               position: "absolute",
-              left: 10,
+              left: 0,
+              lineHeight: 3.2,
             }}
           >
             여행 인원
@@ -194,11 +200,17 @@ function CalendarPickerPage({
               textAlign: "center",
               borderRadius: 5,
               border: "1px solid #ddd",
+              textIndent: "180px",
             }}
           />
           <NextBtn
             type="submit"
-            style={{ width: 140, backgroundColor: "#1270b0" }}
+            style={{
+              width: 220,
+              height: 50,
+              backgroundColor: "#1270b0",
+              fontSize: "16px",
+            }}
           >
             다음
           </NextBtn>

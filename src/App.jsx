@@ -24,12 +24,8 @@ import WritePutPage from "./pages/travel-board/WritePutPage";
 
 import { useState } from "react";
 
-import { PopupProvider } from "./contexts/PopupContext";
-// import { LoginProvider } from "./contexts/LoginContext";
-
-
-
-
+// import { PopupProvider } from "./contexts/PopupContext";
+import { LoginProvider } from "./contexts/LoginContext";
 
 function App() {
   // 일정 등록(날짜, 도시정보 등등)

@@ -343,6 +343,7 @@ function MakePlannerPage({
             setDatePrice={setDatePrice}
             planMasterId={planMasterId}
             peopleCnt={peopleCnt}
+            isSlide={isSlide}
           />
         )}
       </LayoutDiv>

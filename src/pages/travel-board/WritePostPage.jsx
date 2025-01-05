@@ -116,7 +116,9 @@ function WritePostPage({
   return (
     <WrapDiv>
       <form onSubmit={handleSubmit(handleSubmitFeed)}>
-        <TitleDiv>다녀ON</TitleDiv>
+        <TitleDiv style={{ fontFamily: "yg-jalnan", fontSize: 48 }}>
+          다녀 <b>ON</b>
+        </TitleDiv>
         <FlexLayoutDiv style={{ position: "relative", height: 60 }}>
           <PostCity style={{ position: "absolute", zIndex: 9, marginLeft: 10 }}>
             부산

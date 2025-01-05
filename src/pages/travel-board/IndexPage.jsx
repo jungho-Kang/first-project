@@ -44,7 +44,7 @@ function IndexPage() {
   return (
     <WrapDiv>
       <TitleDiv style={{ fontFamily: "yg-jalnan", fontSize: 48 }}>
-        다녀 ON
+        다녀 <b>ON</b>
       </TitleDiv>
       {/* boardList를 4개씩 묶은 후 각 묶음을 PostUl로 렌더링 */}
       {fourArray(boardList, 4).map((four, index) => (
