@@ -205,7 +205,9 @@ const PlanListInput = ({
                 {item.placeName}
                 <SubLocationDiv>{item.placeAddress}</SubLocationDiv>
               </LocationDiv>
-              <PriceDiv>{item.price / peopleCnt}</PriceDiv>
+              <PriceDiv>
+                {Math.ceil(item.price / peopleCnt / 100) * 100}
+              </PriceDiv>
               <SumPriceDiv>{item.price}</SumPriceDiv>
               <MemoDiv>{item.memo}</MemoDiv>
             </PlanContentDiv>
@@ -219,7 +221,7 @@ const PlanListInput = ({
           <PostCity style={{ backgroundColor: "#000" }}>전체</PostCity>
         </div>
         <div style={{ width: "20%" }}>1인당 비용</div>
-        <PriceDiv>{datePrice / peopleCnt}</PriceDiv>
+        <PriceDiv>{Math.ceil(datePrice / peopleCnt / 100) * 100}</PriceDiv>
         <div style={{ width: "20%" }}>총 비용</div>
         <SumPriceDiv>{datePrice}</SumPriceDiv>
       </CostSummaryDiv>

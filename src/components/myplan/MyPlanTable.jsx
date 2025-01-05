@@ -1,7 +1,7 @@
-import { useEffect, useState, useLocation } from "react";
+import { useEffect, useState } from "react";
 // comp
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 // styled
 import { TiArrowSortedDown } from "react-icons/ti";
@@ -37,12 +37,10 @@ const MyPlanTable = ({
   const [cnt, setCnt] = useState(0);
   const [planDate, setPlanDate] = useState();
 
-  const tableTitle = ["시간", "일정", "위치", "1일비용", "총비용", "메모"];
-  // console.log(id);
+  const tableTitle = ["시간", "일정", "위치", "1인비용", "총비용", "메모"];
 
   const { pathname } = useLocation();
 
-  
   const cateChange = item => {
     if (item.category === "hotel") {
       return "숙소";
@@ -87,8 +85,6 @@ const MyPlanTable = ({
   const getPriceAll = async _id => {
     try {
       const res = await axios.get(`/api/plan/sum?planMasterId=${_id}`);
-      // console.log("이거 어디갔냐!!!!!!!!!!", res.data.resultData.price);
-      console.log(allPrice);
       setAllPrice(res.data.resultData.price);
     } catch (error) {
       console.log(error);
@@ -122,7 +118,10 @@ const MyPlanTable = ({
   // 날짜 목록 업데이트
   useEffect(() => {
     setDayList(Array.from({ length: planDate + 1 }, (_, i) => `${i + 1}일차`));
-  }, [planDate]);
+    if (!datePrice) {
+      setDatePrice(0);
+    }
+  }, [planDate, datePrice]);
 
   // 일정 목록 상태 업데이트 (일차와 카테고리 필터링)
   useEffect(() => {
@@ -152,35 +151,34 @@ const MyPlanTable = ({
   };
 
   // 일정 데이터 필터링
-  //  const planListDataChange = data => {
-  //   if (selectedOption === "1일차") {
-  //     const filterData = data.filter(item => item.date === 1);
-  //     setMyPlan(filterData);
-  //   }
-  //   if (selectedOption === "2일차") {
-  //     const filterData = data.filter(item => item.date === 2);
-  //     setMyPlan(filterData);
-  //   }
-  //   if (selectedOption === "3일차") {
-  //     const filterData = data.filter(item => item.date === 3);
-  //     setMyPlan(filterData);
-  //   }
-  //   if (selectedOption === "4일차") {
-  //     const filterData = data.filter(item => item.date === 4);
-  //     setMyPlan(filterData);
-  //   }
-  //   if (selectedOption === "5일차") {
-  //     const filterData = data.filter(item => item.date === 5);
-  //     setMyPlan(filterData);
-  //   }
-  // };
+  const planListDataChange = data => {
+    if (selectedOption === "1일차") {
+      const filterData = data.filter(item => item.date === 1);
+      setMyPlan(filterData);
+    }
+    if (selectedOption === "2일차") {
+      const filterData = data.filter(item => item.date === 2);
+      setMyPlan(filterData);
+    }
+    if (selectedOption === "3일차") {
+      const filterData = data.filter(item => item.date === 3);
+      setMyPlan(filterData);
+    }
+    if (selectedOption === "4일차") {
+      const filterData = data.filter(item => item.date === 4);
+      setMyPlan(filterData);
+    }
+    if (selectedOption === "5일차") {
+      const filterData = data.filter(item => item.date === 5);
+      setMyPlan(filterData);
+    }
+  };
 
   // 일정 목록 상태 업데이트
   useEffect(() => {
     getPlanDetail(id);
     getPriceDate(id);
     getPriceAll(id);
-    // console.log("몇명??", cnt);
   }, [cnt, selectedOption]);
   // 카테고리 색상 지정
   const getCateColor = category => {
@@ -253,14 +251,14 @@ const MyPlanTable = ({
           {pathname === `/myplanlist/${id}` ? (
             <BtnAreaDiv>
               <Link to={"/"}>일정 수정</Link>
-              <Link to={"/board/writepost"}>다녀ON 리뷰작성</Link>
+              <Link to={`/myplanlist/writepost/${id}`}>다녀ON 리뷰작성</Link>
             </BtnAreaDiv>
           ) : (
             <></>
           )}
         </TableTopDiv>
         <TableDiv>
-         <ul className="t-title">
+          <ul className="t-title">
             {tableTitle.map((item, index) => {
               return (
                 <li key={index}>
@@ -301,7 +299,7 @@ const MyPlanTable = ({
                         </p>
                       </li>
                       <li>
-                        <p>{item.price / cnt}</p>
+                        <p>{Math.ceil(item.price / cnt / 100) * 100}</p>
                       </li>
                       <li>
                         <p>{item.price}</p>

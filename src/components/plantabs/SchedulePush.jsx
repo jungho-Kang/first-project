@@ -142,6 +142,7 @@ const SchedulePush = ({
       console.log(error);
     }
   };
+
   const { handleSubmit } = useForm();
   const handleSubmitData = () => {
     postPlanDetail({ ...detailData });

@@ -1,13 +1,12 @@
-import { Link, useNavigate } from "react-router-dom";
-import {} from "./mypage";
+import { Link } from "react-router-dom";
 
-import { IoClose } from "react-icons/io5";
-import { DeleteBtn } from "../../pages/mypage/plan-list/myplan";
 import axios from "axios";
 import { useContext } from "react";
+import { IoClose } from "react-icons/io5";
 import { LoginContext } from "../../contexts/LoginContext";
+import { DeleteBtn } from "../../pages/mypage/plan-list/myplan";
 
-const MyplanlistItem = ({ item, myScheduleList, setMyScheduleList }) => {
+const MyplanlistItem = ({ item, setMyScheduleList }) => {
   const planDateAddOne = parseInt(item?.planDate) + 1;
   const imgUrl = `http://112.222.157.156:5212/pic/city/${item?.cityId}/${item?.cityPic}`;
   const { user } = useContext(LoginContext);

@@ -1,15 +1,16 @@
 import axios from "axios";
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { TitleDiv, WrapDiv } from "../../components/common";
 import PlanListResult from "../../components/list-result/PlanListResult";
+import { LoginContext } from "../../contexts/LoginContext";
 import { PostCity } from "../planning/plan";
 import { FlexLayoutDiv } from "./board";
 
-function WritePostPage({
+function WritePutPage({
   selectedOption,
   setSelectedOption,
   setIsOpen,
@@ -22,32 +23,46 @@ function WritePostPage({
   setAllPrice,
 }) {
   const navigate = useNavigate();
-
   const { id } = useParams();
+  const { user } = useContext(LoginContext);
+  // 받아온 title, content
 
+  // 수정한 title, review(content)
   const [review, setReview] = useState("");
   const [title, setTitle] = useState("");
   const [feedData, setFeedData] = useState({
     planMasterId: 0,
     userId: 0,
+    title: "",
     content: "",
-    location: "",
   });
 
   const { handleSubmit } = useForm();
 
-  const postFeed = async item => {
+  const getFeedDetail = async _id => {
     try {
-      await axios.post(`/api/feed`, item);
-      alert("등록 되었습니다.");
-      navigate("/board");
+      const res = await axios.get(`/api/feed/detail?planMasterId=${_id}`);
+      setTitle(res.data.resultData.title);
+      setReview(res.data.resultData.content);
+
+      console.log("피드 디테일 가져와!!", res.data.resultData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const putFeed = async item => {
+    try {
+      await axios.put(`/api/feed`, item);
     } catch (error) {
       console.log(error);
     }
   };
 
   const handleSubmitFeed = () => {
-    postFeed({ ...feedData });
+    putFeed({ ...feedData });
+    alert("수정 되었습니다.");
+    navigate("/board");
   };
 
   const modules = useMemo(
@@ -106,11 +121,15 @@ function WritePostPage({
   );
 
   useEffect(() => {
+    getFeedDetail(id);
+  }, [id]);
+
+  useEffect(() => {
     setFeedData({
       planMasterId: id,
+      userId: user.userId,
       title: title,
       content: review,
-      location: "포항",
     });
   }, [title, review]);
   return (
@@ -200,4 +219,4 @@ function WritePostPage({
   );
 }
 
-export default WritePostPage;
+export default WritePutPage;

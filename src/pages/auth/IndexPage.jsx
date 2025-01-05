@@ -57,7 +57,7 @@ function IndexPage() {
     resolver: yupResolver(schema),
     defaultValues: {
       email: "o52o.suhyun@gmail.com",
-      upw: "rrrr4444%",
+      upw: "qqqq1111@",
     },
   });
 
