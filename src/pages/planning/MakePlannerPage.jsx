@@ -127,6 +127,8 @@ function MakePlannerPage({
   setDayList,
   datePrice,
   setDatePrice,
+  allPrice,
+  setAllPrice,
 }) {
   const { id } = useParams();
 
@@ -343,6 +345,8 @@ function MakePlannerPage({
             setDatePrice={setDatePrice}
             planMasterId={planMasterId}
             peopleCnt={peopleCnt}
+            allPrice={allPrice}
+            setAllPrice={setAllPrice}
           />
         )}
       </LayoutDiv>
