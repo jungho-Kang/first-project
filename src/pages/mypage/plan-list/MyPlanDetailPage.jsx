@@ -6,6 +6,8 @@ import MypageTop from "../../../components/mypage/MypageTop";
 import MyPlanTable from "../../../components/myplan/MyPlanTable";
 import { MyPageWrapDiv } from "../my-info/myinfo";
 import { TitleAreaDiv } from "./myplan";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 function MyPlanDetail({
   selectedOption,
@@ -20,13 +22,30 @@ function MyPlanDetail({
   setAllPrice,
 }) {
   const { id } = useParams();
+  const [cityName, setCityName] = useState("");
+
+  const getCityName = async () => {
+    try {
+      const res = await axios.get(`/api/plan?planMasterId=${id}`);
+      setCityName(res.data.resultData.cityName);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getCityName();
+  }, []);
+
   return (
     <div>
       <MypageTop />
       <MyPageWrapDiv>
         <MypageTab />
         <TitleAreaDiv>
-          <h3>{selectedOption} 일정</h3>
+          <h3>
+            {cityName} {selectedOption} 일정
+          </h3>
         </TitleAreaDiv>
         <MyPlanTable
           selectedOption={selectedOption}

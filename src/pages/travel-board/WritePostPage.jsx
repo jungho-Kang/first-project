@@ -24,6 +24,8 @@ function WritePostPage({
   const navigate = useNavigate();
 
   const { id } = useParams();
+  const [cityName, setCityName] = useState("");
+  const [color, setColor] = useState("");
 
   const [review, setReview] = useState("");
   const [title, setTitle] = useState("");
@@ -41,6 +43,16 @@ function WritePostPage({
       await axios.post(`/api/feed`, item);
       alert("등록 되었습니다.");
       navigate("/board");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getPlanDetail = async () => {
+    try {
+      const res = await axios.get(`/api/plan?planMasterId=${id}`);
+      setCityName(res.data.resultData.cityName);
+      setColor(res.data.resultData.color);
     } catch (error) {
       console.log(error);
     }
@@ -106,6 +118,7 @@ function WritePostPage({
   );
 
   useEffect(() => {
+    getPlanDetail();
     setFeedData({
       planMasterId: id,
       title: title,
@@ -113,6 +126,7 @@ function WritePostPage({
       location: "포항",
     });
   }, [title, review]);
+
   return (
     <WrapDiv>
       <form onSubmit={handleSubmit(handleSubmitFeed)}>
@@ -120,8 +134,15 @@ function WritePostPage({
           다녀 <b>ON</b>
         </TitleDiv>
         <FlexLayoutDiv style={{ position: "relative", height: 60 }}>
-          <PostCity style={{ position: "absolute", zIndex: 9, marginLeft: 10 }}>
-            부산
+          <PostCity
+            style={{
+              position: "absolute",
+              zIndex: 9,
+              marginLeft: 10,
+              backgroundColor: `#${color}`,
+            }}
+          >
+            {cityName}
           </PostCity>
           <input
             placeholder="제목을 입력해주세요"

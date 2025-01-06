@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import { useEffect } from "react";
 import { TiArrowSortedDown } from "react-icons/ti";
-import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
   position: relative;
@@ -55,24 +54,8 @@ const OptionItem = styled.div`
 `;
 
 const PlanDateDiv = styled.div`
-  padding: 0.8em 0;
+  padding: 0.8em 0 0;
   color: #777;
-`;
-const LinkbtnAreaDiv = styled.div`
-  height: 34px;
-  line-height: 34px;
-
-  a {
-    border: 1px solid #eee;
-    min-width: 120px;
-    text-align: center;
-    border-radius: 4px;
-    background-color: #efefef;
-    transition: all 0.3s;
-    &:hover {
-      opacity: 0.7;
-    }
-  }
 `;
 
 const PlanTop = ({
@@ -117,20 +100,6 @@ const PlanTop = ({
         )}
       </div>
       <PlanDateDiv>{`${resData.startDate} - ${resData.endDate}`}</PlanDateDiv>
-      <LinkbtnAreaDiv>
-        <Link
-          to="#"
-          onClick={() => window.open("https://www.letskorail.com", "_blank")}
-        >
-          교통
-        </Link>
-        <Link
-          to="#"
-          onClick={() => window.open("https://www.airbnb.co.kr/", "_blank")}
-        >
-          숙소
-        </Link>
-      </LinkbtnAreaDiv>
     </Wrapper>
   );
 };
