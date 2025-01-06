@@ -348,7 +348,6 @@ function MakePlannerPage({
             isSlide={isSlide}
             allPrice={allPrice}
             setAllPrice={setAllPrice}
-
           />
         )}
       </LayoutDiv>

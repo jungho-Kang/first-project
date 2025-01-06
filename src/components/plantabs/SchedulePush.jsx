@@ -45,15 +45,6 @@ const SmallTitleDiv = styled.div`
   font-weight: 700;
 `;
 
-const TimeTitleDiv = styled.div`
-  display: flex;
-  gap: 235px;
-  margin-top: 10px;
-  margin-bottom: 5px;
-  color: #bbb;
-  font-size: 12px;
-`;
-
 const TimeDiv = styled.div`
   display: flex;
   margin-top: 5;
@@ -117,25 +108,6 @@ const SchedulePush = ({
   setDetailData,
 }) => {
   const { id } = useParams();
-
-  // // 보낼 Plan 데이터 초기 값
-  // const initDetailData = {
-  //   planMasterId: 0,
-  //   placeId: 0,
-  //   price: 0,
-  //   memo: "",
-  //   startTime: "",
-  //   endTime: "",
-  //   date: "",
-  //   newPlacePostReq: {
-  //     cityId: 0,
-  //     placeAddress: "",
-  //     placeName: "",
-  //     category: "",
-  //     lat: 0,
-  //     lng: 0,
-  //   },
-  // };
 
   const [startTime, setStartTime] = useState("10:00");
   const [endTime, setEndTime] = useState("22:00");
