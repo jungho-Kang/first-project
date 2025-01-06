@@ -1,14 +1,13 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 // comp
-import { JoinDiv, LayerDiv, LoginDiv } from "../../components/common";
 import LayerLogo from "../../components/ui/logo/LayerLogo";
-// yup
 import FindPw from "../../components/auth/FindPw";
 import ResetPw from "../../components/auth/ResetPw";
-import { Link } from "react-router-dom";
+// styled
+import { JoinDiv, LayerDiv, LoginDiv } from "../../components/common";
 
 function FindPwPage() {
-  console.log("리랜더링");
   const [showResetPw, setShowResetPw] = useState(false);
   const [putPwEmail, setPutPwEmail] = useState({
     email: "",

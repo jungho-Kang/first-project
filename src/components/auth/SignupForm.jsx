@@ -42,15 +42,8 @@ const schema = yup.object({
 });
 
 const SignupForm = () => {
-  const [email, setEmail] = useState({ email: "" });
   const navigate = useNavigate();
-  const {
-    isPopup,
-    setIsPopup,
-    popupMessage,
-    setPopupMessage,
-    handleClickPopupClose,
-  } = useContext(LoginContext);
+  const [email, setEmail] = useState({ email: "" });
   const [isCodeCorrect, setIsCodeCorrect] = useState(false); // 인증번호 일치 여부
 
   const {
@@ -65,7 +58,6 @@ const SignupForm = () => {
       upw: "",
       name: "",
     },
-    // 나중에 onSubmit으로 전체 바꾸기
     mode: "onChange",
     resolver: yupResolver(schema),
   });
@@ -77,7 +69,7 @@ const SignupForm = () => {
     console.log("보내는데이터 submitData : ", submitData);
     try {
       const res = await axios.post("/api/user/sign-up", submitData);
-      console.log("회원가입 성공시 받아온 데이터 : ", res.data);
+      // console.log("회원가입 성공시 받아온 데이터 : ", res.data);
       if (res.data.resultData) {
         alert("회원가입이 완료되었습니다. 로그인 화면으로 이동합니다.");
         navigate("/auth");
@@ -100,14 +92,14 @@ const SignupForm = () => {
       setIsCodeCorrect(false);
     }
   }, [[upw, pwconfirm]]);
-  // console.log("aaaaaaa", email);
   return (
     <SignupDiv>
       <LayerLogo />
       <h2>회원가입</h2>
       <div className="form">
+        {/* 이메일 인증 */}
         <CodeCheck email={email} setEmail={setEmail} />
-        {/* ----------------------------------------------------------- */}
+        {/* -------- 인증후 회원정보 입력  -------- */}
         <form onSubmit={handleSubmit(onSubmit)}>
           <NameNickNameDiv>
             {/* 이름 */}
@@ -186,14 +178,6 @@ const SignupForm = () => {
           <Link to={"/auth"}>로그인화면 이동</Link>
         </JoinDiv>
       </div>
-      {/* {isPopup && (
-        <ConfirmPopup
-          message={"회원가입이 완료되었습니다. 로그인 창으로 이동합니다"}
-          onClose={handleClickPopupClose}
-          onNav={`navigate("/auth")`}
-          style={{ textAlign: "center" }}
-        />
-      )} */}
     </SignupDiv>
   );
 };

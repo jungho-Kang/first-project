@@ -1,13 +1,17 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 // comp
 import { WrapDiv } from "../components/common";
+import SwiperItem from "../components/main/SwiperItem";
 // Swiper
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-
 // import required modules
 import { Autoplay } from "swiper/modules";
+
+// styled
 import {
   LinkBoxDiv,
   LinkContDiv,
@@ -17,10 +21,6 @@ import {
   VisualDiv,
 } from ".";
 // icon
-
-import SwiperItem from "../components/main/SwiperItem";
-import axios from "axios";
-import { useEffect, useState } from "react";
 
 function IndexPage() {
   const [planList, setPlanList] = useState([]);

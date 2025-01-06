@@ -26,10 +26,3 @@ export const postEmailCode = async email => {
     return error;
   }
 };
-
-// 인증번호 받기
-// export const patchAuthCode = async data => {
-//   try {
-//     const res = aw;
-//   } catch (error) {}
-// };

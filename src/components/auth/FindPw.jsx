@@ -1,5 +1,6 @@
-import axios from "axios";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import axios from "axios";
 // styled
 import {
   BtnBasic,
@@ -8,11 +9,10 @@ import {
   InputBtnArea,
   TextForm,
 } from "../common";
-
-// import { postEmailCode } from "../../../fetch/auth";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+// yup
 import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+// schema
 const schema = yup.object({
   email: yup
     .string()
@@ -49,15 +49,15 @@ const FindPw = ({ setShowResetPw, setPutPwEmail, putPwEmail }) => {
 
   // 이메일 인증 요청 api 호출
   const handleSendCode = async email => {
-    console.log("이메일 인증코드 요청", email);
+    // console.log("이메일 인증코드 요청", email);
     try {
       const res = await axios.post("/api/email-check", { email: email });
-      console.log(res.data);
+      // console.log(res.data);
       setSendMessage("해당 이메일로 인증번호가 발송되었습니다.");
       setPutData({ ...putData, email: email });
       setPutPwEmail({ ...putPwEmail, email: email });
       setCode(res.data);
-      console.log("PutData updated:", putData);
+      // console.log("PutData updated:", putData);
     } catch (error) {
       console.log("인증코드 발송 실패", error);
       alert("인증번호 발송 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
@@ -66,7 +66,7 @@ const FindPw = ({ setShowResetPw, setPutPwEmail, putPwEmail }) => {
 
   // 이메일,코드 보내기
   const onSubmit = async data => {
-    console.log("제출된 데이터", data);
+    // console.log("제출된 데이터", data);
     try {
       console.log(putData);
       const res = await axios.put(

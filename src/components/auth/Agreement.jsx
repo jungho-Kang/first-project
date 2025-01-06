@@ -8,15 +8,18 @@ import { BtnBasic, CheckBoxDiv } from "../common";
 // icon
 import { FaCheck } from "react-icons/fa";
 
+// 체크박스 상태 관리: 각 항목의 동의 여부를 저장
 const Agreement = ({ setIsAgreementStep }) => {
+  // 전체 동의 여부를 관리하는 상태
+  const [isAllChecked, setIsAllChecked] = useState(false);
   const [agreeChecked, setAgreeChecked] = useState({
     agree01: false,
     agree02: false,
     agree03: false,
   });
+  // 전체 동의 체크박스를 체크했을 때
   const handleAllAgree = e => {
     const { checked } = e.target;
-
     if (checked) {
       setAgreeChecked({
         agree01: true,
@@ -31,12 +34,15 @@ const Agreement = ({ setIsAgreementStep }) => {
       });
     }
   };
+  // 각 체크박스 변경 > 해당 항목의 동의 여부 변경
   const handleCheckboxChange = label => {
     setAgreeChecked(prev => ({
       ...prev,
       [label]: !prev[label],
     }));
   };
+
+  // '다음' 버튼 클릭 > 모든 필수 항목에 동의한 경우  >다음 단계로 진행
   const handleNext = () => {
     if (isAllChecked) {
       setIsAgreementStep(false);
@@ -44,7 +50,7 @@ const Agreement = ({ setIsAgreementStep }) => {
       alert("모든항목에 동의해주세요.");
     }
   };
-  const [isAllChecked, setIsAllChecked] = useState(false);
+
   useEffect(() => {
     if (agreeChecked.agree01 && agreeChecked.agree02 && agreeChecked.agree03) {
       setIsAllChecked(true);

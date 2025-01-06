@@ -1,16 +1,19 @@
-import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { LayoutDiv } from "./plan";
-
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
-import PlanListInput from "../../components/list-result/PlanListInput";
+// comp
 import Logo from "../../components/Logo";
-import AddPlace from "../../components/plantabs/AddPlace";
 import PlanTop from "../../components/plantabs/PlanTop";
 import RecommendItem from "../../components/plantabs/RecommendItem";
 import SchedulePush from "../../components/plantabs/SchedulePush";
+import AddPlace from "../../components/plantabs/AddPlace";
 import TravelMap from "../../components/plantabs/TravelMap";
+//styled
+import styled from "@emotion/styled";
+import { LayoutDiv } from "./plan";
+
+// icon
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+import PlanListInput from "../../components/list-result/PlanListInput";
 
 const PlanTabsUl = styled.ul`
   display: flex;
@@ -211,6 +214,7 @@ function MakePlannerPage({
         width: "100%",
         height: "100vh",
         marginTop: "-68px",
+        zIndex: 9999,
       }}
     >
       <LayoutDiv>
