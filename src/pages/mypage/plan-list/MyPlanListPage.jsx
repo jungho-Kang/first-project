@@ -11,7 +11,7 @@ import MyplanlistItem from "../../../components/mypage/MyplanlistItem";
 import { MyPageWrapDiv } from "../my-info/myinfo";
 import { MyplanlistDiv, TitleAreaDiv } from "./myplan";
 
-function MyPlanListPage() {
+function MyPlanListPage({ setPlanMasterId }) {
   const { user } = useContext(LoginContext);
   const [myScheduleList, setMyScheduleList] = useState([]);
 
@@ -50,6 +50,7 @@ function MyPlanListPage() {
                   key={item.planMasterId}
                   item={item}
                   setMyScheduleList={setMyScheduleList}
+                  setPlanMasterId={setPlanMasterId}
                 />
               ) : null,
             )

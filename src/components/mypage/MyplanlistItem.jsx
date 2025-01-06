@@ -7,7 +7,7 @@ import { DeleteBtn } from "../../pages/mypage/plan-list/myplan";
 // icon
 import { IoClose } from "react-icons/io5";
 
-const MyplanlistItem = ({ item, setMyScheduleList }) => {
+const MyplanlistItem = ({ item, setMyScheduleList, setPlanMasterId }) => {
   const planDateAddOne = parseInt(item?.planDate) + 1;
   const imgUrl = `http://112.222.157.156:5212/pic/city/${item?.cityId}/${item?.cityPic}`;
   const { user } = useContext(LoginContext);
@@ -40,7 +40,10 @@ const MyplanlistItem = ({ item, setMyScheduleList }) => {
 
   return (
     <>
-      <Link to={`/myplanlist/${item.planMasterId}`}>
+      <Link
+        to={`/myplanlist/${item.planMasterId}`}
+        onClick={() => setPlanMasterId(item.planMasterId)}
+      >
         <img className="city-pic" src={imgUrl} alt="지역이미지" />
         <div
           className="city-color"
