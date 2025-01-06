@@ -118,6 +118,7 @@ const SchedulePush = ({
     try {
       await axios.post(`${API_URL}/plan/detail`, item);
     } catch (error) {
+      console.log("보낸 데이터", item);
       console.log(error);
     }
   };

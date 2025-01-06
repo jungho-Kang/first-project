@@ -1,12 +1,12 @@
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 // comp
-import Header from "./header/Header";
 import Footer from "./footer/Footer";
+import Header from "./header/Header";
 // style
 import { MainDiv } from "./common";
 
-const Layout = ({ children, paramPath }) => {
+const Layout = ({ children, paramPath, planMasterId }) => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   // 스크롤 이벤트
@@ -30,14 +30,16 @@ const Layout = ({ children, paramPath }) => {
       {pathname === "/auth" ||
       pathname === "/auth/findpw" ||
       pathname === "/auth/signup" ||
-      pathname === `/planning/makeplanner/${paramPath}` ? null : (
+      pathname === `/planning/makeplanner/${paramPath}` ||
+      pathname === `/myplanlist/editplanner/${planMasterId}` ? null : (
         <Header isScrolled={isScrolled} />
       )}
       <MainDiv>{children}</MainDiv>
       {pathname === "/auth" ||
       pathname === "/auth/findpw" ||
       pathname === "/auth/signup" ||
-      pathname === `/planning/makeplanner/${paramPath}` ? null : (
+      pathname === `/planning/makeplanner/${paramPath}` ||
+      pathname === `/myplanlist/editplanner/${planMasterId}` ? null : (
         <Footer />
       )}
     </div>

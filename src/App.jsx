@@ -25,6 +25,7 @@ import WritePutPage from "./pages/travel-board/WritePutPage";
 import { useState } from "react";
 import { LoginProvider } from "./contexts/LoginContext";
 import ScrollToTop from "./components/ScrollToTop";
+import EditPlannerPage from "./pages/planning/EditPlannerPage";
 
 function App() {
   // 일정 등록(날짜, 도시정보 등등)
@@ -56,7 +57,7 @@ function App() {
     <Router>
       <ScrollToTop />
       <LoginProvider>
-        <Layout paramPath={paramPath}>
+        <Layout paramPath={paramPath} planMasterId={planMasterId}>
           <Routes>
             {/* 홈 */}
             <Route path="/" element={<Home />} />
@@ -153,7 +154,10 @@ function App() {
 
             <Route path="myplanlist">
               {/* 마이페이지 - 내일정, 일정디테일 */}
-              <Route index element={<MyPlanList />} />
+              <Route
+                index
+                element={<MyPlanList setPlanMasterId={setPlanMasterId} />}
+              />
               <Route
                 path=":id"
                 element={
@@ -183,6 +187,27 @@ function App() {
                     setDayList={setDayList}
                     datePrice={datePrice}
                     setDatePrice={setDatePrice}
+                    allPrice={allPrice}
+                    setAllPrice={setAllPrice}
+                  />
+                }
+              />
+              <Route
+                path="editplanner/:id"
+                element={
+                  <EditPlannerPage
+                    planMasterId={planMasterId}
+                    resData={resData}
+                    resDetailData={resDetailData}
+                    peopleCnt={peopleCnt}
+                    selectedOption={selectedOption}
+                    setSelectedOption={setSelectedOption}
+                    setDayList={setDayList}
+                    dayList={dayList}
+                    datePrice={datePrice}
+                    setDatePrice={setDatePrice}
+                    isOpen={isOpen}
+                    setIsOpen={setIsOpen}
                     allPrice={allPrice}
                     setAllPrice={setAllPrice}
                   />

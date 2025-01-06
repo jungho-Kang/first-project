@@ -245,7 +245,7 @@ const MyPlanTable = ({
           </ChoiceDiv>
           {pathname === `/myplanlist/${id}` ? (
             <BtnAreaDiv>
-              <Link to={`/planning/makeplanner/${id}`}>일정 수정</Link>
+              <Link to={`/myplanlist/editplanner/${id}`}>일정 수정</Link>
               <Link to={`/myplanlist/writepost/${id}`}>다녀ON 리뷰작성</Link>
             </BtnAreaDiv>
           ) : (
