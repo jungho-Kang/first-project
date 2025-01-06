@@ -37,13 +37,13 @@ export const LoginProvider = ({ children }) => {
   };
 
   // 팝업
-  const handleClickPopup = () => {
-    setIsPopup(true);
-    console.log(isPopup);
-  };
-  const handleClickPopupClose = () => {
-    setIsPopup(false);
-  };
+  // const handleClickPopup = () => {
+  //   setIsPopup(true);
+  //   console.log(isPopup);
+  // };
+  // const handleClickPopupClose = () => {
+  //   setIsPopup(false);
+  // };
 
   // 페이지 로드 시 sessionStorage에서 값 읽어오기
   useEffect(() => {

@@ -15,13 +15,6 @@ import axios from "axios";
 import { API_URL } from "../../constants/login";
 import { AboutTopDiv } from "../about/about";
 
-const FlexBtnDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  max-width: 1440px;
-  padding-top: 30px;
-`;
-
 const NextBtn = styled.button`
   width: 80px;
   height: 45px;
@@ -43,7 +36,7 @@ function CalendarPickerPage({
   setPlanMasterId,
   setPeopleCnt,
 }) {
-  const { user } = useContext(LoginContext);
+  const { user, isLogin } = useContext(LoginContext);
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -88,6 +81,14 @@ function CalendarPickerPage({
 
       navigate(`/planning/makeplanner/${id}`);
     } catch (error) {
+      if (!isLogin) {
+        const isConfirmed = window.confirm(
+          "로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?",
+        );
+        if (isConfirmed) {
+          navigate("/auth");
+        }
+      }
       console.log(error);
     }
   };

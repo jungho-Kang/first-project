@@ -1,14 +1,12 @@
-import { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { LoginContext } from "../../contexts/LoginContext";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 // comp
 import LayerLogo from "../ui/logo/LayerLogo";
 import CodeCheck from "./CodeCheck";
-import ConfirmPopup from "../popup/ConfirmPopup";
 // yup
-import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 import * as yup from "yup";
 // styled
 import { NameNickNameDiv, SignupDiv } from "../../pages/auth/login";
