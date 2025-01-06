@@ -37,7 +37,6 @@ export const FooterTopDiv = styled.div`
         font-size: 15px;
         position: relative;
         &::before {
-          content: "";
           width: 2px;
           height: 12px;
           background-color: #555;

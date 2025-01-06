@@ -72,7 +72,6 @@ const MyPlanTable = ({
     // http://112.222.157.156:5212/api/plan?planMasterId=1
     try {
       const res = await axios.get(`/api/plan?planMasterId=${_id}`);
-      // console.log(res);
       const result = res.data.resultData;
       setPlanDate(result.planDate);
       setCnt(result.peopleCnt);

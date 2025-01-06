@@ -86,7 +86,6 @@ const MenuLayoutDiv = styled.div`
   max-width: 100%;
   height: 100%;
   position: relative;
-  display: flex;
 `;
 const AddScheduleDiv = styled.div`
   width: 480px;
@@ -273,6 +272,7 @@ function EditPlannerPage({
   setAllPrice,
 }) {
   const { id } = useParams();
+
   // 보낼 Plan 데이터 초기 값
   const initDetailData = {
     planMasterId: id,
