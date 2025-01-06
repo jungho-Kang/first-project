@@ -16,17 +16,25 @@ import {
 
 function IndexPage() {
   const [boardList, setBoardList] = useState([]);
+  const [btnClick, setBtnClick] = useState(false);
 
   const getBoard = async () => {
     try {
-      const res = await axios.get(`/api/feed`);
-      console.log(res.data.resultData);
+      const res = await axios.get(`/api/feed/latest`);
       setBoardList(res.data.resultData);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const getBoardLike = async () => {
+    try {
+      const res = await axios.get(`/api/feed`);
+      setBoardList(res.data.resultData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   // boardList를 4개씩 묶어서 반환하는 함수
   const fourArray = (arr, size) => {
     const result = [];
@@ -38,7 +46,6 @@ function IndexPage() {
 
   useEffect(() => {
     getBoard();
-    console.log("이거!!!!!!!", boardList);
   }, []);
 
   return (
@@ -46,6 +53,41 @@ function IndexPage() {
       <TitleDiv style={{ fontFamily: "yg-jalnan", fontSize: 48 }}>
         다녀 <b>ON</b>
       </TitleDiv>
+      <div style={{ display: "flex", gap: 20, justifyContent: "flex-end" }}>
+        <button
+          style={{
+            backgroundColor: btnClick ? "#4CAF50" : "#F5F5F5",
+            color: btnClick ? "#fff" : "#616161",
+            border: "none",
+            borderRadius: 5,
+            width: 80,
+            height: 30,
+          }}
+          onClick={() => {
+            getBoardLike();
+            setBtnClick(true);
+          }}
+        >
+          좋아요순
+        </button>
+        <button
+          style={{
+            backgroundColor: !btnClick ? "#673AB7" : "#F5F5F5",
+            color: !btnClick ? "#fff" : "#616161",
+            border: "none",
+            borderRadius: 5,
+            width: 80,
+            height: 30,
+          }}
+          onClick={() => {
+            getBoard();
+            setBtnClick(false);
+          }}
+        >
+          최신순
+        </button>
+      </div>
+
       {/* boardList를 4개씩 묶은 후 각 묶음을 PostUl로 렌더링 */}
       {fourArray(boardList, 4).map((four, index) => (
         <PostUl key={index}>

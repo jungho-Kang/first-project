@@ -170,24 +170,8 @@ const OptionItem = styled.div`
 `;
 
 const PlanDateDiv = styled.div`
-  padding: 0.8em 0;
+  padding: 0.8em 0 0;
   color: #777;
-`;
-const LinkbtnAreaDiv = styled.div`
-  height: 34px;
-  line-height: 34px;
-
-  a {
-    border: 1px solid #eee;
-    min-width: 120px;
-    text-align: center;
-    border-radius: 4px;
-    background-color: #efefef;
-    transition: all 0.3s;
-    &:hover {
-      opacity: 0.7;
-    }
-  }
 `;
 
 const ContentDiv = styled.div`
@@ -288,6 +272,7 @@ function EditPlannerPage({
   allPrice,
   setAllPrice,
 }) {
+  const { id } = useParams();
   // 보낼 Plan 데이터 초기 값
   const initDetailData = {
     planMasterId: id,
@@ -311,7 +296,7 @@ function EditPlannerPage({
   const [detailData, setDetailData] = useState(initDetailData);
   const [startTime, setStartTime] = useState("10:00");
   const [endTime, setEndTime] = useState("22:00");
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState();
   const [memo, setMemo] = useState("");
 
   const [isSlide, setIsSlide] = useState(false);
@@ -375,8 +360,6 @@ function EditPlannerPage({
     setIsOpen(false);
   };
 
-  const { id } = useParams();
-
   const postPlanDetail = async item => {
     try {
       await axios.post(`/api/plan/detail`, item);
@@ -390,7 +373,6 @@ function EditPlannerPage({
   const { handleSubmit } = useForm();
   const handleSubmitData = () => {
     postPlanDetail({ ...detailData });
-
     setIsClick(false);
   };
 
@@ -403,7 +385,7 @@ function EditPlannerPage({
       endTime: endTime,
       date: selectedOption.substring(0, 1),
       newPlacePostReq: {
-        cityId: id,
+        cityId: planDetailData.cityId,
         placeAddress: selectedItem.addressName,
         placeName: selectedItem.placeName,
         category: selectedCate,
@@ -514,24 +496,6 @@ function EditPlannerPage({
                   )}
                 </div>
                 <PlanDateDiv>{`${planDetailData.startDate} - ${planDetailData.endDate}`}</PlanDateDiv>
-                <LinkbtnAreaDiv>
-                  <Link
-                    to="#"
-                    onClick={() =>
-                      window.open("https://www.letskorail.com", "_blank")
-                    }
-                  >
-                    교통
-                  </Link>
-                  <Link
-                    to="#"
-                    onClick={() =>
-                      window.open("https://www.airbnb.co.kr/", "_blank")
-                    }
-                  >
-                    숙소
-                  </Link>
-                </LinkbtnAreaDiv>
               </Wrapper>
               <div>
                 <PlanTabsUl>
