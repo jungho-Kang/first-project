@@ -3,7 +3,7 @@ import { useState } from "react";
 
 const ContentDiv = styled.div`
   width: 100%;
-  height: 500px;
+  height: 650px;
   margin-top: 40px;
 `;
 
@@ -65,7 +65,7 @@ const AddPlace = ({
         </button>
       </div>
       {/* 검색결과 출력 */}
-      <div style={{ overflowY: "auto", height: 500, cursor: "pointer" }}>
+      <div style={{ overflowY: "auto", height: 580, cursor: "pointer" }}>
         {mapResultList.map(item => {
           return (
             <div

@@ -27,6 +27,10 @@ function WritePutPage({
   const { user } = useContext(LoginContext);
   // 받아온 title, content
 
+  // cityName, color
+  const [cityName, setCityName] = useState("");
+  const [color, setColor] = useState("");
+
   // 수정한 title, review(content)
   const [review, setReview] = useState("");
   const [title, setTitle] = useState("");
@@ -44,8 +48,10 @@ function WritePutPage({
       const res = await axios.get(
         `/api/feed/detail?planMasterId=${_id}&userId=${user.userId}`,
       );
+      setCityName(res.data.resultData.cityName);
       setTitle(res.data.resultData.title);
       setReview(res.data.resultData.content);
+      setColor(res.data.resultData.color);
 
       console.log("피드 디테일 가져와!!", res.data.resultData);
     } catch (error) {
@@ -141,8 +147,15 @@ function WritePutPage({
           다녀 <b>ON</b>
         </TitleDiv>
         <FlexLayoutDiv style={{ position: "relative", height: 60 }}>
-          <PostCity style={{ position: "absolute", zIndex: 9, marginLeft: 10 }}>
-            부산
+          <PostCity
+            style={{
+              position: "absolute",
+              zIndex: 9,
+              marginLeft: 10,
+              backgroundColor: `#${color}`,
+            }}
+          >
+            {cityName}
           </PostCity>
           <input
             placeholder="제목을 입력해주세요"
