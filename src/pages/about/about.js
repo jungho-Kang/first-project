@@ -68,9 +68,9 @@ export const GuideDiv = styled.div``;
 export const GuideContentDiv = styled.div`
   max-width: 1280px;
   margin: 120px auto 160px;
-  border: 1px solid #bbb;
   width: 100%;
   height: 720px;
+
   .mySwiper {
     width: 100%;
     height: 100%;
@@ -78,6 +78,20 @@ export const GuideContentDiv = styled.div`
       width: 100%;
       height: 100%;
       background: #eee;
+      border-radius: 30px;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
+  }
+  .swiper-button-next:after,
+  .swiper-rtl .swiper-button-prev:after,
+  .swiper-button-prev:after,
+  .swiper-rtl .swiper-button-next:after {
+    color: #fff;
   }
 `;

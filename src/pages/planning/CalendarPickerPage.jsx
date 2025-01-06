@@ -117,7 +117,6 @@ function CalendarPickerPage({
   useEffect(() => {
     if (moment(startDate).isSame(endDate, "day")) {
       setMaxDate(null);
-    } else {
       setMaxDate(moment(startDate).add(4, "days").toDate());
     }
     if (endDate) {

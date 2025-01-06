@@ -86,7 +86,6 @@ const MenuLayoutDiv = styled.div`
   max-width: 100%;
   height: 100%;
   position: relative;
-  display: flex;
 `;
 const AddScheduleDiv = styled.div`
   width: 480px;
@@ -288,6 +287,8 @@ function EditPlannerPage({
   allPrice,
   setAllPrice,
 }) {
+  const { id } = useParams();
+
   // 보낼 Plan 데이터 초기 값
   const initDetailData = {
     planMasterId: id,
@@ -375,8 +376,6 @@ function EditPlannerPage({
     setIsOpen(false);
   };
 
-  const { id } = useParams();
-
   const postPlanDetail = async item => {
     try {
       await axios.post(`/api/plan/detail`, item);
@@ -403,7 +402,7 @@ function EditPlannerPage({
       endTime: endTime,
       date: selectedOption.substring(0, 1),
       newPlacePostReq: {
-        cityId: id,
+        cityId: planDetailData.cityId,
         placeAddress: selectedItem.addressName,
         placeName: selectedItem.placeName,
         category: selectedCate,
