@@ -1,9 +1,11 @@
 import styled from "@emotion/styled";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { API_URL } from "../../constants/login";
 import { PostCity } from "../../pages/planning/plan";
 import { WrapDiv } from "../common";
+import { RiDeleteBin6Fill } from "react-icons/ri";
+import { FaEdit } from "react-icons/fa";
 
 const PlanTitleDiv = styled.div`
   margin: 0 auto;
@@ -90,7 +92,11 @@ const PlanListInput = ({
   planMasterId,
   peopleCnt,
   isSlide,
+  allPrice,
+  setAllPrice,
 }) => {
+  const [planId, setPlanId] = useState("");
+
   const getPrice = async () => {
     try {
       const res = await axios.get(
@@ -169,10 +175,35 @@ const PlanListInput = ({
     }
   };
 
+  const getPriceAll = async () => {
+    try {
+      const res = await axios.get(`/api/plan/sum?planMasterId=${planMasterId}`);
+      // console.log(allPrice);
+      const result = res.data.resultData;
+      setAllPrice(result.price);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deletePlanDetail = async () => {
+    try {
+      await axios.delete(`/api/plan/detail?planId=${planId}`);
+      alert("삭제 되었습니다.");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getPrice();
     getPlanData();
-  }, [selectedOption, datePrice]);
+    getPriceAll();
+  }, [selectedOption]);
+
+  useEffect(() => {
+    setPlanId(planId);
+  }, [planId]);
 
   return (
     <WrapDiv
@@ -199,6 +230,8 @@ const PlanListInput = ({
         </PriceDiv>
         <SumPriceDiv>총금액</SumPriceDiv>
         <MemoDiv>메모</MemoDiv>
+        <div style={{ width: "5%" }}></div>
+        <div style={{ width: "5%", marginRight: 20 }}></div>
       </PlanTitleDiv>
       <div style={{ overflowY: "auto", height: 500 }}>
         {planListData.map(item => {
@@ -219,6 +252,33 @@ const PlanListInput = ({
               </PriceDiv>
               <SumPriceDiv>{item.price}</SumPriceDiv>
               <MemoDiv>{item.memo}</MemoDiv>
+              <button
+                style={{
+                  backgroundColor: "#fff",
+                  border: "none",
+                  width: "5%",
+                  color: "#999",
+                }}
+              >
+                <FaEdit style={{ fontSize: 30 }} />
+                <div style={{ fontSize: 12 }}>수정</div>
+              </button>
+              <button
+                style={{
+                  backgroundColor: "#fff",
+                  border: "none",
+                  width: "5%",
+                  color: "#999",
+                  marginRight: 20,
+                }}
+                onClick={() => {
+                  setPlanId(item.planId);
+                  deletePlanDetail();
+                }}
+              >
+                <RiDeleteBin6Fill style={{ fontSize: 30 }} />
+                <div style={{ fontSize: 12 }}>삭제</div>
+              </button>
             </PlanContentDiv>
           );
         })}
@@ -233,6 +293,8 @@ const PlanListInput = ({
         <PriceDiv>{Math.ceil(datePrice / peopleCnt / 100) * 100}</PriceDiv>
         <div style={{ width: "20%" }}>총 비용</div>
         <SumPriceDiv>{datePrice}</SumPriceDiv>
+        <div style={{ width: "20%" }}>여행 총 비용</div>
+        <SumPriceDiv>{allPrice}</SumPriceDiv>
       </CostSummaryDiv>
     </WrapDiv>
   );

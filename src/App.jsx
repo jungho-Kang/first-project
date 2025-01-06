@@ -23,8 +23,6 @@ import WritePost from "./pages/travel-board/WritePostPage";
 import WritePutPage from "./pages/travel-board/WritePutPage";
 
 import { useState } from "react";
-
-// import { PopupProvider } from "./contexts/PopupContext";
 import { LoginProvider } from "./contexts/LoginContext";
 
 function App() {
@@ -105,6 +103,8 @@ function App() {
                     setDatePrice={setDatePrice}
                     isOpen={isOpen}
                     setIsOpen={setIsOpen}
+                    allPrice={allPrice}
+                    setAllPrice={setAllPrice}
                   />
                 }
               ></Route>
