@@ -6,9 +6,6 @@ import { createContext, useEffect, useState } from "react";
 export const PopupContext = createContext();
 
 export const PopupProvider = ({ children }) => {
-  //   const [isPopup, setIsPopup] = useState(false);
-  //   const [popupMessage, setPopupMessage] = useState(""); // 팝업에 띄울 메시지
-  //   const navigate = useNavigate();
   const [popup, setPopup] = useState({
     inVisible: false,
     tit: "",

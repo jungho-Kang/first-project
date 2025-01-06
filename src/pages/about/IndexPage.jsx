@@ -9,9 +9,6 @@ function IndexPage() {
       </AboutTopDiv>
       <AboutContDiv>
         <WrapDiv>
-          {/* <h3>
-            다녀 <b>ALL</b> 소개
-          </h3> */}
           {/* 1 */}
           <div className="cont">
             <div className="img-box"></div>

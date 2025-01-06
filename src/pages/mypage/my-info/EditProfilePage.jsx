@@ -46,7 +46,7 @@ function EditProfilePage() {
 
   const fetchApi = async data => {
     data.userId = user.userId;
-    console.log("보낼 데이터", data);
+    // console.log("보낼 데이터", data);
     try {
       const res = await axios.patch("/api/user/nickname", data);
       console.log("닉네임 수정 성공시 받은 데이터", res.data);
@@ -89,7 +89,7 @@ function EditProfilePage() {
                 <input
                   type="text"
                   name="name"
-                  value={"홍길동"}
+                  value={user.name}
                   readOnly
                   style={{
                     backgroundColor: "#eee",
@@ -126,7 +126,7 @@ function EditProfilePage() {
                 <input
                   type="email"
                   name="email"
-                  value={"aa@gmail.com"}
+                  value={user.email}
                   readOnly
                   style={{ backgroundColor: "#eee", color: "#999" }}
                 />

@@ -54,10 +54,10 @@ function UpdatePwPage() {
 
   const onSubmit = async data => {
     data.userId = user.userId;
-    console.log(data);
+    // console.log(data);
 
     try {
-      console.log(data);
+      // console.log(data);
       const res = await axios.patch("/api/user/password", data);
       if (res.data.resultData) {
         console.log("비밀번호 수정 :", res.data.resultData);

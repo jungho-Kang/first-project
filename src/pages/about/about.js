@@ -19,7 +19,6 @@ export const AboutTopDiv = styled.div`
 export const AboutContDiv = styled.div`
   padding-bottom: 160px;
   .cont {
-    /* border: 1px solid; */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -65,9 +64,7 @@ export const AboutContDiv = styled.div`
 
 // 서브메뉴 - 가이드 페이지
 
-export const GuideDiv = styled.div`
-  border: 1px solid;
-`;
+export const GuideDiv = styled.div``;
 export const GuideContentDiv = styled.div`
   max-width: 1280px;
   margin: 120px auto 160px;

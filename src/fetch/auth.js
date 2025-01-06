@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_URL } from "../src/constants/login";
+import { API_URL } from "../constants/login";
 
 // 로그인 API
 export const postLoginMember = async data => {
@@ -26,10 +26,3 @@ export const postEmailCode = async email => {
     return error;
   }
 };
-
-// 인증번호 받기
-// export const patchAuthCode = async data => {
-//   try {
-//     const res = aw;
-//   } catch (error) {}
-// };

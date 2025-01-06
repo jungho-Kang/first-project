@@ -16,7 +16,6 @@ export const MainDiv = styled.main`
 // --- 로그인 페이지 ---
 export const LoginDiv = styled.div`
   background: url(/images/auth_bg.png) no-repeat center center / cover;
-  /* background: url(/images/auth_bg.jpg) no-repeat center center / cover; */
   position: fixed;
   z-index: 99;
   left: 0;
@@ -26,12 +25,6 @@ export const LoginDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  /* form {
-    display: block;
-    max-width: 1024px;
-    width: 100%;
-  } */
 `;
 export const LayerDiv = styled.div`
   max-width: 460px;

@@ -72,7 +72,7 @@ const MyPlanTable = ({
     // http://112.222.157.156:5212/api/plan?planMasterId=1
     try {
       const res = await axios.get(`/api/plan?planMasterId=${_id}`);
-      console.log(res);
+      // console.log(res);
       const result = res.data.resultData;
       setPlanDate(result.planDate);
       setCnt(result.peopleCnt);
@@ -87,7 +87,7 @@ const MyPlanTable = ({
       console.log(error);
     }
   };
-  console.log(startEndDate);
+
   // 가격 가져오기
   const getPriceDate = async _id => {
     try {
@@ -245,7 +245,7 @@ const MyPlanTable = ({
           </ChoiceDiv>
           {pathname === `/myplanlist/${id}` ? (
             <BtnAreaDiv>
-              <Link to={`/plannig/makeplanner/${id}`}>일정 수정</Link>
+              <Link to={`/planning/makeplanner/${id}`}>일정 수정</Link>
               <Link to={`/myplanlist/writepost/${id}`}>다녀ON 리뷰작성</Link>
             </BtnAreaDiv>
           ) : (

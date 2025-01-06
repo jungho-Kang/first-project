@@ -209,7 +209,6 @@ const PlanListInput = ({
     <WrapDiv
       style={{
         margin: 0,
-        marginLeft: 200,
         marginTop: 100,
         width: 1024,
         height: 800,

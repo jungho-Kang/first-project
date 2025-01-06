@@ -1,10 +1,18 @@
-import { IoHeart } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
+// styled
 import { SwiperItemDiv } from "../../pages";
+// icon
+import { IoHeart } from "react-icons/io5";
 
 const SwiperItem = ({ item }) => {
   const imgUrl = `http://112.222.157.156:5212/pic/city/${item?.cityId}/${item?.cityPic}`;
+  const navigate = useNavigate();
   return (
-    <SwiperItemDiv>
+    <SwiperItemDiv
+      onClick={() => {
+        navigate(`/board/detail/${item?.planMasterId}`);
+      }}
+    >
       <div className="thum">
         <img src={imgUrl} alt="지역이미지" />
       </div>

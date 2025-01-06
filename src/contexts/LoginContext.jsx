@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
-import { LOGIN_SESSION_KEY, USER_SESSION_KEY } from "../constants/login";
 import { useNavigate } from "react-router-dom";
+import { LOGIN_SESSION_KEY, USER_SESSION_KEY } from "../constants/login";
 
 export const LoginContext = createContext();
 
@@ -71,12 +71,6 @@ export const LoginProvider = ({ children }) => {
         setUser,
         handleClickLogin,
         handleClickLogout,
-        setIsPopup,
-        isPopup,
-        handleClickPopup,
-        handleClickPopupClose,
-        setPopupMessage,
-        popupMessage,
       }}
     >
       {children}

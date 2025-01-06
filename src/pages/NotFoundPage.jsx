@@ -6,9 +6,9 @@ function NotFoundPage() {
     <NotFoundDiv>
       <div className="inner">
         <div className="img-box">
-          <img src="../images/404/fa_cloud.svg" alt="왼쪽구름" />
-          <img src="../images/404/fa_paper-plane.svg" alt="비행기" />
-          <img src="../images/404/icomoon-free_cloud.svg" alt="오른쪽구름" />
+          <img src="/images/404/fa_cloud.svg" alt="왼쪽구름" />
+          <img src="/images/404/fa_paper-plane.svg" alt="비행기" />
+          <img src="/images/404/icomoon-free_cloud.svg" alt="오른쪽구름" />
         </div>
         <div className="txt-box">
           <h2>404</h2>

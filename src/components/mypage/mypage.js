@@ -28,7 +28,6 @@ export const MyPageTopDiv = styled.div`
       border-radius: 100%;
       border: 3px solid #eee;
       margin-top: -45px;
-      /* background-color: #1270b0; */
       background: #1270b0 url(/images/icon-plane.svg) no-repeat center center /
         75%;
     }

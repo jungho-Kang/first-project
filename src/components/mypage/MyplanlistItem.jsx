@@ -15,7 +15,6 @@ const MyplanlistItem = ({ item, setMyScheduleList }) => {
   const deleteItem = _Id => {
     setMyScheduleList(prev => prev.filter(item => item.planMasterId !== _Id));
   };
-  // http://112.222.157.156:5212/api/plan?planMasterId=0&userId=0
   const deleteListItem = async data => {
     try {
       const res = await axios.delete(
@@ -27,8 +26,6 @@ const MyplanlistItem = ({ item, setMyScheduleList }) => {
       console.log(error);
     }
   };
-
-  // http://112.222.157.156:5212/api/plan?planMasterId=1
 
   const handleClickbtn = e => {
     e.preventDefault();

@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { LoginContext } from "../../contexts/LoginContext";
 import axios from "axios";
 // comp
-import ConfirmPopup from "../../components/popup/ConfirmPopup";
 import BasicBtn from "../../components/ui/button/BasicBtn";
 import LayerLogo from "../../components/ui/logo/LayerLogo";
 // styled
@@ -20,7 +19,7 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-
+// schema
 const schema = yup.object({
   email: yup
     .string()
@@ -45,7 +44,7 @@ function IndexPage() {
   const navigate = useNavigate();
   const { handleClickLogin, setIsLogin } = useContext(LoginContext);
 
-  // 리엑트훅폼 설정
+  // react hook form
   const {
     register,
     handleSubmit,
@@ -54,21 +53,18 @@ function IndexPage() {
     mode: "onSubmit",
     resolver: yupResolver(schema),
     defaultValues: {
-      email: "o52o.suhyun@gmail.com",
-      upw: "qqqq1111@",
+      email: "",
+      upw: "",
     },
   });
-
-  //  api 요청후 결과받기
-  // const { data, error, loading } = useAxios("/user/signin", null, "post");
 
   const fetchApi = async _formData => {
     try {
       setLoading(true);
       const response = await axios.post("/api/user/sign-in", _formData);
-      console.log("로그인 성공시 받아온 데이터:", response.data);
+      // console.log("로그인 성공시 받아온 데이터:", response.data);
       const { upw, message, ...userData } = response.data.resultData;
-      console.log("로그인 성공시 받아온 데이터 userData:", userData);
+      // console.log("로그인 성공시 받아온 데이터 userData:", userData);
 
       if (!response.data.resultData.nickName) {
         alert(response.data.resultData.message);
@@ -146,29 +142,9 @@ function IndexPage() {
               <span>아직 회원이 아니신가요?</span>
               <Link to={"/auth/signup"}>회원가입</Link>
             </JoinDiv>
-            {/* start 팝업버튼 사용시 버튼 */}
-            {/* <button
-              type="button"
-              onClick={() => {
-                handleClickPopup();
-              }}
-            >
-              이거
-            </button> */}
-            {/* //end 팝업버튼 사용시 버튼 */}
           </LayerDiv>
         </LoginDiv>
       </form>
-      {/* start 팝업버튼 사용시 */}
-      {/* {isPopup && (
-        <ConfirmPopup
-          navi={"/"}
-          onClose={() => {
-            handleClickPopupClose();
-          }}
-        />
-      )} */}
-      {/* //end 팝업버튼 사용시 */}
     </>
   );
 }

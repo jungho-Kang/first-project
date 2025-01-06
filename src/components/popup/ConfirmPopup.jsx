@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { PopupDiv } from "./popup";
 
 const ConfirmPopup = ({ style, message }) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   return (
     <PopupDiv>
