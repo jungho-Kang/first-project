@@ -84,7 +84,7 @@ function DetailPage({
   }, [feedDetail.isLike]);
 
   return (
-    <WrapDiv>
+    <WrapDiv style={{ marginBottom: 150 }}>
       <TitleDiv style={{ fontFamily: "yg-jalnan", fontSize: 48 }}>
         다녀 <b>ON</b>
       </TitleDiv>
@@ -94,7 +94,7 @@ function DetailPage({
         </PostCity>
         <SubTitleDiv>{feedDetail.title}</SubTitleDiv>
       </FlexLayoutDiv>
-      <LineDiv />
+      {/* <LineDiv /> */}
       <PlanListResult
         selectedOption={selectedOption}
         setSelectedOption={setSelectedOption}
@@ -112,11 +112,10 @@ function DetailPage({
       <div
         style={{
           display: "flex",
-          margin: "0 auto",
+          margin: "50px auto",
           maxWidth: 1200,
           width: "100%",
           justifyContent: "flex-end",
-          marginBottom: 20,
           gap: 15,
         }}
       >
@@ -125,22 +124,22 @@ function DetailPage({
             <button
               onClick={() => navigate(`/board/writeput/${id}`)}
               style={{
-                width: 100,
-                height: 50,
-                borderRadius: 20,
-                backgroundColor: "#B8D8E4",
+                width: 110,
+                height: 45,
+                borderRadius: 5,
+                backgroundColor: "#1270B0",
                 color: "#fff",
                 border: "none",
               }}
             >
-              수정
+              게시글 수정
             </button>
             <button
               style={{
                 width: 100,
-                height: 50,
-                borderRadius: 20,
-                backgroundColor: "#B8D8E4",
+                height: 45,
+                borderRadius: 5,
+                backgroundColor: "#b3b3b3",
                 color: "#fff",
                 border: "none",
               }}
@@ -150,34 +149,83 @@ function DetailPage({
             </button>
           </>
         ) : user.userId ? (
-          <FlexDiv style={{ cursor: "pointer" }}>
+          <FlexDiv
+            style={{
+              cursor: "pointer",
+              width: "100%",
+              justifyContent: "center",
+            }}
+          >
             {isLike ? (
-              <GoHeartFill
+              <span
                 onClick={() => {
                   if (user.userId) {
                     deleteLike();
                   }
                 }}
                 style={{
-                  color: "#f00",
-                  marginRight: 5,
-                  width: 25,
-                  height: 25,
+                  border: "1px solid #ccc",
+                  backgroundColor: "#ea4335",
+                  borderRadius: 5,
+                  padding: "8px 32px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
                 }}
-              />
+              >
+                <GoHeartFill
+                  style={{
+                    color: "#fff",
+                    width: 35,
+                    height: 35,
+                  }}
+                />{" "}
+                <p
+                  style={{
+                    textAlign: "center",
+                    fontWeight: 600,
+                    color: "#ffeeee",
+                    fontSize: 18,
+                  }}
+                >
+                  좋아요
+                </p>
+              </span>
             ) : (
-              <CiHeart
+              <span
+                style={{
+                  border: "1px solid #ccc",
+                  backgroundColor: "#ebebeb",
+                  borderRadius: 5,
+                  padding: "8px 32px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                }}
                 onClick={() => {
                   if (user.userId) {
                     postLike(likeData);
                   }
                 }}
-                style={{
-                  marginRight: 5,
-                  width: 25,
-                  height: 25,
-                }}
-              />
+              >
+                <GoHeartFill
+                  style={{
+                    width: 35,
+                    height: 35,
+                    color: "#999",
+                  }}
+                />
+                <p
+                  style={{
+                    textAlign: "center",
+                    fontWeight: 600,
+                    color: "#555",
+                    fontSize: 18,
+                  }}
+                >
+                  좋아요
+                </p>
+              </span>
             )}
           </FlexDiv>
         ) : (

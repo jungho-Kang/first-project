@@ -53,10 +53,10 @@ function IndexPage() {
       <TitleDiv style={{ fontFamily: "yg-jalnan", fontSize: 48 }}>
         다녀 <b>ON</b>
       </TitleDiv>
-      <div style={{ display: "flex", gap: 20, justifyContent: "flex-end" }}>
+      <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
         <button
           style={{
-            backgroundColor: btnClick ? "#4CAF50" : "#F5F5F5",
+            backgroundColor: btnClick ? "#4CAF50" : "#eee",
             color: btnClick ? "#fff" : "#616161",
             border: "none",
             borderRadius: 5,
@@ -72,7 +72,7 @@ function IndexPage() {
         </button>
         <button
           style={{
-            backgroundColor: !btnClick ? "#673AB7" : "#F5F5F5",
+            backgroundColor: !btnClick ? "#673AB7" : "#eee",
             color: !btnClick ? "#fff" : "#616161",
             border: "none",
             borderRadius: 5,
