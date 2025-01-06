@@ -9,19 +9,22 @@ import { useParams } from "react-router-dom";
 import { API_URL } from "../../constants/login";
 
 const ContentDiv = styled.div`
-  max-width: 600px;
+  max-width: 480px;
   width: 100%;
-  background-color: #fff;
-  padding: 50px;
+  box-shadow:
+    0 3px 6px rgba(0, 0, 0, 0.12),
+    0 7px 14px rgba(0, 0, 0, 0.12);
+  padding: 40px;
   border-radius: 20px;
-  margin-top: 40px;
+  background-color: #fff;
   z-index: 999;
   position: absolute;
-  top: calc(50% - 34px);
-  right: 0;
+  top: 50%;
+  right: 50px;
   transform: translateY(-50%);
   h2 {
     font-size: 24px;
+    text-align: center;
     font-weight: 700;
     margin-bottom: 20px;
   }
@@ -29,7 +32,7 @@ const ContentDiv = styled.div`
     width: 100%;
     height: 50px;
     margin-top: 10px;
-    background-color: #3825e4;
+    background-color: #17a1fa;
     color: #fff;
     border-radius: 5px;
     border: none;
@@ -37,9 +40,8 @@ const ContentDiv = styled.div`
 `;
 
 const SmallTitleDiv = styled.div`
-  margin-top: 20px;
-  margin-bottom: 10px;
-  font-size: 16px;
+  margin: 10px 0 7px;
+  font-size: 14px;
   font-weight: 700;
 `;
 
@@ -63,10 +65,13 @@ const TimeInput = styled.input`
   height: 40px;
   font-size: 16px;
   padding-left: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 `;
 
 const CostInput = styled(TimeInput)`
   width: 100%;
+  border: 1px solid #ddd;
 `;
 
 const TextInput = styled.input`
@@ -74,15 +79,17 @@ const TextInput = styled.input`
   height: 40px;
   font-size: 14px;
   padding-left: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
 `;
 
 const CateDiv = styled.div`
-  width: 100px;
-  height: 40px;
-  border-radius: 10px;
+  width: calc((100% - 20px) / 3);
+  height: 38px;
+  border-radius: 4px;
   text-align: center;
-  background-color: #eeeeee;
-  line-height: 40px;
+  background-color: #eee;
+  line-height: 38px;
   cursor: pointer;
 `;
 
@@ -175,10 +182,10 @@ const SchedulePush = ({
       >
         <h2>일정등록</h2>
         <SmallTitleDiv>시간</SmallTitleDiv>
-        <TimeTitleDiv>
+        {/* <TimeTitleDiv>
           <div>시작</div>
           <div>종료</div>
-        </TimeTitleDiv>
+        </TimeTitleDiv> */}
         <TimeDiv>
           <TimeInput
             type="time"
@@ -199,7 +206,7 @@ const SchedulePush = ({
           <CateDiv
             onClick={() => setSelectedCate("place")}
             style={{
-              backgroundColor: selectedCate === "place" ? "#5469D4" : "#ddd",
+              backgroundColor: selectedCate === "place" ? "#1270B0" : "#eee",
               color: selectedCate === "place" ? "#fff" : "#000",
             }}
           >
@@ -208,7 +215,7 @@ const SchedulePush = ({
           <CateDiv
             onClick={() => setSelectedCate("hotel")}
             style={{
-              backgroundColor: selectedCate === "hotel" ? "#5469D4" : "#ddd",
+              backgroundColor: selectedCate === "hotel" ? "#1270B0" : "#eee",
               color: selectedCate === "hotel" ? "#fff" : "#000",
             }}
           >
@@ -218,7 +225,7 @@ const SchedulePush = ({
             onClick={() => setSelectedCate("restaurant")}
             style={{
               backgroundColor:
-                selectedCate === "restaurant" ? "#5469D4" : "#ddd",
+                selectedCate === "restaurant" ? "#1270B0" : "#eee",
               color: selectedCate === "restaurant" ? "#fff" : "#000",
             }}
           >
@@ -239,7 +246,16 @@ const SchedulePush = ({
         </div>
         <SmallTitleDiv>메모</SmallTitleDiv>
         <textarea
-          style={{ padding: 10, width: "100%", height: 120, resize: "none" }}
+          style={{
+            padding: 10,
+            width: "100%",
+            height: 80,
+            overflowY: "auto",
+            marginBottom: 20,
+            borderRadius: 4,
+            border: "1px solid #ddd",
+            resize: "none",
+          }}
           value={memo}
           onChange={e => setMemo(e.target.value)}
         ></textarea>

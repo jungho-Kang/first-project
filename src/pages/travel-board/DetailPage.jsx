@@ -51,7 +51,9 @@ function DetailPage({
 
   return (
     <WrapDiv>
-      <TitleDiv>다녀ON</TitleDiv>
+      <TitleDiv style={{ fontFamily: "yg-jalnan", fontSize: 48 }}>
+        다녀 <b>ON</b>
+      </TitleDiv>
       <FlexLayoutDiv>
         <PostCity style={{ backgroundColor: `#${feedDetail.color}` }}>
           {feedDetail.cityName}

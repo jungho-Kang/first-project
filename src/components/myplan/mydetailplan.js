@@ -77,6 +77,8 @@ export const MemoPopupDiv = styled.div`
       font-weight: 600;
       font-size: 24px;
       margin-bottom: 30px;
+      word-break: keep-all;
+      line-height: 1.2em;
       em {
         color: rgb(0, 119, 255);
       }

@@ -8,8 +8,8 @@ import DOMPurify from "dompurify";
 const ReviewDiv = styled.div`
   margin: 0 auto;
   max-width: 1200px;
-  border: 1px solid #000;
-  border-radius: 30px;
+  border: 1px solid #bbb;
+  border-radius: 10px;
   padding: 30px;
   line-height: 1.5em;
   margin-top: 30px;

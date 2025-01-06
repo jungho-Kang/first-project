@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { WrapDiv } from "../components/common";
+import { keyframes } from "@emotion/react";
 
 export const MainWrapDiv = styled(WrapDiv)`
   padding: 40px 0 120px;
@@ -239,6 +240,96 @@ export const LinkBoxDiv = styled.div`
       p {
         font-size: 14px;
         color: rgba(255, 255, 255, 0.7);
+      }
+    }
+  }
+`;
+const position = keyframes`
+  0% {transform: translate(-80px, 80px) scale(1);}
+  70% {transform: translate(50px, -45px) scale(0);}
+  100% {transform: translate(50px, -45px) scale(0);}
+`;
+const cloudPosition1 = keyframes`
+0% {transform: translate(0, 30px);}
+50% {transform: translate(-5px, 30px);}
+100% {transform: translate(0, 30px);}
+`;
+const cloudPosition2 = keyframes`
+0% {transform: translate(0, -30px);}
+50% {transform: translate(-5px, -30px);}
+100% {transform: translate(0, -30px);}
+`;
+// 404
+export const NotFoundDiv = styled.div`
+  background: #fff;
+  position: fixed;
+  z-index: 999;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .inner {
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+    > div {
+      width: 50%;
+    }
+    .img-box {
+      width: 300px;
+      height: 300px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      img {
+        &:nth-of-type(1) {
+          width: 100px;
+          transform: translate(0, 30px);
+          animation: ${cloudPosition1} 3s linear infinite;
+        }
+        &:nth-of-type(2) {
+          width: 40px;
+          transform: translate(-80px, 50px) scale(1);
+          animation: ${position} 3s ease-in-out infinite;
+        }
+        &:nth-of-type(3) {
+          width: 60px;
+          transform: translate(0, -30px);
+          animation: ${cloudPosition2} 3s linear infinite;
+        }
+      }
+    }
+    .txt-box {
+      h2 {
+        font-weight: 600;
+        font-size: 48px;
+      }
+      p {
+        font-size: 24px;
+        font-weight: 500;
+        margin: 5px 0 15px;
+      }
+      span {
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.5);
+      }
+      a {
+        display: inline-block;
+        background-color: #1270b0;
+        color: #fff;
+        margin-top: 30px;
+        padding: 14px 30px;
+        text-align: center;
+        border-radius: 3px;
+        transition: all 0.3s;
+        font-weight: 500;
+        &:hover {
+          background-color: #17a1fa;
+        }
       }
     }
   }

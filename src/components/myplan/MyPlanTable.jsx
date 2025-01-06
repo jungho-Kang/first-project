@@ -38,6 +38,10 @@ const MyPlanTable = ({
   const [filterPlan, setFilterPlan] = useState([]); // 필터링된 일정
   const [cnt, setCnt] = useState(0); // 인원
   const [planDate, setPlanDate] = useState();
+  const [startEndDate, setStartEndDate] = useState({
+    endDate: "",
+    startDate: "",
+  });
 
   const [planDetailPop, setPlanDetailPop] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -68,15 +72,22 @@ const MyPlanTable = ({
     // http://112.222.157.156:5212/api/plan?planMasterId=1
     try {
       const res = await axios.get(`/api/plan?planMasterId=${_id}`);
+      console.log(res);
       const result = res.data.resultData;
       setPlanDate(result.planDate);
       setCnt(result.peopleCnt);
       setMyPlan(result.selPlanDtoList);
+      setStartEndDate({
+        endDate: result.endDate,
+        startDate: result.startDate,
+      });
+
       planListDataChange(result.selPlanDtoList);
     } catch (error) {
       console.log(error);
     }
   };
+  console.log(startEndDate);
   // 가격 가져오기
   const getPriceDate = async _id => {
     try {
@@ -333,13 +344,16 @@ const MyPlanTable = ({
         <MemoPopupDiv>
           <div className="layer">
             <h4 className="tit">
-              <em>[{cateChange(selectedItem)}]</em> {selectedItem.placeName}{" "}
-              상세 일정
+              <em>[{cateChange(selectedItem)}]</em> {selectedItem.placeName}
             </h4>
             <div className="scheduleInfo">
               <div>
                 <b>기간</b>
-                <p> 2025.01.01 - 2025.01.03 ( {selectedItem.date}일차 )</p>
+                <p>
+                  {" "}
+                  {startEndDate.startDate} - {startEndDate.endDate}({" "}
+                  {selectedItem.date}일차 )
+                </p>
               </div>
               <div>
                 <b>시간</b>
@@ -349,14 +363,14 @@ const MyPlanTable = ({
               </div>
               <div>
                 <b>장소</b>
-                <p> {selectedItem.placeName}</p>
+                <p> {selectedItem.placeAddress}</p>
               </div>
             </div>
 
             <div className="price">
               <div>
                 <b>1인 기준 비용</b>
-                <p>{selectedItem.price / cnt} 원</p>
+                <p>{Math.ceil(selectedItem.price / cnt / 100) * 100} 원</p>
               </div>
               <div>
                 <b>전체 비용 </b>

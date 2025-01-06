@@ -28,7 +28,7 @@ const Header = ({ isScrolled }) => {
   // 메뉴
   const menuItems = [
     { path: "/about", label: "다녀ALL" },
-    { path: "/guide", label: "이용방법" },
+    { path: "/guide", label: "이용가이드" },
     { path: "/planning", label: "일정만들기" },
     { path: "/board", label: "다녀ON" },
   ];

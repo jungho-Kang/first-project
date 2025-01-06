@@ -95,6 +95,23 @@ export const TitleDiv = styled.div`
     margin-top: 15px;
     color: rgba(0, 0, 0, 0.65s);
   }
+  b {
+    position: relative;
+    color: #73c971;
+    display: inline-block;
+    font-size: 52px;
+    &::before {
+      content: "";
+      display: block;
+      width: 23px;
+      height: 23px;
+      background: url(/images/icon/on_icon.svg) no-repeat center center /
+        contain;
+      position: absolute;
+      top: -18px;
+      left: 25px;
+    }
+  }
 `;
 export const LineDiv = styled.div`
   margin: 0 auto;

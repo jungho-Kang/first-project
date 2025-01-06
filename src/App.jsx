@@ -23,7 +23,6 @@ import WritePost from "./pages/travel-board/WritePostPage";
 import WritePutPage from "./pages/travel-board/WritePutPage";
 
 import { useState } from "react";
-
 import { LoginProvider } from "./contexts/LoginContext";
 
 function App() {

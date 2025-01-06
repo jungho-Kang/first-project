@@ -100,6 +100,7 @@
 h2.react-datepicker__current-month {
   padding: 0;
   margin: 0;
+  font-family: "yg-jalnan";
 }
 
 .react-datepicker-time__header {
@@ -381,6 +382,7 @@ h2.react-datepicker__current-month {
 .react-datepicker__day-names {
   white-space: nowrap;
   margin-bottom: -8px;
+  font-family: "yg-jalnan";
 }
 
 .react-datepicker__week {
@@ -957,7 +959,7 @@ h2.react-datepicker__current-month {
 /* 여기서 부터에요.. */
 /* 달력의 너비, 높이를 조절함 */
 .react-datepicker {
-  max-width: 620px;
+  max-width: 520px;
   width: 100%;
   margin: 0 auto;
 }
@@ -992,18 +994,21 @@ h2.react-datepicker__current-month {
 /* 날짜 버튼 스타일 */
 .react-datepicker__day {
   font-size: 20px;
-  height: 80px;
-  line-height: 80px;
+  height: 68px;
+  line-height: 68px;
   text-align: center;
   border-radius: 8px;
   margin: 5px;
   cursor: pointer;
+  font-family: "yg-jalnan";
 }
 .react-datepicker__day,
 .react-datepicker__day--001,
 .react-datepicker__day--disabled,
 .react-datepicker__day--weekend {
   width: calc(100% / 7);
+  /* 커스텀 */
+  color: #333;
   margin: 0;
 }
 
