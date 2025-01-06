@@ -6,6 +6,7 @@ import { FlexLayoutDiv, SubTitleDiv } from "./board";
 import { useContext, useEffect, useState } from "react";
 import { LoginContext } from "../../contexts/LoginContext";
 import { GoHeartFill } from "react-icons/go";
+import { CiHeart } from "react-icons/ci";
 import axios from "axios";
 
 function DetailPage({
@@ -24,10 +25,17 @@ function DetailPage({
   const { isLogin, user } = useContext(LoginContext);
   const { id } = useParams();
   const [feedDetail, setFeedDetail] = useState({});
+  const [isLike, setIsLike] = useState(false);
+  const likeData = {
+    userId: user.userId,
+    planMasterId: id,
+  };
 
   const getFeedDetail = async _id => {
     try {
-      const res = await axios.get(`/api/feed/detail?planMasterId=${_id}`);
+      const res = await axios.get(
+        `/api/feed/detail?planMasterId=${_id}&userId=${user.userId}`,
+      );
       setFeedDetail(res.data.resultData);
       console.log("피드 디테일 가져와!!", res.data.resultData);
     } catch (error) {
@@ -35,7 +43,27 @@ function DetailPage({
     }
   };
 
-  const deletFeedDetail = async () => {
+  const postLike = async item => {
+    try {
+      await axios.post(`/api/feed/like`, item);
+      setIsLike(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteLike = async () => {
+    try {
+      await axios.delete(
+        `/api/feed/like?userId=${user.userId}&planMasterId=${id}`,
+      );
+      setIsLike(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteFeedDetail = async () => {
     try {
       await axios.delete(`/api/feed?planMasterId=${id}`);
       alert("삭제 되었습니다.");
@@ -48,6 +76,12 @@ function DetailPage({
   useEffect(() => {
     getFeedDetail(id);
   }, []);
+
+  useEffect(() => {
+    if (feedDetail.isLike === 1) {
+      setIsLike(true);
+    }
+  }, [feedDetail.isLike]);
 
   return (
     <WrapDiv>
@@ -110,18 +144,44 @@ function DetailPage({
                 color: "#fff",
                 border: "none",
               }}
-              onClick={() => deletFeedDetail(id)}
+              onClick={() => deleteFeedDetail(id)}
             >
               삭제
             </button>
           </>
-        ) : (
-          <FlexDiv style={{ gap: 10 }}>
-            <GoHeartFill
-              style={{ color: "#f00", marginRight: 5, width: 25, height: 25 }}
-            />
-            <div style={{ fontSize: 20 }}>{feedDetail.likeCnt}</div>
+        ) : user.userId ? (
+          <FlexDiv style={{ cursor: "pointer" }}>
+            {isLike ? (
+              <GoHeartFill
+                onClick={() => {
+                  if (user.userId) {
+                    deleteLike();
+                  }
+                }}
+                style={{
+                  color: "#f00",
+                  marginRight: 5,
+                  width: 25,
+                  height: 25,
+                }}
+              />
+            ) : (
+              <CiHeart
+                onClick={() => {
+                  if (user.userId) {
+                    postLike(likeData);
+                  }
+                }}
+                style={{
+                  marginRight: 5,
+                  width: 25,
+                  height: 25,
+                }}
+              />
+            )}
           </FlexDiv>
+        ) : (
+          <></>
         )}
       </div>
     </WrapDiv>

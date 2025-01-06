@@ -24,6 +24,7 @@ import WritePutPage from "./pages/travel-board/WritePutPage";
 
 import { useState } from "react";
 import { LoginProvider } from "./contexts/LoginContext";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   // 일정 등록(날짜, 도시정보 등등)
@@ -53,6 +54,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <LoginProvider>
         <Layout paramPath={paramPath}>
           <Routes>

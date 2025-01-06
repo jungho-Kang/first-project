@@ -16,7 +16,7 @@
 
 ### 1. 아이데이션 (주제선정)
 
-- Notion
+- [Notion](https://buttercup-lyric-4ee.notion.site/1576cf890caa807e865deba39a032df0?v=1576cf890caa8194abf0000c14b5b68b&pvs=4)
 
 ### 2. 린캔버스로 아이템의 장단점을 분석해보자.
 

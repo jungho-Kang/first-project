@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_URL } from "../constants/login";
+import { API_URL } from "../src/constants/login";
 
 // 로그인 API
 export const postLoginMember = async data => {
