@@ -41,7 +41,9 @@ function WritePutPage({
 
   const getFeedDetail = async _id => {
     try {
-      const res = await axios.get(`/api/feed/detail?planMasterId=${_id}`);
+      const res = await axios.get(
+        `/api/feed/detail?planMasterId=${_id}&userId=${user.userId}`,
+      );
       setTitle(res.data.resultData.title);
       setReview(res.data.resultData.content);
 
