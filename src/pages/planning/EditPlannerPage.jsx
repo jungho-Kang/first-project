@@ -24,7 +24,6 @@ const PlanTabsUl = styled.ul`
   position: relative;
   margin: 15px 10px 0;
   border-bottom: 1px solid #eee;
-
   li {
     width: 50%;
     height: 45px;
@@ -34,7 +33,6 @@ const PlanTabsUl = styled.ul`
     color: #777;
     font-size: 18px;
   }
-
   .active {
     font-weight: 500;
     color: #3825e4;
@@ -86,6 +84,7 @@ const MenuLayoutDiv = styled.div`
   max-width: 100%;
   height: 100%;
   position: relative;
+  display: flex;
 `;
 const AddScheduleDiv = styled.div`
   width: 480px;
@@ -96,7 +95,6 @@ const AddScheduleDiv = styled.div`
   transition: all 0.3s;
   box-shadow: 0 4px 8px 4px rgba(0, 0, 0, 0.15);
   left: ${({ isSlide }) => (isSlide ? "-355px" : "125px")};
-
   .slide-btn {
     position: absolute;
     top: 50%;
@@ -169,7 +167,7 @@ const OptionItem = styled.div`
 `;
 
 const PlanDateDiv = styled.div`
-  padding: 0.8em 0 0;
+  padding: 0.8em 0;
   color: #777;
 `;
 
@@ -296,7 +294,7 @@ function EditPlannerPage({
   const [detailData, setDetailData] = useState(initDetailData);
   const [startTime, setStartTime] = useState("10:00");
   const [endTime, setEndTime] = useState("22:00");
-  const [price, setPrice] = useState();
+  const [price, setPrice] = useState(0);
   const [memo, setMemo] = useState("");
 
   const [isSlide, setIsSlide] = useState(false);
@@ -373,6 +371,7 @@ function EditPlannerPage({
   const { handleSubmit } = useForm();
   const handleSubmitData = () => {
     postPlanDetail({ ...detailData });
+
     setIsClick(false);
   };
 

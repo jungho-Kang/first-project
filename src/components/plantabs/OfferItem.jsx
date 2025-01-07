@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { FaCheck, FaPlus, FaStar } from "react-icons/fa";
 import { API_URL } from "../../constants/login";
 const OfferItemA = styled.a`
@@ -107,7 +107,7 @@ const OfferItem = ({
 
   useEffect(() => {
     getPlace();
-  }, [selectedCate]);
+  }, [selectedCate, cityId]);
 
   return (
     <>
