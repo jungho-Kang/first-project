@@ -74,10 +74,10 @@ const FindPw = ({ setShowResetPw, setPutPwEmail, putPwEmail }) => {
         `/api/auth-check?email=${putData.email}&authCode=${putData.authCode}`,
       );
       if (res.data.resultData) {
-        console.log("코드 인증:", res.data.resultMessage);
+        // console.log("코드 인증:", res.data.resultMessage);
         setShowResetPw(true);
       } else {
-        console.log("코드 인증:", res.data.resultMessage);
+        // console.log("코드 인증:", res.data.resultMessage);
         alert("코드인증에 실패했습니다. 다시 시도해주세요.");
       }
     } catch (error) {

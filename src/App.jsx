@@ -210,6 +210,7 @@ function App() {
                     setIsOpen={setIsOpen}
                     allPrice={allPrice}
                     setAllPrice={setAllPrice}
+                    setPlanMasterId={setPlanMasterId}
                   />
                 }
               />

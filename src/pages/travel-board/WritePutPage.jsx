@@ -53,7 +53,7 @@ function WritePutPage({
       setReview(res.data.resultData.content);
       setColor(res.data.resultData.color);
 
-      console.log("피드 디테일 가져와!!", res.data.resultData);
+      // console.log("피드 디테일 가져와!!", res.data.resultData);
     } catch (error) {
       console.log(error);
     }

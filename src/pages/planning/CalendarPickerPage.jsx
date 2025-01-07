@@ -134,6 +134,12 @@ function CalendarPickerPage({
     });
   }, [endDate, count]);
 
+  useEffect(() => {
+    if (startDate) {
+      setMaxDate(moment(startDate).add(4, "days").toDate());
+    }
+  }, [startDate]);
+
   return (
     <form
       onSubmit={handleSubmit(handleSubmitDate)}

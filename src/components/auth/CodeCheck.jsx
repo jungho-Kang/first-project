@@ -77,11 +77,11 @@ const CodeCheck = ({ email, setEmail }) => {
         `/api/auth-check?email=${data.email}&authCode=${data.authCode}`,
       );
       if (res.data.resultData) {
-        console.log("코드 인증:", res.data.resultMessage);
+        // console.log("코드 인증:", res.data.resultMessage);
         setEmail({ email: data.email });
         alert("이메일 인증 성공하였습니다.");
       } else {
-        console.log("코드 인증:", res.data.resultMessage);
+        // console.log("코드 인증:", res.data.resultMessage);
         alert("인증번호가 틀렸습니다. 다시 시도해주세요.");
       }
     } catch (error) {

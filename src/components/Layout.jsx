@@ -12,7 +12,7 @@ const Layout = ({ children, paramPath, planMasterId }) => {
   // 스크롤 이벤트
 
   useEffect(() => {
-    console.log("컴포넌트 마운트 시 스크롤 위치:");
+    // console.log("컴포넌트 마운트 시 스크롤 위치:");
     window.addEventListener(
       "scroll",
       function () {
@@ -20,6 +20,7 @@ const Layout = ({ children, paramPath, planMasterId }) => {
       },
       true,
     );
+    // console.log("planMasterID 이거다!!!!!!!!", planMasterId);
   }, []);
 
   const { pathname } = useLocation();

@@ -21,7 +21,7 @@ const MyplanlistItem = ({ item, setMyScheduleList, setPlanMasterId }) => {
         `/api/plan?planMasterId=${data}&userId=${user.userId}`,
         alert("일정이 삭제되었습니다."),
       );
-      console.log(res);
+      // console.log(res);
     } catch (error) {
       console.log(error);
     }
@@ -34,7 +34,7 @@ const MyplanlistItem = ({ item, setMyScheduleList, setPlanMasterId }) => {
       deleteItem(item.planMasterId);
       deleteListItem(item.planMasterId);
     } else {
-      console.log("일정 삭제 취소됨");
+      // console.log("일정 삭제 취소됨");
     }
   };
 
