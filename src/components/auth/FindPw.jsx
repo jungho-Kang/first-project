@@ -69,7 +69,7 @@ const FindPw = ({ setShowResetPw, setPutPwEmail, putPwEmail }) => {
   const onSubmit = async data => {
     // console.log("제출된 데이터", data);
     try {
-      console.log(putData);
+      // console.log(putData);
       const res = await axios.put(
         `/api/auth-check?email=${putData.email}&authCode=${putData.authCode}`,
       );
@@ -155,7 +155,8 @@ const FindPw = ({ setShowResetPw, setPutPwEmail, putPwEmail }) => {
         disabled={inputCode !== code}
         style={{
           marginTop: "20px",
-          backgroundColor: inputCode !== code ? "#d3d3d3" : "#5469D4",
+          backgroundColor:
+            inputCode === "" || inputCode !== code ? "#d3d3d3" : "#5469D4",
         }}
       >
         확인 인증
