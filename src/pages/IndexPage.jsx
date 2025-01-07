@@ -27,7 +27,7 @@ function IndexPage() {
   const fetchApi = async () => {
     try {
       const res = await axios.get(`/api/feed/main`);
-      console.log(res.data.resultData);
+      // console.log(res.data.resultData);
       setPlanList(res.data.resultData);
     } catch (error) {
       console.log(error);

@@ -3,7 +3,7 @@ import { API_URL } from "../src/constants/login";
 
 // 로그인 API
 export const postLoginMember = async data => {
-  console.log("postLoginMember : ", data);
+  // console.log("postLoginMember : ", data);
   try {
     const res = await axios.post(`${API_URL}/user/signin`, { ...data });
     return res;
@@ -17,9 +17,9 @@ export const postLoginMember = async data => {
 //  인증번호 발송 API
 export const postEmailCode = async email => {
   try {
-    console.log("postEmailCode : ", email);
+    // console.log("postEmailCode : ", email);
     const res = await axios.post(`${API_URL}/emailCheck`, { email });
-    console.log(res);
+    // console.log(res);
     return res;
   } catch (error) {
     console.log("Sending Email Error: ", error);

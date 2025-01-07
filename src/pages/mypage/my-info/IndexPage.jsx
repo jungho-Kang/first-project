@@ -17,7 +17,7 @@ import {
 function IndexPage() {
   const navigate = useNavigate();
   const { user } = useContext(LoginContext);
-  console.log(user);
+  // console.log(user);
   return (
     <div>
       <MypageTop />

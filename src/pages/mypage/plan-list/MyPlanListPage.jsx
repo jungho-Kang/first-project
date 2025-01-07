@@ -20,7 +20,7 @@ function MyPlanListPage({ setPlanMasterId }) {
       const res = await axios.get(
         `${API_URL}/user/schedule?userId=${user?.userId}`,
       );
-      console.log(res.data.resultData);
+      // console.log(res.data.resultData);
       setMyScheduleList(res.data.resultData);
     } catch (error) {
       console.log(error);

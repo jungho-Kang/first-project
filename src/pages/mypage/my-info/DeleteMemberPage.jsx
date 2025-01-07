@@ -45,12 +45,12 @@ function DeleteMemberPage() {
   });
 
   const fetchApi = async data => {
-    console.log("탈퇴를 위해 보내는 데이터", data);
+    // console.log("탈퇴를 위해 보내는 데이터", data);
     try {
       const res = await axios.delete(
         `/api/user?userId=${data.userId}&upw=${data.upw}`,
       );
-      console.log(res.data);
+      // console.log(res.data);
       // setIsLogin(false);
       if (res.data.resultData) {
         handleClickLogout();
@@ -69,7 +69,7 @@ function DeleteMemberPage() {
     const isConfirmed = confirm("정말 탈퇴하시겠습니까?");
     if (isConfirmed) {
       const payload = { userId: user.userId, upw: deletePw };
-      console.log(payload);
+      // console.log(payload);
       fetchApi(payload);
     } else {
       console.log("탈퇴가 취소되었습니다.");

@@ -20,6 +20,7 @@ const Layout = ({ children, paramPath, planMasterId }) => {
       },
       true,
     );
+    // console.log("planMasterID 이거다!!!!!!!!", planMasterId);
   }, []);
 
   const { pathname } = useLocation();

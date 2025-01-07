@@ -60,11 +60,11 @@ function UpdatePwPage() {
       // console.log(data);
       const res = await axios.patch("/api/user/password", data);
       if (res.data.resultData) {
-        console.log("비밀번호 수정 :", res.data.resultData);
+        // console.log("비밀번호 수정 :", res.data.resultData);
         alert("비밀번호가 정상적으로 수정완료 되었습니다.");
         navigate("/myinfo");
       } else {
-        console.log("비밀번호 수정 :", res.data.resultData);
+        // console.log("비밀번호 수정 :", res.data.resultData);
         alert("비밀번호 수정에 실패하였습니다. 다시 시도해주세요.");
       }
     } catch (error) {

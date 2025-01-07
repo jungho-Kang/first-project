@@ -49,15 +49,15 @@ function EditProfilePage() {
     // console.log("보낼 데이터", data);
     try {
       const res = await axios.patch("/api/user/nickname", data);
-      console.log("닉네임 수정 성공시 받은 데이터", res.data);
+      // console.log("닉네임 수정 성공시 받은 데이터", res.data);
       if (res.data.resultData) {
-        console.log(res.data.resultMessage);
+        // console.log(res.data.resultMessage);
         setUser({ ...user, nickName: data.nickName });
         alert("닉네임이 정상적으로 수정되었습니다.");
         navigate("/myinfo");
-        console.log(user);
+        // console.log(user);
       } else {
-        console.log(res.data.resultMessage);
+        // console.log(res.data.resultMessage);
         alert("다른 닉네임으로 다시 시도해주세요.");
       }
     } catch (error) {
@@ -66,7 +66,7 @@ function EditProfilePage() {
     }
   };
   const onSubmit = _nickname => {
-    console.log("수정된 보낼 닉네임", _nickname);
+    // console.log("수정된 보낼 닉네임", _nickname);
     fetchApi(_nickname);
   };
 

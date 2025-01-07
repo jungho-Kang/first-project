@@ -25,7 +25,7 @@ function CityPage({ setCityName }) {
     getCity();
   }, []);
 
-  console.log(cityData);
+  // console.log(cityData);
 
   return (
     <>

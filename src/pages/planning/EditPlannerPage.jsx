@@ -295,7 +295,7 @@ function EditPlannerPage({
   const [detailData, setDetailData] = useState(initDetailData);
   const [startTime, setStartTime] = useState("10:00");
   const [endTime, setEndTime] = useState("22:00");
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState();
   const [memo, setMemo] = useState("");
 
   const [isSlide, setIsSlide] = useState(false);
@@ -343,7 +343,7 @@ function EditPlannerPage({
   const getPlanDetail = async () => {
     try {
       const res = await axios.get(`/api/plan?planMasterId=${id}`);
-      console.log("get 받아옴!!", res.data.resultData);
+      // console.log("get 받아옴!!", res.data.resultData);
       setPlanDetailData(res.data.resultData);
     } catch (error) {
       console.log(error);
@@ -364,7 +364,7 @@ function EditPlannerPage({
       await axios.post(`/api/plan/detail`, item);
       setDetailData(initDetailData);
     } catch (error) {
-      console.log("보낸 데이터", item);
+      // console.log("보낸 데이터", item);
       console.log(error);
     }
   };
@@ -408,7 +408,7 @@ function EditPlannerPage({
   }, [planDetailData.cityName]);
 
   useEffect(() => {
-    console.log("플랜 리스트 데이터다", planListData);
+    // console.log("플랜 리스트 데이터다", planListData);
   }, [planListData]);
 
   return (

@@ -268,7 +268,7 @@ const PlanListInput = ({
 
   const handleSubmitData = async () => {
     await putPlan(putPlanData);
-    console.log(putPlanData);
+    // console.log(putPlanData);
     setIsEdit(false);
   };
 
@@ -278,9 +278,9 @@ const PlanListInput = ({
         `${API_URL}/plan/day?planMasterId=${planMasterId}`,
       );
       datePriceChange(res);
-      console.log("getPrice 응답 데이터:", res.data);
+      // console.log("getPrice 응답 데이터:", res.data);
 
-      console.log("get 받아왔다", res.data.resultData);
+      // console.log("get 받아왔다", res.data.resultData);
     } catch (error) {
       console.log(error);
     }
@@ -326,7 +326,6 @@ const PlanListInput = ({
   }, [selectedOption]);
 
   return (
-
     <>
       <WrapDiv
         style={{

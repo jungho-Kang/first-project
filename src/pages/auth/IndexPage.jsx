@@ -83,7 +83,7 @@ function IndexPage() {
   };
 
   const onSubmit = async formData => {
-    console.log("onSubmit 호출됨", formData);
+    // console.log("onSubmit 호출됨", formData);
     fetchApi(formData);
   };
 

@@ -64,7 +64,7 @@ const SignupForm = () => {
     // console.log("보내는데이터 data:", data);
     const { pwconfirm, ...submitData } = data;
     submitData.email = email.email;
-    console.log("보내는데이터 submitData : ", submitData);
+    // console.log("보내는데이터 submitData : ", submitData);
     try {
       const res = await axios.post("/api/user/sign-up", submitData);
       // console.log("회원가입 성공시 받아온 데이터 : ", res.data);
