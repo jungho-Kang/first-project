@@ -210,7 +210,7 @@ function WritePostPage({
               width: 100,
               height: 50,
               borderRadius: 20,
-              backgroundColor: "#B8D8E4",
+              backgroundColor: "#1270b0",
               color: "#fff",
               border: "none",
             }}

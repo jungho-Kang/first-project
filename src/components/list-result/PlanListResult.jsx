@@ -8,12 +8,11 @@ import DOMPurify from "dompurify";
 const ReviewDiv = styled.div`
   margin: 0 auto;
   max-width: 1200px;
-  border: 1px solid #bbb;
+  border: 1px solid #e9e9e9;
   border-radius: 10px;
   padding: 30px;
   line-height: 1.5em;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin: 10px 0 30px;
   strong {
     font-weight: 700;
   }
@@ -24,13 +23,21 @@ const ReviewDiv = styled.div`
     font-size: 30px;
   }
   h2 {
-    font-size: 24px;
+    font-size: 18px;
+  }
+  p {
+    font-size: 14px;
+    color: #555;
+  }
+  span {
+    font-size: 16px;
   }
 `;
 
 const ReviewTitleDiv = styled(SubTitleDiv)`
-  text-align: center;
-  margin-top: 100px;
+  /* text-align: center;
+  margin-top: 100px; */
+  font-size: 20px;
 `;
 
 const PlanListResult = ({
@@ -51,6 +58,17 @@ const PlanListResult = ({
 
   return (
     <WrapDiv style={{ maxWidth: 1200 }}>
+      {/* <ReviewTitleDiv>여행 후기</ReviewTitleDiv> */}
+      {pathname === `/myplanlist/writepost/${id}` ||
+      pathname === `/board/writeput/${id}` ? (
+        <></>
+      ) : (
+        <ReviewDiv
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(String(content)),
+          }}
+        ></ReviewDiv>
+      )}
       <MyPlanTable
         selectedOption={selectedOption}
         setSelectedOption={setSelectedOption}
@@ -64,18 +82,6 @@ const PlanListResult = ({
         setAllPrice={setAllPrice}
         id={id}
       />
-
-      <ReviewTitleDiv>여행 후기</ReviewTitleDiv>
-      {pathname === `/myplanlist/writepost/${id}` ||
-      pathname === `/board/writeput/${id}` ? (
-        <></>
-      ) : (
-        <ReviewDiv
-          dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(String(content)),
-          }}
-        ></ReviewDiv>
-      )}
     </WrapDiv>
   );
 };

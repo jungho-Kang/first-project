@@ -141,12 +141,14 @@ function WritePutPage({
     });
   }, [title, review]);
   return (
-    <WrapDiv>
+    <WrapDiv style={{ marginBottom: 180 }}>
       <form onSubmit={handleSubmit(handleSubmitFeed)}>
         <TitleDiv style={{ fontFamily: "yg-jalnan", fontSize: 48 }}>
           다녀 <b>ON</b>
         </TitleDiv>
-        <FlexLayoutDiv style={{ position: "relative", height: 60 }}>
+        <FlexLayoutDiv
+          style={{ position: "relative", height: 60, marginBottom: 0 }}
+        >
           <PostCity
             style={{
               position: "absolute",
@@ -165,28 +167,16 @@ function WritePutPage({
               fontSize: 24,
               fontWeight: 700,
               position: "absolute",
-              paddingLeft: 70,
+              paddingLeft: 80,
               maxWidth: 1200,
               width: "100%",
-              height: 60,
-              borderRadius: 10,
+              height: 50,
+              borderRadius: 0,
+              border: "1px solid #bbb",
             }}
           />
         </FlexLayoutDiv>
-        <PlanListResult
-          selectedOption={selectedOption}
-          setSelectedOption={setSelectedOption}
-          setIsOpen={setIsOpen}
-          isOpen={isOpen}
-          dayList={dayList}
-          setDayList={setDayList}
-          datePrice={datePrice}
-          setDatePrice={setDatePrice}
-          allPrice={allPrice}
-          setAllPrice={setAllPrice}
-          id={id}
-          content={""}
-        />
+
         <div
           style={{
             display: "flex",
@@ -208,7 +198,20 @@ function WritePutPage({
             modules={modules}
           />
         </div>
-
+        <PlanListResult
+          selectedOption={selectedOption}
+          setSelectedOption={setSelectedOption}
+          setIsOpen={setIsOpen}
+          isOpen={isOpen}
+          dayList={dayList}
+          setDayList={setDayList}
+          datePrice={datePrice}
+          setDatePrice={setDatePrice}
+          allPrice={allPrice}
+          setAllPrice={setAllPrice}
+          id={id}
+          content={""}
+        />
         <div
           style={{
             display: "flex",
@@ -221,14 +224,15 @@ function WritePutPage({
             type="submit"
             style={{
               width: 100,
-              height: 50,
-              borderRadius: 20,
-              backgroundColor: "#B8D8E4",
+              height: 45,
+              borderRadius: 5,
+              backgroundColor: "#1270b0",
               color: "#fff",
               border: "none",
+              marginTop: 30,
             }}
           >
-            등록
+            수정 완료
           </button>
         </div>
       </form>

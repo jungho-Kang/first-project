@@ -59,8 +59,8 @@ export const PostUl = styled(ImgUl)`
 `;
 
 export const PostLi = styled(ImgLi)`
-  width: 100%;
   height: 100%;
+  width: 340px;
   background-color: #fff;
 
   &:hover {
@@ -71,15 +71,19 @@ export const PostLi = styled(ImgLi)`
 export const PostImg = styled.div`
   border-radius: 20px;
   background-color: #ddd;
-  width: 300px;
+  width: 100%;
   height: 320px;
 `;
 
 export const PostTitle = styled.div`
-  font-size: 24px;
+  font-size: 22px;
   color: #000;
   margin-top: 15px;
   margin-bottom: 15px;
+  padding-right: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 export const PostDate = styled.div`
   font-size: 14px;

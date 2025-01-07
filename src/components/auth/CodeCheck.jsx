@@ -55,6 +55,8 @@ const CodeCheck = ({ email, setEmail }) => {
     try {
       const res = await axios.post("/api/email-check", { email: email });
       // console.log(res.data);
+      alert("해당 이메일로 인증번호가 발송되었습니다.");
+      // console.log(res.data);
       setSendMessage("해당 이메일로 인증번호가 발송되었습니다.");
       setPutData({ ...putData, email: email });
       setCodeBtnDisable(false);
