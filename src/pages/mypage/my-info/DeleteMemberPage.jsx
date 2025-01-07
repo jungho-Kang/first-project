@@ -52,9 +52,13 @@ function DeleteMemberPage() {
       );
       console.log(res.data);
       // setIsLogin(false);
-      handleClickLogout();
-      alert("탈퇴되었습니다.");
-      navigate("/");
+      if (res.data.resultData) {
+        handleClickLogout();
+        alert("탈퇴되었습니다.");
+        navigate("/");
+      } else {
+        alert("비밀번호가 틀렸습니다. 다시 시도해주세요.");
+      }
     } catch (error) {
       console.log(error);
       alert("오류가 발생했습니다. 다시 시도해주세요.");
