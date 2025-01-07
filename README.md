@@ -29,9 +29,15 @@ BE
 
 ## 3. FE 역할 분담
 
-```
-
-```
+- `이수현`
+  : 회원가입, 로그인, 비밀번호 찾기
+  : 마이페이지(나의 일정리스트, 상세리스트, 프로필, 비밀번호 수정, 닉네임 수정, 회원탈퇴)
+  : 메인페이지, 사이트소개, 이용가이드페이지,404페이지,
+- `강정호`
+  : 여행일정관리(생성,수정,삭제)
+  : 캘린더 라이브러리 사용,신규 장소 등록
+  : 추천(명소,숙소 음식점)에 따른 지도 표시 및 일정 추가,
+  : 게시판(보기,작성,수정,삭제),
 
 ## 4. 개발 기간
 
@@ -46,34 +52,58 @@ BE
 - styled-components
 - Swiper (슬라이드)
 - Axios (API 요청)
-- Context (상태관리)
+- Context (상태 관리)
+- React Calendar (캘린더 기능)
+- Kakao Map API (카카오 지도)
+- React Datepicker (날짜 선택 기능)
+- npm (패키지 관리)
 ```
 
 ## 6. 설치 및 실행 방법
 
+### 6.1 프로젝트 클론
+
+- 프로젝트를 로컬에 클론합니다.
+
+```bash
+git clone https://github.com/suhyun5252/first-project.git .
 ```
 
+### 6.2 디렉토리로 이동
+
+- 클론한 프로젝트 디렉토리로 이동합니다.
+
+```bash
+cd danyeoall
 ```
 
+### 6.3 의존성 설치(npm)
+
+- 프로젝트 의존성을 설치합니다.
+
+```bash
+npm install
 ```
 
+### 6.4 서버 실행
+
+```bash
+npm run dev
 ```
 
-```
-
-```
+실행 후, 브라우저에서 http://localhost:3000으로 접속하면 애플리케이션을 확인할 수 있습니다.
 
 ## 7. 협업 자료
 
-### 1. 회의록
+### 7.1 회의록
 
 - [회의록 : Notion](https://buttercup-lyric-4ee.notion.site/1576cf890caa807e865deba39a032df0?v=1576cf890caa8194abf0000c14b5b68b&pvs=4)
 
-### 2. 레이아웃
+### 7.2. 레이아웃
 
 - [레이아웃 : Figma](https://www.figma.com/design/L57TThYRiljYfnrPiq9HEL/1%EC%B0%A8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%99%80%EC%9D%B4%EC%96%B4%ED%94%84%EB%A0%88%EC%9E%84?node-id=1-6&p=f&t=mFne0RXla5MS88TH-0)
 
-### 3. 발표
+### 7.3. 발표
 
 - [발표 자료: Canva](https://www.canva.com/design/DAGbHithVhQ/1s9tg3SOvaOuf8lpAN7tJA/edit)
 
@@ -197,6 +227,6 @@ danyeoall
 # Contact
 
 `이수현` Email : o52o.suhyun@gmail.com
-`강정호` Email : o52o.suhyun@gmail.com
+`강정호` Email : rkdwjdgh08@naver.com
 
 # 감사합니다.
