@@ -268,6 +268,7 @@ function EditPlannerPage({
   setDatePrice,
   allPrice,
   setAllPrice,
+  setPlanMasterId,
 }) {
   const { id } = useParams();
 
@@ -403,6 +404,7 @@ function EditPlannerPage({
       ),
     );
     setSearchWord(`${planDetailData.cityName} 맛집`);
+    setPlanMasterId(id);
   }, [planDetailData.cityName]);
 
   useEffect(() => {
