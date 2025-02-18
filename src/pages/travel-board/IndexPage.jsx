@@ -92,7 +92,7 @@ function IndexPage() {
       {fourArray(boardList, 4).map((four, index) => (
         <PostUl key={index}>
           {four.map(item => {
-            const imgUrl = `http://112.222.157.156:5212/pic/city/${item?.cityId}/${item?.cityPic}`;
+            const imgUrl = `http://112.222.157.157:5212/pic/city/${item?.cityId}/${item?.cityPic}`;
             return (
               <Link
                 key={item.planMasterId}
