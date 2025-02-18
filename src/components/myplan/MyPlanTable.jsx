@@ -69,7 +69,7 @@ const MyPlanTable = ({
   };
   // 데이터 가져오기
   const getPlanDetail = async _id => {
-    // http://112.222.157.156:5212/api/plan?planMasterId=1
+    // http://112.222.157.157:5212/api/plan?planMasterId=1
     try {
       const res = await axios.get(`/api/plan?planMasterId=${_id}`);
       const result = res.data.resultData;

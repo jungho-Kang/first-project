@@ -39,7 +39,7 @@ function CityPage({ setCityName }) {
         </TitleDiv>
         <ImgUl>
           {cityData.map(item => {
-            const imgUrl = `http://112.222.157.156:5212/pic/city/${item.cityId}/${item.cityPic}`;
+            const imgUrl = `http://112.222.157.157:5212/pic/city/${item.cityId}/${item.cityPic}`;
             if (item.cityId <= 3) {
               return (
                 <ImgLi
@@ -58,7 +58,7 @@ function CityPage({ setCityName }) {
         </ImgUl>
         <ImgUl>
           {cityData.map(item => {
-            const imgUrl = `http://112.222.157.156:5212/pic/city/${item.cityId}/${item.cityPic}`;
+            const imgUrl = `http://112.222.157.157:5212/pic/city/${item.cityId}/${item.cityPic}`;
             if (item.cityId > 3) {
               return (
                 <ImgLi
