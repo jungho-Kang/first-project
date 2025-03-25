@@ -48,6 +48,7 @@ const TravelMap = ({ setMapResultList, searchWord, itemLatLng, isClick }) => {
           setMapResultList(data);
 
           const newMarkers = data.map(place => {
+            console.log(place);
             const position = {
               lat: place.y,
               lng: place.x,

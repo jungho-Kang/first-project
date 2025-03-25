@@ -112,7 +112,7 @@ const OfferItem = ({
   return (
     <>
       {placeData.map(item => {
-        const imgUrl = `http://112.222.157.156:5212/pic/city/${cityId}/${selectedCate}/${item.placePic}`;
+        const imgUrl = `http://112.222.157.157:5212/pic/city/${cityId}/${selectedCate}/${item.placePic}`;
         return (
           <OfferItemA key={item.placeId}>
             <div className="img-box">

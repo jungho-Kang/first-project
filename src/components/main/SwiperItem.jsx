@@ -5,7 +5,7 @@ import { SwiperItemDiv } from "../../pages";
 import { IoHeart } from "react-icons/io5";
 
 const SwiperItem = ({ item }) => {
-  const imgUrl = `http://112.222.157.156:5212/pic/city/${item?.cityId}/${item?.cityPic}`;
+  const imgUrl = `http://112.222.157.157:5212/pic/city/${item?.cityId}/${item?.cityPic}`;
   const navigate = useNavigate();
   return (
     <SwiperItemDiv
