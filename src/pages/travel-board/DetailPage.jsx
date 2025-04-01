@@ -1,13 +1,12 @@
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
+import { GoHeartFill } from "react-icons/go";
 import { useNavigate, useParams } from "react-router-dom";
-import { LineDiv, TitleDiv, WrapDiv } from "../../components/common";
+import { TitleDiv, WrapDiv } from "../../components/common";
 import PlanListResult from "../../components/list-result/PlanListResult";
+import { LoginContext } from "../../contexts/LoginContext";
 import { FlexDiv, PostCity } from "../planning/plan";
 import { FlexLayoutDiv, SubTitleDiv } from "./board";
-import { useContext, useEffect, useState } from "react";
-import { LoginContext } from "../../contexts/LoginContext";
-import { GoHeartFill } from "react-icons/go";
-import { CiHeart } from "react-icons/ci";
-import axios from "axios";
 
 function DetailPage({
   selectedOption,
