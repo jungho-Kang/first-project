@@ -1,9 +1,8 @@
 import styled from "@emotion/styled";
+import DOMPurify from "dompurify";
 import { useLocation } from "react-router-dom";
-import { SubTitleDiv } from "../../pages/travel-board/board";
 import { WrapDiv } from "../common";
 import MyPlanTable from "../myplan/MyPlanTable";
-import DOMPurify from "dompurify";
 
 const ReviewDiv = styled.div`
   margin: 0 auto;
@@ -32,12 +31,6 @@ const ReviewDiv = styled.div`
   span {
     font-size: 16px;
   }
-`;
-
-const ReviewTitleDiv = styled(SubTitleDiv)`
-  /* text-align: center;
-  margin-top: 100px; */
-  font-size: 20px;
 `;
 
 const PlanListResult = ({

@@ -49,9 +49,9 @@
 
 ### 7. 협업 자료 📝
 
-- **회의록**: Notion
-- **레이아웃**: Figma
-- **발표 자료**: Canva
+- **회의록**: [Notion](https://buttercup-lyric-4ee.notion.site/1576cf890caa807e865deba39a032df0?v=1a46cf890caa8096a912000cd85f7711&pvs=4)
+- **레이아웃**: [Figma](https://www.figma.com/design/L57TThYRiljYfnrPiq9HEL/1%EC%B0%A8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%99%80%EC%9D%B4%EC%96%B4%ED%94%84%EB%A0%88%EC%9E%84?node-id=1-6&t=ELSCthh6nxVc5E2m-1)
+- **발표 자료**: [Canva](https://www.canva.com/design/DAGbHithVhQ/1s9tg3SOvaOuf8lpAN7tJA/edit)
 
 ### 8. 프로젝트 구조 📂
 
