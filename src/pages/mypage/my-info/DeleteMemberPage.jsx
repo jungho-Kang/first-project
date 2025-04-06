@@ -19,6 +19,7 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import Popup from "../../../components/common/Popup";
 
 const schema = yup.object({
   upw: yup
@@ -33,6 +34,8 @@ const schema = yup.object({
 });
 function DeleteMemberPage() {
   const [deletePw, setDeletePw] = useState("");
+  const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
+  const [isCompletePopupOpen, setIsCompletePopupOpen] = useState(false);
   const navigate = useNavigate();
   const { user, handleClickLogout } = useContext(LoginContext);
   const {
@@ -45,100 +48,120 @@ function DeleteMemberPage() {
   });
 
   const fetchApi = async data => {
-    // console.log("탈퇴를 위해 보내는 데이터", data);
-    try {
+    // API 호출 임시 주석 처리
+    /*try {
       const res = await axios.delete(
         `/api/user?userId=${data.userId}&upw=${data.upw}`,
       );
-      // console.log(res.data);
-      // setIsLogin(false);
-      if (res.data.resultData) {
-        handleClickLogout();
-        alert("탈퇴되었습니다.");
-        navigate("/");
-      } else {
+      if (res.data.resultData) {*/
+
+    setIsCompletePopupOpen(true);
+    // navigate 제거 - 팝업의 확인 버튼에서 처리
+    /*} else {
         alert("비밀번호가 틀렸습니다. 다시 시도해주세요.");
       }
     } catch (error) {
       console.log(error);
       alert("오류가 발생했습니다. 다시 시도해주세요.");
-    }
+    }*/
+  };
+
+  const handleConfirmDelete = () => {
+    setIsConfirmPopupOpen(false); // 확인 팝업 닫기
+    fetchApi(); // 바로 실행되도록 수정
   };
 
   const onSubmit = () => {
-    const isConfirmed = confirm("정말 탈퇴하시겠습니까?");
-    if (isConfirmed) {
-      const payload = { userId: user.userId, upw: deletePw };
-      // console.log(payload);
-      fetchApi(payload);
-    } else {
-      console.log("탈퇴가 취소되었습니다.");
-    }
+    setIsConfirmPopupOpen(true);
   };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <MypageTop />
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <MypageTop />
 
-      <MyPageWrapDiv>
-        <MypageTab />
-        <FormDiv>
-          <FormInnerDiv>
-            <div className="tit-area">
-              <h3>회원탈퇴</h3>
-            </div>
-            <WarningBoxDiv>
-              <p>회원탈퇴 안내사항</p>
-              <span>
-                회원 정보 및 여행 일정 데이터 등 개인 서비스 이용 기록은 탈퇴
-                즉시 모두 삭제되며, 삭제된 데이터는 복구되지 않습니다.
-              </span>
-            </WarningBoxDiv>
-            {/* 비밀번호 */}
-            <TextForm>
-              <label htmlFor="">
-                <p>비밀번호</p>
-                <input
-                  type="password"
-                  name="upw"
-                  {...register("upw")}
-                  value={deletePw.upw}
-                  onChange={e => setDeletePw(e.target.value)}
+        <MyPageWrapDiv>
+          <MypageTab />
+          <FormDiv>
+            <FormInnerDiv>
+              <div className="tit-area">
+                <h3>회원탈퇴</h3>
+              </div>
+              <WarningBoxDiv>
+                <p>회원탈퇴 안내사항</p>
+                <span>
+                  회원 정보 및 여행 일정 데이터 등 개인 서비스 이용 기록은 탈퇴
+                  즉시 모두 삭제되며, 삭제된 데이터는 복구되지 않습니다.
+                </span>
+              </WarningBoxDiv>
+              {/* 비밀번호 */}
+              <TextForm>
+                <label htmlFor="">
+                  <p>비밀번호</p>
+                  <input
+                    type="password"
+                    name="upw"
+                    {...register("upw")}
+                    value={deletePw.upw}
+                    onChange={e => setDeletePw(e.target.value)}
+                  />
+                  {errors?.upw ? (
+                    <ErrorP>{errors.upw?.message}</ErrorP>
+                  ) : (
+                    <InitMessageP>현재 비밀번호를 입력해주세요.</InitMessageP>
+                  )}
+                </label>
+              </TextForm>
+
+              <BtnAreaDiv>
+                <BasicBtn
+                  type="button"
+                  btnname={"취소"}
+                  style={{
+                    marginTop: "25px",
+                    backgroundColor: "#EEE",
+                    color: "#555",
+                  }}
+                  onClick={() => {
+                    navigate("/myinfo");
+                  }}
                 />
-                {errors?.upw ? (
-                  <ErrorP>{errors.upw?.message}</ErrorP>
-                ) : (
-                  <InitMessageP>현재 비밀번호를 입력해주세요.</InitMessageP>
-                )}
-              </label>
-            </TextForm>
+                <BasicBtn
+                  type="submit"
+                  btnname={"회원탈퇴"}
+                  style={{
+                    marginTop: "25px",
+                    backgroundColor: "#FF5757",
+                    color: "#fff",
+                  }}
+                />
+              </BtnAreaDiv>
+            </FormInnerDiv>
+          </FormDiv>
+        </MyPageWrapDiv>
+      </form>
 
-            <BtnAreaDiv>
-              <BasicBtn
-                type="button"
-                btnname={"취소"}
-                style={{
-                  marginTop: "25px",
-                  backgroundColor: "#EEE",
-                  color: "#555",
-                }}
-                onClick={() => {
-                  navigate("/myinfo");
-                }}
-              />
-              <BasicBtn
-                type="submit"
-                btnname={"회원탈퇴"}
-                style={{
-                  marginTop: "25px",
-                  backgroundColor: "#FF5757",
-                  color: "#fff",
-                }}
-              />
-            </BtnAreaDiv>
-          </FormInnerDiv>
-        </FormDiv>
-      </MyPageWrapDiv>
-    </form>
+      {/* 탈퇴 확인 팝업 */}
+      <Popup
+        isOpen={isConfirmPopupOpen}
+        onClose={() => setIsConfirmPopupOpen(false)}
+        message="정말 탈퇴하시겠습니까?"
+        onConfirm={handleConfirmDelete}
+        type="confirm"
+      />
+
+      {/* 탈퇴 완료 팝업 */}
+      <Popup
+        isOpen={isCompletePopupOpen}
+        onClose={() => {
+          setIsCompletePopupOpen(false);
+          handleClickLogout();
+          navigate("/"); // 확인 버튼 클릭 시 네비게이션 실행
+        }}
+        message="탈퇴되었습니다."
+        type="alert"
+      />
+    </>
   );
 }
 

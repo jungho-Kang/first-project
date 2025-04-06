@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { LoginContext } from "../../../contexts/LoginContext";
@@ -6,6 +6,7 @@ import { LoginContext } from "../../../contexts/LoginContext";
 import MypageTop from "../../../components/mypage/MypageTop";
 import MypageTab from "../../../components/mypage/MypageTab";
 import BasicBtn from "../../../components/ui/button/BasicBtn";
+import Popup from "../../../components/common/Popup";
 // styled
 import { ErrorP, InitMessageP, TextForm } from "../../../components/common";
 import { BtnAreaDiv, FormDiv, FormInnerDiv, MyPageWrapDiv } from "./myinfo";
@@ -43,6 +44,8 @@ const schema = yup.object({
 function UpdatePwPage() {
   const navigate = useNavigate();
   const { user } = useContext(LoginContext);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -54,17 +57,12 @@ function UpdatePwPage() {
 
   const onSubmit = async data => {
     data.userId = user.userId;
-    // console.log(data);
 
     try {
-      // console.log(data);
       const res = await axios.patch("/api/user/password", data);
       if (res.data.resultData) {
-        // console.log("비밀번호 수정 :", res.data.resultData);
-        alert("비밀번호가 정상적으로 수정완료 되었습니다.");
-        navigate("/myinfo");
+        setIsPopupOpen(true);
       } else {
-        // console.log("비밀번호 수정 :", res.data.resultData);
         alert("비밀번호 수정에 실패하였습니다. 다시 시도해주세요.");
       }
     } catch (error) {
@@ -73,98 +71,114 @@ function UpdatePwPage() {
     }
   };
 
+  const handleClosePopup = () => {
+    setIsPopupOpen(false);
+    navigate("/myinfo");
+  };
+
   return (
-    <div>
-      <MypageTop />
+    <>
+      <div>
+        <MypageTop />
 
-      <MyPageWrapDiv>
-        <MypageTab />
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <FormDiv>
-            <FormInnerDiv>
-              <div className="tit-area">
-                <h3>비밀번호 재설정</h3>
-              </div>
-              {/* 기존 비밀번호 */}
-              <TextForm>
-                <label htmlFor="">
-                  <p>기존 비밀번호</p>
-                  <input type="password" name="upw" {...register("upw")} />
-                  {errors?.upw ? (
-                    <ErrorP>{errors.upw?.message}</ErrorP>
-                  ) : (
-                    <InitMessageP>현재 비밀번호를 입력해주세요.</InitMessageP>
-                  )}
-                </label>
-              </TextForm>
+        <MyPageWrapDiv>
+          <MypageTab />
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <FormDiv>
+              <FormInnerDiv>
+                <div className="tit-area">
+                  <h3>비밀번호 재설정</h3>
+                </div>
+                {/* 기존 비밀번호 */}
+                <TextForm>
+                  <label htmlFor="">
+                    <p>기존 비밀번호</p>
+                    <input type="password" name="upw" {...register("upw")} />
+                    {errors?.upw ? (
+                      <ErrorP>{errors.upw?.message}</ErrorP>
+                    ) : (
+                      <InitMessageP>현재 비밀번호를 입력해주세요.</InitMessageP>
+                    )}
+                  </label>
+                </TextForm>
 
-              {/* 새 비밀번호 */}
-              <TextForm>
-                <label htmlFor="">
-                  <p>새비밀번호</p>
-                  <input
-                    type="password"
-                    name="newUpw"
-                    {...register("newUpw")}
+                {/* 새 비밀번호 */}
+                <TextForm>
+                  <label htmlFor="">
+                    <p>새비밀번호</p>
+                    <input
+                      type="password"
+                      name="newUpw"
+                      {...register("newUpw")}
+                    />
+                    {errors?.newUpw ? (
+                      <ErrorP>{errors.newUpw?.message}</ErrorP>
+                    ) : (
+                      <InitMessageP>
+                        새비밀번호를 영문, 숫자, 특수문자가 포함하여
+                        입력해주세요.
+                      </InitMessageP>
+                    )}
+                  </label>
+                </TextForm>
+
+                {/* 새 비밀번호 확인 */}
+                <TextForm>
+                  <label htmlFor="">
+                    <p>새비밀번호 확인</p>
+                    <input
+                      type="password"
+                      name="newpwconfirm"
+                      {...register("newpwconfirm")}
+                    />
+                    {errors?.newpwconfirm ? (
+                      <ErrorP>{errors.newpwconfirm?.message}</ErrorP>
+                    ) : (
+                      <InitMessageP>
+                        새비밀번호를 한 번 더 입력해주세요.
+                      </InitMessageP>
+                    )}
+                  </label>
+                </TextForm>
+
+                {/* 취소버튼 설정완료버튼 */}
+                <BtnAreaDiv>
+                  <BasicBtn
+                    type="button"
+                    btnname={"취소"}
+                    style={{
+                      marginTop: "25px",
+                      backgroundColor: "#eee",
+                      color: "#555",
+                    }}
+                    onClick={() => {
+                      navigate("/myinfo");
+                    }}
                   />
-                  {errors?.newUpw ? (
-                    <ErrorP>{errors.newUpw?.message}</ErrorP>
-                  ) : (
-                    <InitMessageP>
-                      새비밀번호를 영문, 숫자, 특수문자가 포함하여 입력해주세요.
-                    </InitMessageP>
-                  )}
-                </label>
-              </TextForm>
-
-              {/* 새 비밀번호 확인 */}
-              <TextForm>
-                <label htmlFor="">
-                  <p>새비밀번호 확인</p>
-                  <input
-                    type="password"
-                    name="newpwconfirm"
-                    {...register("newpwconfirm")}
+                  <BasicBtn
+                    type="submit"
+                    btnname={"설정완료"}
+                    style={{
+                      marginTop: "25px",
+                      backgroundColor: "#5469d4",
+                      color: "#fff",
+                    }}
                   />
-                  {errors?.newpwconfirm ? (
-                    <ErrorP>{errors.newpwconfirm?.message}</ErrorP>
-                  ) : (
-                    <InitMessageP>
-                      새비밀번호를 한 번 더 입력해주세요.
-                    </InitMessageP>
-                  )}
-                </label>
-              </TextForm>
+                </BtnAreaDiv>
+              </FormInnerDiv>
+            </FormDiv>
+          </form>
+        </MyPageWrapDiv>
+      </div>
 
-              {/* 취소버튼 설정완료버튼 */}
-              <BtnAreaDiv>
-                <BasicBtn
-                  type="button"
-                  btnname={"취소"}
-                  style={{
-                    marginTop: "25px",
-                    backgroundColor: "#eee",
-                    color: "#555",
-                  }}
-                  onClick={() => {
-                    navigate("/myinfo");
-                  }}
-                />
-                <BasicBtn
-                  type="submit"
-                  btnname={"설정완료"}
-                  style={{
-                    marginTop: "25px",
-                    backgroundColor: "#5469d4",
-                    color: "#fff",
-                  }}
-                />
-              </BtnAreaDiv>
-            </FormInnerDiv>
-          </FormDiv>
-        </form>
-      </MyPageWrapDiv>
-    </div>
+      {/* 비밀번호 수정 완료 팝업 */}
+      <Popup
+        isOpen={isPopupOpen}
+        onClose={handleClosePopup}
+        message="새로운 비밀번호가 설정되었습니다."
+        type="alert"
+      />
+    </>
   );
 }
 

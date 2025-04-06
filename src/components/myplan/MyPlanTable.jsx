@@ -300,10 +300,14 @@ const MyPlanTable = ({
                         </p>
                       </li>
                       <li>
-                        <p>{Math.ceil(item.price / cnt / 100) * 100}</p>
+                        <p>
+                          {(
+                            Math.ceil(item.price / cnt / 100) * 100
+                          ).toLocaleString()}
+                        </p>
                       </li>
                       <li>
-                        <p>{item.price}</p>
+                        <p>{item.price.toLocaleString()}</p>
                       </li>
                       <li>
                         <p>{item.memo}</p>
@@ -322,19 +326,21 @@ const MyPlanTable = ({
               <p>1인당 비용</p>
             </li>
             <li>
-              <p>{Math.ceil(datePrice / cnt / 100) * 100} 원</p>
+              <p>
+                {(Math.ceil(datePrice / cnt / 100) * 100).toLocaleString()} 원
+              </p>
             </li>
             <li>
               <p>총 비용</p>
             </li>
             <li>
-              <p>{datePrice} 원</p>
+              <p>{datePrice.toLocaleString()} 원</p>
             </li>
             <li>
               <p>여행 총 비용</p>
             </li>
             <li>
-              <p>{allPrice} 원</p>
+              <p>{allPrice.toLocaleString()} 원</p>
             </li>
           </ul>
         </TableDiv>
@@ -369,11 +375,16 @@ const MyPlanTable = ({
             <div className="price">
               <div>
                 <b>1인 기준 비용</b>
-                <p>{Math.ceil(selectedItem.price / cnt / 100) * 100} 원</p>
+                <p>
+                  {(
+                    Math.ceil(selectedItem.price / cnt / 100) * 100
+                  ).toLocaleString()}
+                  원
+                </p>
               </div>
               <div>
                 <b>전체 비용 </b>
-                <p>{selectedItem.price} 원</p>
+                <p>{selectedItem.price.toLocaleString()} 원</p>
               </div>
             </div>
             <div className="memo">

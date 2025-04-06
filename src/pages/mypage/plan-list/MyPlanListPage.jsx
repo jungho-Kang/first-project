@@ -7,6 +7,7 @@ import axios from "axios";
 import MypageTop from "../../../components/mypage/MypageTop";
 import MypageTab from "../../../components/mypage/MypageTab";
 import MyplanlistItem from "../../../components/mypage/MyplanlistItem";
+import Popup from "../../../components/common/Popup";
 // styled
 import { MyPageWrapDiv } from "../my-info/myinfo";
 import { MyplanlistDiv, TitleAreaDiv } from "./myplan";
@@ -14,6 +15,7 @@ import { MyplanlistDiv, TitleAreaDiv } from "./myplan";
 function MyPlanListPage({ setPlanMasterId }) {
   const { user } = useContext(LoginContext);
   const [myScheduleList, setMyScheduleList] = useState([]);
+  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
 
   const fetchApi = async () => {
     try {
@@ -51,6 +53,7 @@ function MyPlanListPage({ setPlanMasterId }) {
                   item={item}
                   setMyScheduleList={setMyScheduleList}
                   setPlanMasterId={setPlanMasterId}
+                  setIsDeletePopupOpen={setIsDeletePopupOpen}
                 />
               ) : null,
             )
@@ -59,6 +62,13 @@ function MyPlanListPage({ setPlanMasterId }) {
           )}
         </MyplanlistDiv>
       </MyPageWrapDiv>
+
+      <Popup
+        isOpen={isDeletePopupOpen}
+        onClose={() => setIsDeletePopupOpen(false)}
+        message="선택한 일정이 삭제되었습니다."
+        type="alert"
+      />
     </div>
   );
 }

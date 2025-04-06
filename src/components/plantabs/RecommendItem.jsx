@@ -17,7 +17,7 @@ const OfferFilterListUl = styled.div`
 `;
 
 const OfferListDiv = styled.div`
-  max-height: 620px;
+  max-height: 680px;
   height: 100%;
   padding: 0 10px;
   overflow-y: auto;
