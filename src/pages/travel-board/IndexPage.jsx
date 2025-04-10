@@ -100,7 +100,11 @@ function IndexPage() {
               >
                 <PostLi style={{ padding: 20 }}>
                   <PostImg>
-                    <img src={imgUrl} alt="안떠" />
+                    <img
+                      src={imgUrl}
+                      alt="안떠"
+                      style={{ objectFit: "cover" }}
+                    />
                   </PostImg>
                   <FlexDiv>
                     <PostTitle>{item.title}</PostTitle>

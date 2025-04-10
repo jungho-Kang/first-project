@@ -116,7 +116,13 @@ const OfferItem = ({
         return (
           <OfferItemA key={item.placeId}>
             <div className="img-box">
-              <img src={imgUrl} alt="신규 장소" />
+              <img
+                src={imgUrl}
+                alt="신규 장소"
+                onError={e => {
+                  e.target.src = "/images/empty.png"; // 이미지 로드 실패시 대체 이미지
+                }}
+              />
             </div>
             <div className="text-box">
               <h3>{item.placeName}</h3>

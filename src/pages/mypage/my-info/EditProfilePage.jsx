@@ -7,6 +7,7 @@ import axios from "axios";
 import MypageTab from "../../../components/mypage/MypageTab";
 import MypageTop from "../../../components/mypage/MypageTop";
 import BasicBtn from "../../../components/ui/button/BasicBtn";
+import Popup from "../../../components/common/Popup";
 
 // styled
 import { ErrorP, InitMessageP, TextForm } from "../../../components/common";
@@ -28,6 +29,7 @@ function EditProfilePage() {
   const navigate = useNavigate();
   const { user, setUser } = useContext(LoginContext);
   const [editNickName, setEditNickName] = useState(user.nickName);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const {
     register,
     handleSubmit,
@@ -53,8 +55,7 @@ function EditProfilePage() {
       if (res.data.resultData) {
         // console.log(res.data.resultMessage);
         setUser({ ...user, nickName: data.nickName });
-        alert("닉네임이 정상적으로 수정되었습니다.");
-        navigate("/myinfo");
+        setIsPopupOpen(true);
         // console.log(user);
       } else {
         // console.log(res.data.resultMessage);
@@ -70,104 +71,118 @@ function EditProfilePage() {
     fetchApi(_nickname);
   };
 
+  const handleClosePopup = () => {
+    setIsPopupOpen(false);
+    navigate("/myinfo");
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <MypageTop />
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <MypageTop />
 
-      <MyPageWrapDiv>
-        <MypageTab />
-        <FormDiv>
-          <FormInnerDiv>
-            <div className="tit-area">
-              <h3>프로필 수정</h3>
-            </div>
+        <MyPageWrapDiv>
+          <MypageTab />
+          <FormDiv>
+            <FormInnerDiv>
+              <div className="tit-area">
+                <h3>프로필 수정</h3>
+              </div>
 
-            {/* 이름 */}
-            <TextForm style={{ padding: 0, marginBottom: 23 }}>
-              <label htmlFor="">
-                <p>Name</p>
-                <input
-                  type="text"
-                  name="name"
-                  value={user.name}
-                  readOnly
+              {/* 이름 */}
+              <TextForm style={{ padding: 0, marginBottom: 23 }}>
+                <label htmlFor="">
+                  <p>Name</p>
+                  <input
+                    type="text"
+                    name="name"
+                    value={user.name}
+                    readOnly
+                    style={{
+                      backgroundColor: "#eee",
+                      color: "#999",
+                    }}
+                  />
+                </label>
+              </TextForm>
+
+              {/* 닉네임 */}
+              <TextForm style={{ padding: 0, marginBottom: 12 }}>
+                <label htmlFor="">
+                  <p>NickName</p>
+                  <input
+                    type="text"
+                    name="nickName"
+                    {...register("nickName")}
+                    value={editNickName}
+                    onChange={e => {
+                      handleChangeData(e);
+                    }}
+                  />
+                  {errors?.nickName ? (
+                    <ErrorP>{errors.nickName?.message}</ErrorP>
+                  ) : (
+                    <InitMessageP>3글자 이상 입력해주세요.</InitMessageP>
+                  )}
+                </label>
+              </TextForm>
+              {/* 이메일 */}
+              <TextForm style={{ padding: 0 }}>
+                <label htmlFor="">
+                  <p>Email</p>
+                  <input
+                    type="email"
+                    name="email"
+                    value={user.email}
+                    readOnly
+                    style={{ backgroundColor: "#eee", color: "#999" }}
+                  />
+                </label>
+              </TextForm>
+
+              <BtnAreaDiv>
+                <BasicBtn
+                  btnname={"뒤로가기"}
+                  type="button"
                   style={{
+                    // marginTop: "25px",
                     backgroundColor: "#eee",
-                    color: "#999",
+                    color: "#555",
+                  }}
+                  onClick={() => {
+                    navigate("/myinfo");
                   }}
                 />
-              </label>
-            </TextForm>
-
-            {/* 닉네임 */}
-            <TextForm style={{ padding: 0, marginBottom: 12 }}>
-              <label htmlFor="">
-                <p>NickName</p>
-                <input
-                  type="text"
-                  name="nickName"
-                  {...register("nickName")}
-                  value={editNickName}
-                  onChange={e => {
-                    handleChangeData(e);
+                <BasicBtn
+                  type="button"
+                  btnname={"회원탈퇴"}
+                  style={{
+                    // marginTop: "25px",
+                    backgroundColor: "#FF5757",
+                    color: "#fff",
+                  }}
+                  onClick={() => {
+                    navigate("/myinfo/deletemember");
                   }}
                 />
-                {errors?.nickName ? (
-                  <ErrorP>{errors.nickName?.message}</ErrorP>
-                ) : (
-                  <InitMessageP>3글자 이상 입력해주세요.</InitMessageP>
-                )}
-              </label>
-            </TextForm>
-            {/* 이메일 */}
-            <TextForm style={{ padding: 0 }}>
-              <label htmlFor="">
-                <p>Email</p>
-                <input
-                  type="email"
-                  name="email"
-                  value={user.email}
-                  readOnly
-                  style={{ backgroundColor: "#eee", color: "#999" }}
-                />
-              </label>
-            </TextForm>
+              </BtnAreaDiv>
+              <BasicBtn
+                type="submit"
+                btnname={"저장"}
+                style={{ marginTop: "25px" }}
+              />
+            </FormInnerDiv>
+          </FormDiv>
+        </MyPageWrapDiv>
+      </form>
 
-            <BtnAreaDiv>
-              <BasicBtn
-                btnname={"뒤로가기"}
-                type="button"
-                style={{
-                  // marginTop: "25px",
-                  backgroundColor: "#eee",
-                  color: "#555",
-                }}
-                onClick={() => {
-                  navigate("/myinfo");
-                }}
-              />
-              <BasicBtn
-                type="button"
-                btnname={"회원탈퇴"}
-                style={{
-                  // marginTop: "25px",
-                  backgroundColor: "#FF5757",
-                  color: "#fff",
-                }}
-                onClick={() => {
-                  navigate("/myinfo/deletemember");
-                }}
-              />
-            </BtnAreaDiv>
-            <BasicBtn
-              type="submit"
-              btnname={"저장"}
-              style={{ marginTop: "25px" }}
-            />
-          </FormInnerDiv>
-        </FormDiv>
-      </MyPageWrapDiv>
-    </form>
+      <Popup
+        isOpen={isPopupOpen}
+        onClose={handleClosePopup}
+        message="닉네임 수정이 완료되었습니다."
+        type="alert"
+      />
+    </>
   );
 }
 

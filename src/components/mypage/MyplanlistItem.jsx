@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { LoginContext } from "../../contexts/LoginContext";
 import axios from "axios";
@@ -6,8 +6,15 @@ import axios from "axios";
 import { DeleteBtn } from "../../pages/mypage/plan-list/myplan";
 // icon
 import { IoClose } from "react-icons/io5";
+import Popup from "../common/Popup";
 
-const MyplanlistItem = ({ item, setMyScheduleList, setPlanMasterId }) => {
+const MyplanlistItem = ({
+  item,
+  setMyScheduleList,
+  setPlanMasterId,
+  setIsDeletePopupOpen,
+}) => {
+  const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
   const planDateAddOne = parseInt(item?.planDate) + 1;
   const imgUrl = `http://112.222.157.157:5212/pic/city/${item?.cityId}/${item?.cityPic}`;
   const { user } = useContext(LoginContext);
@@ -15,13 +22,19 @@ const MyplanlistItem = ({ item, setMyScheduleList, setPlanMasterId }) => {
   const deleteItem = _Id => {
     setMyScheduleList(prev => prev.filter(item => item.planMasterId !== _Id));
   };
-  const deleteListItem = async data => {
+
+  const handleConfirmDelete = async () => {
     try {
       const res = await axios.delete(
-        `/api/plan?planMasterId=${data}&userId=${user.userId}`,
-        alert("일정이 삭제되었습니다."),
+        `/api/plan?planMasterId=${item.planMasterId}&userId=${user.userId}`,
       );
-      // console.log(res);
+
+      setIsConfirmPopupOpen(false);
+
+      if (res.data) {
+        deleteItem(item.planMasterId);
+        setIsDeletePopupOpen(true); // 상위 컴포넌트의 팝업 상태 변경
+      }
     } catch (error) {
       console.log(error);
     }
@@ -29,13 +42,7 @@ const MyplanlistItem = ({ item, setMyScheduleList, setPlanMasterId }) => {
 
   const handleClickbtn = e => {
     e.preventDefault();
-    const isConfirm = confirm("선택한 일정을 삭제하시겠습니까?");
-    if (isConfirm) {
-      deleteItem(item.planMasterId);
-      deleteListItem(item.planMasterId);
-    } else {
-      // console.log("일정 삭제 취소됨");
-    }
+    setIsConfirmPopupOpen(true);
   };
 
   return (
@@ -60,6 +67,15 @@ const MyplanlistItem = ({ item, setMyScheduleList, setPlanMasterId }) => {
           <IoClose />
         </DeleteBtn>
       </Link>
+
+      {/* 삭제 확인 팝업만 남김 */}
+      <Popup
+        isOpen={isConfirmPopupOpen}
+        onClose={() => setIsConfirmPopupOpen(false)}
+        message="선택한 일정을 삭제하시겠습니까?"
+        onConfirm={handleConfirmDelete}
+        type="confirm"
+      />
     </>
   );
 };
