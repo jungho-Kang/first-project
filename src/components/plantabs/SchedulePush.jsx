@@ -6,6 +6,9 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoMdCloseCircle } from "react-icons/io";
 import { useParams } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { planMasterIdState } from "../../atoms/planAtom";
+import { selectedOptionState } from "../../atoms/planDetailAtom";
 import { API_URL } from "../../constants/login";
 
 const ContentDiv = styled.div`
@@ -101,13 +104,16 @@ const SchedulePush = ({
   selectedCate,
   initData,
   setPlaceData,
-  resDetailData,
   itemLatLng,
-  selectedOption,
   detailData,
   setDetailData,
 }) => {
+  // cityId
   const { id } = useParams();
+  // 플랜 마스터 아이디
+  const planMasterId = useRecoilValue(planMasterIdState);
+  // 선택된 일차
+  const selectedOption = useRecoilValue(selectedOptionState);
 
   const [startTime, setStartTime] = useState("10:00");
   const [endTime, setEndTime] = useState("22:00");
@@ -131,7 +137,7 @@ const SchedulePush = ({
 
   useEffect(() => {
     setDetailData({
-      planMasterId: resDetailData.planMasterId,
+      planMasterId,
       price: price,
       memo: memo,
       startTime: startTime,
@@ -155,10 +161,6 @@ const SchedulePush = ({
       >
         <h2>일정등록</h2>
         <SmallTitleDiv>시간</SmallTitleDiv>
-        {/* <TimeTitleDiv>
-          <div>시작</div>
-          <div>종료</div>
-        </TimeTitleDiv> */}
         <TimeDiv>
           <TimeInput
             type="time"

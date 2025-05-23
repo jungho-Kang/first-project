@@ -1,6 +1,10 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import "./App.css";
+import { LoginProvider } from "./contexts/LoginContext";
+
+// 공통 레이아웃
 import Layout from "./components/Layout";
+
+import ScrollToTop from "./components/ScrollToTop";
 import Home from "./pages/IndexPage";
 import NotFound from "./pages/NotFoundPage";
 import Guide from "./pages/about/GuidePage";
@@ -16,48 +20,19 @@ import MyPlanDetail from "./pages/mypage/plan-list/MyPlanDetailPage";
 import MyPlanList from "./pages/mypage/plan-list/MyPlanListPage";
 import CalendarPicker from "./pages/planning/CalendarPickerPage";
 import City from "./pages/planning/CityPage";
+import EditPlannerPage from "./pages/planning/EditPlannerPage";
 import MakePlanner from "./pages/planning/MakePlannerPage";
 import BoardDetail from "./pages/travel-board/DetailPage";
 import BoardIndex from "./pages/travel-board/IndexPage";
 import WritePost from "./pages/travel-board/WritePostPage";
 import WritePutPage from "./pages/travel-board/WritePutPage";
 
-import { useState } from "react";
-import { LoginProvider } from "./contexts/LoginContext";
-import ScrollToTop from "./components/ScrollToTop";
-import EditPlannerPage from "./pages/planning/EditPlannerPage";
-
 function App() {
-  // 일정 등록(날짜, 도시정보 등등)
-  const [resData, setResData] = useState({});
-  const [paramPath, setParamPath] = useState("");
-  const [cityName, setCityName] = useState("");
-
-  // 상세 일정 등록하기(위치, 주소, 금액 등등)
-  const [resDetailData, setResDetailData] = useState({});
-
-  // 플랜 마스터 아이디
-  const [planMasterId, setPlanMasterId] = useState(0);
-
-  // 인원수
-  const [peopleCnt, setPeopleCnt] = useState(0);
-
-  // 선택된 일차
-  const [selectedOption, setSelectedOption] = useState("1일차");
-
-  // 일차 정보 state
-  const [isOpen, setIsOpen] = useState(false);
-  const [dayList, setDayList] = useState([]);
-
-  // 일차별 가격, 총 가격 정보
-  const [datePrice, setDatePrice] = useState(0);
-  const [allPrice, setAllPrice] = useState(0);
-
   return (
     <Router>
       <ScrollToTop />
       <LoginProvider>
-        <Layout paramPath={paramPath} planMasterId={planMasterId}>
+        <Layout>
           <Routes>
             {/* 홈 */}
             <Route path="/" element={<Home />} />
@@ -75,145 +50,24 @@ function App() {
 
             {/* 일정계획 */}
             <Route path="planning">
-              <Route index element={<City setCityName={setCityName} />}></Route>
-              <Route
-                path="schedule/:id"
-                element={
-                  <CalendarPicker
-                    setResData={setResData}
-                    setParamPath={setParamPath}
-                    setResDetailData={setResDetailData}
-                    resDetailData={resDetailData}
-                    setPlanMasterId={setPlanMasterId}
-                    setPeopleCnt={setPeopleCnt}
-                  />
-                }
-              ></Route>
-              <Route
-                path="makeplanner/:id"
-                element={
-                  <MakePlanner
-                    planMasterId={planMasterId}
-                    resData={resData}
-                    cityName={cityName}
-                    resDetailData={resDetailData}
-                    peopleCnt={peopleCnt}
-                    selectedOption={selectedOption}
-                    setSelectedOption={setSelectedOption}
-                    setDayList={setDayList}
-                    dayList={dayList}
-                    datePrice={datePrice}
-                    setDatePrice={setDatePrice}
-                    isOpen={isOpen}
-                    setIsOpen={setIsOpen}
-                    allPrice={allPrice}
-                    setAllPrice={setAllPrice}
-                  />
-                }
-              ></Route>
+              <Route index element={<City />} />
+              <Route path="schedule/:id" element={<CalendarPicker />} />
+              <Route path="makeplanner/:id" element={<MakePlanner />} />
             </Route>
 
             {/* 다녀ON 게시판 : 리스트, 디테일페이지, 글쓰기/수정 */}
             <Route path="board">
               <Route index element={<BoardIndex />} />
-              <Route
-                path="detail/:id"
-                element={
-                  <BoardDetail
-                    selectedOption={selectedOption}
-                    setSelectedOption={setSelectedOption}
-                    setIsOpen={setIsOpen}
-                    isOpen={isOpen}
-                    dayList={dayList}
-                    setDayList={setDayList}
-                    datePrice={datePrice}
-                    setDatePrice={setDatePrice}
-                    allPrice={allPrice}
-                    setAllPrice={setAllPrice}
-                  />
-                }
-              />
-              <Route
-                path="writeput/:id"
-                element={
-                  <WritePutPage
-                    selectedOption={selectedOption}
-                    setSelectedOption={setSelectedOption}
-                    setIsOpen={setIsOpen}
-                    isOpen={isOpen}
-                    dayList={dayList}
-                    setDayList={setDayList}
-                    datePrice={datePrice}
-                    setDatePrice={setDatePrice}
-                    allPrice={allPrice}
-                    setAllPrice={setAllPrice}
-                  />
-                }
-              />
+              <Route path="detail/:id" element={<BoardDetail />} />
+              <Route path="writeput/:id" element={<WritePutPage />} />
             </Route>
 
             <Route path="myplanlist">
               {/* 마이페이지 - 내일정, 일정디테일 */}
-              <Route
-                index
-                element={<MyPlanList setPlanMasterId={setPlanMasterId} />}
-              />
-              <Route
-                path=":id"
-                element={
-                  <MyPlanDetail
-                    selectedOption={selectedOption}
-                    setSelectedOption={setSelectedOption}
-                    setIsOpen={setIsOpen}
-                    isOpen={isOpen}
-                    dayList={dayList}
-                    setDayList={setDayList}
-                    datePrice={datePrice}
-                    setDatePrice={setDatePrice}
-                    allPrice={allPrice}
-                    setAllPrice={setAllPrice}
-                  />
-                }
-              />
-              <Route
-                path="writepost/:id"
-                element={
-                  <WritePost
-                    selectedOption={selectedOption}
-                    setSelectedOption={setSelectedOption}
-                    setIsOpen={setIsOpen}
-                    isOpen={isOpen}
-                    dayList={dayList}
-                    setDayList={setDayList}
-                    datePrice={datePrice}
-                    setDatePrice={setDatePrice}
-                    allPrice={allPrice}
-                    setAllPrice={setAllPrice}
-                  />
-                }
-              />
-              <Route
-                path="editplanner/:id"
-                element={
-                  <EditPlannerPage
-                    planMasterId={planMasterId}
-                    resData={resData}
-                    resDetailData={resDetailData}
-                    peopleCnt={peopleCnt}
-                    selectedOption={selectedOption}
-                    setSelectedOption={setSelectedOption}
-                    setDayList={setDayList}
-                    dayList={dayList}
-                    datePrice={datePrice}
-                    setDatePrice={setDatePrice}
-                    isOpen={isOpen}
-                    setIsOpen={setIsOpen}
-                    allPrice={allPrice}
-                    setAllPrice={setAllPrice}
-                    setPlanMasterId={setPlanMasterId}
-                  />
-                }
-              />
+              <Route index element={<MyPlanList />} />
+              <Route path=":id" element={<MyPlanDetail />} />
+              <Route path="writepost/:id" element={<WritePost />} />
+              <Route path="editplanner/:id" element={<EditPlannerPage />} />
             </Route>
             {/* 마이페이지 - 내프로필, 수정, 비번재설정, 탈퇴 */}
             <Route path="myinfo">

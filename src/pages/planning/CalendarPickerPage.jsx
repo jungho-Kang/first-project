@@ -7,12 +7,14 @@ import { TitleDiv } from "../../components/common";
 import { PickDateDiv } from "./plan";
 import "./react-datepicker.css";
 
+import axios from "axios";
 import { ko } from "date-fns/locale";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import { LoginContext } from "../../contexts/LoginContext";
-import axios from "axios";
+import { useRecoilState } from "recoil";
+import { planMasterIdState } from "../../atoms/planAtom";
 import { API_URL } from "../../constants/login";
+import { LoginContext } from "../../contexts/LoginContext";
 import { AboutTopDiv } from "../about/about";
 
 const NextBtn = styled.button`
@@ -28,17 +30,11 @@ const NextBtn = styled.button`
   font-size: 14px;
 `;
 
-function CalendarPickerPage({
-  setResData,
-  setParamPath,
-  resDetailData,
-  setResDetailData,
-  setPlanMasterId,
-  setPeopleCnt,
-}) {
+function CalendarPickerPage() {
   const { user, isLogin } = useContext(LoginContext);
 
   const navigate = useNavigate();
+  // cityId
   const { id } = useParams();
   const initData = {
     userId: 0,
@@ -47,6 +43,10 @@ function CalendarPickerPage({
     endDate: "",
     peopleCnt: "",
   };
+
+  // 플랜 마스터 아이디
+  const [_, setPlanMasterId] = useRecoilState(planMasterIdState);
+
   // 날짜 관련
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(null);
@@ -56,6 +56,7 @@ function CalendarPickerPage({
   const [formData, setFormData] = useState(initData);
 
   // 인원수 state
+  // 캘린더 내의 인원수 입력 (뒤로가기 누르면 다시 초기화가 됨)
   const [count, setCount] = useState(0);
 
   const onChange = dates => {
@@ -70,13 +71,12 @@ function CalendarPickerPage({
   const postPlan = async item => {
     try {
       const res = await axios.post(`${API_URL}/plan`, item);
-      setResData({ ...item, planDate: res.data.resultData.planDate });
+
+      // 일정계획 정보 (도시, 날짜, 인원수 등)
+      const planInfo = { ...item, planDate: res.data.resultData.planDate };
+      sessionStorage.setItem("plan_info", JSON.stringify(planInfo));
+
       setPlanMasterId(res.data.resultData.planMasterId);
-      setPeopleCnt(item.peopleCnt);
-      setResDetailData({
-        ...resDetailData,
-        planMasterId: res.data.resultData.planMasterId,
-      });
       setFormData(initData);
 
       navigate(`/planning/makeplanner/${id}`);
@@ -109,10 +109,6 @@ function CalendarPickerPage({
       alert("인원수를 입력해주세요.");
     }
   };
-
-  useEffect(() => {
-    setParamPath(id);
-  }, []);
 
   useEffect(() => {
     if (moment(startDate).isSame(endDate, "day")) {

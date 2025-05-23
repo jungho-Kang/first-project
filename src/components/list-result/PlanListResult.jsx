@@ -33,25 +33,11 @@ const ReviewDiv = styled.div`
   }
 `;
 
-const PlanListResult = ({
-  selectedOption,
-  setSelectedOption,
-  setIsOpen,
-  isOpen,
-  dayList,
-  setDayList,
-  datePrice,
-  setDatePrice,
-  allPrice,
-  setAllPrice,
-  id,
-  content,
-}) => {
+const PlanListResult = ({ id, content }) => {
   const { pathname } = useLocation();
 
   return (
     <WrapDiv style={{ maxWidth: 1200 }}>
-      {/* <ReviewTitleDiv>여행 후기</ReviewTitleDiv> */}
       {pathname === `/myplanlist/writepost/${id}` ||
       pathname === `/board/writeput/${id}` ? (
         <></>
@@ -62,19 +48,7 @@ const PlanListResult = ({
           }}
         ></ReviewDiv>
       )}
-      <MyPlanTable
-        selectedOption={selectedOption}
-        setSelectedOption={setSelectedOption}
-        setIsOpen={setIsOpen}
-        isOpen={isOpen}
-        dayList={dayList}
-        setDayList={setDayList}
-        datePrice={datePrice}
-        setDatePrice={setDatePrice}
-        allPrice={allPrice}
-        setAllPrice={setAllPrice}
-        id={id}
-      />
+      <MyPlanTable id={id} />
     </WrapDiv>
   );
 };

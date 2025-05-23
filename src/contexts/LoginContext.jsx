@@ -14,8 +14,6 @@ export const LoginProvider = ({ children }) => {
 
   const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState(initUser);
-  const [isPopup, setIsPopup] = useState(false);
-  const [popupMessage, setPopupMessage] = useState(""); // 팝업에 띄울 메시지
   const navigate = useNavigate();
 
   // 로그인
@@ -35,15 +33,6 @@ export const LoginProvider = ({ children }) => {
     sessionStorage.removeItem(LOGIN_SESSION_KEY);
     sessionStorage.removeItem(USER_SESSION_KEY);
   };
-
-  // 팝업
-  // const handleClickPopup = () => {
-  //   setIsPopup(true);
-  //   console.log(isPopup);
-  // };
-  // const handleClickPopupClose = () => {
-  //   setIsPopup(false);
-  // };
 
   // 페이지 로드 시 sessionStorage에서 값 읽어오기
   useEffect(() => {

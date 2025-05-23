@@ -9,18 +9,7 @@ import PlanListResult from "../../components/list-result/PlanListResult";
 import { PostCity } from "../planning/plan";
 import { FlexLayoutDiv } from "./board";
 
-function WritePostPage({
-  selectedOption,
-  setSelectedOption,
-  setIsOpen,
-  isOpen,
-  dayList,
-  setDayList,
-  datePrice,
-  setDatePrice,
-  allPrice,
-  setAllPrice,
-}) {
+function WritePostPage() {
   const navigate = useNavigate();
 
   const { id } = useParams();
@@ -160,20 +149,7 @@ function WritePostPage({
             }}
           />
         </FlexLayoutDiv>
-        <PlanListResult
-          selectedOption={selectedOption}
-          setSelectedOption={setSelectedOption}
-          setIsOpen={setIsOpen}
-          isOpen={isOpen}
-          dayList={dayList}
-          setDayList={setDayList}
-          datePrice={datePrice}
-          setDatePrice={setDatePrice}
-          allPrice={allPrice}
-          setAllPrice={setAllPrice}
-          id={id}
-          content={""}
-        />
+        <PlanListResult id={id} content={""} />
         <div
           style={{
             display: "flex",

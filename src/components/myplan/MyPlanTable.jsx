@@ -1,6 +1,6 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import axios from "axios";
 
 // styled
 import {
@@ -18,22 +18,29 @@ import {
   SelectedOption,
 } from "./mydetailplan";
 // icon
-import { TiArrowSortedDown } from "react-icons/ti";
 import { IoClose } from "react-icons/io5";
+import { TiArrowSortedDown } from "react-icons/ti";
+import { useRecoilState } from "recoil";
+import {
+  allPriceState,
+  datePriceState,
+  dayListState,
+  selectedOptionState,
+} from "../../atoms/planDetailAtom";
 
-const MyPlanTable = ({
-  selectedOption,
-  setSelectedOption,
-  setIsOpen,
-  isOpen,
-  dayList,
-  setDayList,
-  datePrice,
-  setDatePrice,
-  allPrice,
-  setAllPrice,
-  id,
-}) => {
+const MyPlanTable = ({ id }) => {
+  // 선택된 일차 (게시글)
+  const [selectedOption, setSelectedOption] =
+    useRecoilState(selectedOptionState);
+  // 일차 정보 저장
+  const [dayList, setDayList] = useRecoilState(dayListState);
+  // 일차 선택 state
+  const [isOpen, setIsOpen] = useState(false);
+  // 일차별 가격
+  const [datePrice, setDatePrice] = useRecoilState(datePriceState);
+  // 총 가격
+  const [allPrice, setAllPrice] = useRecoilState(allPriceState);
+
   const [myPlan, setMyPlan] = useState([]);
   const [filterPlan, setFilterPlan] = useState([]); // 필터링된 일정
   const [cnt, setCnt] = useState(0); // 인원
@@ -96,6 +103,7 @@ const MyPlanTable = ({
       console.log(error);
     }
   };
+
   // 전체 가격 가져오기
   const getPriceAll = async _id => {
     try {
@@ -116,38 +124,17 @@ const MyPlanTable = ({
   // 가격 변경
   const datePriceChange = res => {
     const result = res.data.resultData;
-    const dayIndex = parseInt(selectedOption.replace("일차", "")) - 1;
+    const dayIndex = Number(selectedOption.replace("일차", "")) - 1;
     if (dayIndex >= 0 && dayIndex < result.length) {
       setDatePrice(result[dayIndex]?.price);
-    }
-  };
-  // 날짜 목록 업데이트
-  useEffect(() => {
-    setDayList(Array.from({ length: planDate + 1 }, (_, i) => `${i + 1}일차`));
-    if (!datePrice) {
+    } else {
       setDatePrice(0);
     }
-  }, [planDate, datePrice]);
-
-  // 일정 목록 상태 업데이트 (일차와 카테고리 필터링)
-  useEffect(() => {
-    if (selectedOption === "전체") {
-      setFilterPlan(myPlan); // 전체 선택 시, 모든 일정 표시
-    } else {
-      const filteredPlan = filterPlansByDay(
-        myPlan,
-        parseInt(selectedOption[0]),
-      ); // 선택된 일차만 필터링
-      setFilterPlan(filteredPlan);
-    }
-  }, [myPlan, selectedOption]);
+  };
 
   // 카테고리 필터 처리
   const handleCateFilter = category => {
-    let filtered =
-      selectedOption === "전체"
-        ? myPlan // 전체 선택 시 모든 데이터 사용
-        : filterPlansByDay(myPlan, parseInt(selectedOption[0])); // 선택된 일차에 맞는 필터링
+    let filtered = filterPlansByDay(myPlan, parseInt(selectedOption[0])); // 선택된 일차에 맞는 필터링
 
     if (category !== "전체") {
       filtered = filtered.filter(item => cateChange(item) === category);
@@ -162,13 +149,6 @@ const MyPlanTable = ({
     const filterData = data.filter(item => item.date === dayIndex);
     setMyPlan(filterData);
   };
-
-  // 일정 목록 상태 업데이트
-  useEffect(() => {
-    getPlanDetail(id);
-    getPriceDate(id);
-    getPriceAll(id);
-  }, [cnt, selectedOption]);
 
   // 카테고리 색상 지정
   const getCateColor = category => {
@@ -190,6 +170,29 @@ const MyPlanTable = ({
   const togglePlanPop = () => {
     setPlanDetailPop(!planDetailPop);
   };
+
+  // 날짜 목록 업데이트
+  useEffect(() => {
+    setDayList(Array.from({ length: planDate + 1 }, (_, i) => `${i + 1}일차`));
+  }, [planDate, datePrice]);
+
+  // 일정 목록 상태 업데이트 (일차와 카테고리 필터링)
+  useEffect(() => {
+    const filteredPlan = filterPlansByDay(myPlan, parseInt(selectedOption[0])); // 선택된 일차만 필터링
+    setFilterPlan(filteredPlan);
+  }, [myPlan, selectedOption]);
+
+  // 일정 목록 상태 업데이트
+  useEffect(() => {
+    getPlanDetail(id);
+    getPriceDate(id);
+    getPriceAll(id);
+  }, [cnt, selectedOption]);
+
+  // 1일차로 초기화
+  useEffect(() => {
+    setSelectedOption("1일차");
+  }, []);
   return (
     <div>
       <DetailContentDiv>
@@ -368,7 +371,7 @@ const MyPlanTable = ({
               </div>
               <div>
                 <b>장소</b>
-                <p> {selectedItem.placeAddress}</p>
+                <p>{selectedItem.placeAddress}</p>
               </div>
             </div>
 

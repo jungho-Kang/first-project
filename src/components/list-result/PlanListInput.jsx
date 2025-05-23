@@ -1,13 +1,20 @@
 import styled from "@emotion/styled";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { FaEdit } from "react-icons/fa";
 import { IoMdCloseCircle } from "react-icons/io";
 import { RiDeleteBin6Fill } from "react-icons/ri";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { planMasterIdState } from "../../atoms/planAtom";
+import {
+  allPriceState,
+  datePriceState,
+  selectedOptionState,
+} from "../../atoms/planDetailAtom";
 import { API_URL } from "../../constants/login";
 import { PostCity } from "../../pages/planning/plan";
 import { WrapDiv } from "../common";
-import { useForm } from "react-hook-form";
 
 const ContentDiv = styled.div`
   max-width: 480px;
@@ -170,17 +177,20 @@ const SubLocationDiv = styled.div`
 `;
 
 const PlanListInput = ({
+  peopleCnt,
   planListData,
   setPlanListData,
-  selectedOption,
-  datePrice,
-  setDatePrice,
-  planMasterId,
-  peopleCnt,
   isSlide,
-  allPrice,
-  setAllPrice,
 }) => {
+  // 플랜 마스터 아이디
+  const planMasterId = useRecoilValue(planMasterIdState);
+
+  // 선택된 일차
+  const selectedOption = useRecoilValue(selectedOptionState);
+  // 일차별 가격
+  const [datePrice, setDatePrice] = useRecoilState(datePriceState);
+  // 총 가격
+  const [allPrice, setAllPrice] = useRecoilState(allPriceState);
   const [isEdit, setIsEdit] = useState(false);
 
   const [myData, setMyData] = useState({
@@ -272,17 +282,22 @@ const PlanListInput = ({
     setIsEdit(false);
   };
 
+  // 수정 필요함!!!!!!!
   const getPrice = async () => {
     try {
       const res = await axios.get(
         `${API_URL}/plan/day?planMasterId=${planMasterId}`,
       );
+      console.log("니 뭐고!!!!!!!!!!!!", res);
       datePriceChange(res);
       // console.log("getPrice 응답 데이터:", res.data);
 
       // console.log("get 받아왔다", res.data.resultData);
     } catch (error) {
       console.log(error);
+      // 수정 필요함
+      setDatePrice(0);
+      setAllPrice(0);
     }
   };
 
@@ -291,15 +306,16 @@ const PlanListInput = ({
       const res = await axios.get(
         `${API_URL}/plan?planMasterId=${planMasterId}`,
       );
-      planListDataChange(res.data.resultData.selPlanDtoList);
+      planListDataChange(res.data?.resultData?.selPlanDtoList);
     } catch (error) {
       console.log(error);
+      // 에러 발생 이유가 selPlanDtoList가 비어 있으면 get 할 때 에러 발생하는 거 같음
+      setPlanListData([]);
     }
   };
   const getPriceAll = async () => {
     try {
       const res = await axios.get(`/api/plan/sum?planMasterId=${planMasterId}`);
-      // console.log(allPrice);
       const result = res.data.resultData;
       setAllPrice(result.price);
     } catch (error) {
@@ -318,6 +334,11 @@ const PlanListInput = ({
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    setDatePrice(0);
+    setAllPrice(0);
+  }, []);
 
   useEffect(() => {
     getPrice();

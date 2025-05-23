@@ -13,6 +13,7 @@ import {
   PostTitle,
   PostUl,
 } from "../planning/plan";
+import { IMAGE_URL } from "../../constants/api";
 
 function IndexPage() {
   const [boardList, setBoardList] = useState([]);
@@ -92,7 +93,7 @@ function IndexPage() {
       {fourArray(boardList, 4).map((four, index) => (
         <PostUl key={index}>
           {four.map(item => {
-            const imgUrl = `http://112.222.157.157:5212/pic/city/${item?.cityId}/${item?.cityPic}`;
+            const imgUrl = `${IMAGE_URL}/pic/city/${item?.cityId}/${item?.cityPic}`;
             return (
               <Link
                 key={item.planMasterId}

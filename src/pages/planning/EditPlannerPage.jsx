@@ -16,6 +16,9 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import { IoMdCloseCircle } from "react-icons/io";
 import { TiArrowSortedDown } from "react-icons/ti";
 import PlanListInput from "../../components/list-result/PlanListInput";
+import { useRecoilState } from "recoil";
+import { cityIdState, planMasterIdState } from "../../atoms/planAtom";
+import { dayListState, selectedOptionState } from "../../atoms/planDetailAtom";
 
 const PlanTabsUl = styled.ul`
   display: flex;
@@ -257,19 +260,7 @@ const ExitBtn = styled.button`
   height: 30px;
 `;
 
-function EditPlannerPage({
-  selectedOption,
-  setSelectedOption,
-  isOpen,
-  setIsOpen,
-  dayList,
-  setDayList,
-  datePrice,
-  setDatePrice,
-  allPrice,
-  setAllPrice,
-  setPlanMasterId,
-}) {
+function EditPlannerPage() {
   const { id } = useParams();
 
   // 보낼 Plan 데이터 초기 값
@@ -291,6 +282,17 @@ function EditPlannerPage({
     },
   };
 
+  // cityId
+  const [_cityId, setCityId] = useRecoilState(cityIdState);
+  // 플랜 마스터 아이디
+  const [_, setPlanMasterId] = useRecoilState(planMasterIdState);
+  // 선택된 일차
+  const [selectedOption, setSelectedOption] =
+    useRecoilState(selectedOptionState);
+  // 일차 정보 저장
+  const [dayList, setDayList] = useRecoilState(dayListState);
+  // 일차 선택 state
+  const [isOpen, setIsOpen] = useState(false);
   // 보낼 Plan 데이터 (위치, 시간, 주소, 비용 등등)
   const [detailData, setDetailData] = useState(initDetailData);
   const [startTime, setStartTime] = useState("10:00");
@@ -408,8 +410,12 @@ function EditPlannerPage({
   }, [planDetailData.cityName]);
 
   useEffect(() => {
-    // console.log("플랜 리스트 데이터다", planListData);
-  }, [planListData]);
+    setCityId(planDetailData.cityId);
+  }, [planDetailData.cityId]);
+
+  useEffect(() => {
+    setSelectedOption("1일차");
+  }, []);
 
   return (
     <div
@@ -522,7 +528,6 @@ function EditPlannerPage({
                   selectedCate={selectedCate}
                   setSelectedCate={setSelectedCate}
                   setSelectedItem={setSelectedItem}
-                  cityId={planDetailData.cityId}
                   setPlaceData={setPlaceData}
                   setInitData={setInitData}
                   placeData={placeData}
@@ -567,14 +572,8 @@ function EditPlannerPage({
           <PlanListInput
             planListData={planListData}
             setPlanListData={setPlanListData}
-            selectedOption={selectedOption}
-            datePrice={datePrice}
-            setDatePrice={setDatePrice}
-            planMasterId={id}
             peopleCnt={planDetailData.peopleCnt}
             isSlide={isSlide}
-            allPrice={allPrice}
-            setAllPrice={setAllPrice}
           />
         )}
       </LayoutDiv>
@@ -587,10 +586,7 @@ function EditPlannerPage({
           >
             <h2>일정등록</h2>
             <SmallTitleDiv>시간</SmallTitleDiv>
-            {/* <TimeTitleDiv>
-            <div>시작</div>
-            <div>종료</div>
-          </TimeTitleDiv> */}
+
             <TimeDiv>
               <TimeInput
                 type="time"
