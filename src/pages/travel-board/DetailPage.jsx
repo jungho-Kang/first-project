@@ -8,18 +8,7 @@ import { LoginContext } from "../../contexts/LoginContext";
 import { FlexDiv, PostCity } from "../planning/plan";
 import { FlexLayoutDiv, SubTitleDiv } from "./board";
 
-function DetailPage({
-  selectedOption,
-  setSelectedOption,
-  setIsOpen,
-  isOpen,
-  dayList,
-  setDayList,
-  datePrice,
-  setDatePrice,
-  allPrice,
-  setAllPrice,
-}) {
+function DetailPage() {
   const navigate = useNavigate();
   const { isLogin, user } = useContext(LoginContext);
   const { id } = useParams();
@@ -93,21 +82,7 @@ function DetailPage({
         </PostCity>
         <SubTitleDiv>{feedDetail.title}</SubTitleDiv>
       </FlexLayoutDiv>
-      {/* <LineDiv /> */}
-      <PlanListResult
-        selectedOption={selectedOption}
-        setSelectedOption={setSelectedOption}
-        setIsOpen={setIsOpen}
-        isOpen={isOpen}
-        dayList={dayList}
-        setDayList={setDayList}
-        datePrice={datePrice}
-        setDatePrice={setDatePrice}
-        allPrice={allPrice}
-        setAllPrice={setAllPrice}
-        id={id}
-        content={feedDetail.content}
-      />
+      <PlanListResult id={id} content={feedDetail.content} />
       <div
         style={{
           display: "flex",

@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { SwiperItemDiv } from "../../pages";
 // icon
 import { IoHeart } from "react-icons/io5";
+import { IMAGE_URL } from "../../constants/api";
 
 const SwiperItem = ({ item }) => {
-  const imgUrl = `http://112.222.157.157:5212/pic/city/${item?.cityId}/${item?.cityPic}`;
+  const imgUrl = `${IMAGE_URL}/pic/city/${item?.cityId}/${item?.cityPic}`;
   const navigate = useNavigate();
   return (
     <SwiperItemDiv

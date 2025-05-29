@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import OfferItem from "./OfferItem";
+import { useEffect } from "react";
 
 const OfferFilterListUl = styled.div`
   margin: 15px 10px;
@@ -27,7 +28,6 @@ const RecommendItem = ({
   selectedCate,
   setSelectedCate,
   setSelectedItem,
-  cityId,
   setIsClick,
   isClick,
   setPlaceData,
@@ -35,6 +35,9 @@ const RecommendItem = ({
   placeData,
   setItemLatLng,
 }) => {
+  useEffect(() => {
+    console.log("!!!!!!!!!이거", placeData);
+  }, [placeData]);
   return (
     <>
       <OfferFilterListUl>
@@ -62,7 +65,6 @@ const RecommendItem = ({
           setItemLatLng={setItemLatLng}
           isClick={isClick}
           setSelectedItem={setSelectedItem}
-          cityId={cityId}
           selectedCate={selectedCate}
           setIsClick={setIsClick}
           setPlaceData={setPlaceData}

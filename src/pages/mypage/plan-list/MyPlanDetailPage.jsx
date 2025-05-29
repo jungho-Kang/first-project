@@ -3,24 +3,16 @@ import { useParams } from "react-router-dom";
 import MypageTab from "../../../components/mypage/MypageTab";
 import MypageTop from "../../../components/mypage/MypageTop";
 // styled
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { selectedOptionState } from "../../../atoms/planDetailAtom";
 import MyPlanTable from "../../../components/myplan/MyPlanTable";
 import { MyPageWrapDiv } from "../my-info/myinfo";
 import { TitleAreaDiv } from "./myplan";
-import axios from "axios";
-import { useEffect, useState } from "react";
 
-function MyPlanDetail({
-  selectedOption,
-  setSelectedOption,
-  setIsOpen,
-  isOpen,
-  dayList,
-  setDayList,
-  datePrice,
-  setDatePrice,
-  allPrice,
-  setAllPrice,
-}) {
+function MyPlanDetail() {
+  const selectedOption = useRecoilValue(selectedOptionState);
   const { id } = useParams();
   const [cityName, setCityName] = useState("");
 
@@ -47,19 +39,7 @@ function MyPlanDetail({
             {cityName} {selectedOption} 일정
           </h3>
         </TitleAreaDiv>
-        <MyPlanTable
-          selectedOption={selectedOption}
-          setSelectedOption={setSelectedOption}
-          setIsOpen={setIsOpen}
-          isOpen={isOpen}
-          dayList={dayList}
-          setDayList={setDayList}
-          datePrice={datePrice}
-          setDatePrice={setDatePrice}
-          allPrice={allPrice}
-          setAllPrice={setAllPrice}
-          id={id}
-        />
+        <MyPlanTable id={id} />
       </MyPageWrapDiv>
     </div>
   );

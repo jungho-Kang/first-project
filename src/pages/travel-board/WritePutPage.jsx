@@ -10,18 +10,7 @@ import { LoginContext } from "../../contexts/LoginContext";
 import { PostCity } from "../planning/plan";
 import { FlexLayoutDiv } from "./board";
 
-function WritePutPage({
-  selectedOption,
-  setSelectedOption,
-  setIsOpen,
-  isOpen,
-  dayList,
-  setDayList,
-  datePrice,
-  setDatePrice,
-  allPrice,
-  setAllPrice,
-}) {
+function WritePutPage() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { user } = useContext(LoginContext);
@@ -198,20 +187,7 @@ function WritePutPage({
             modules={modules}
           />
         </div>
-        <PlanListResult
-          selectedOption={selectedOption}
-          setSelectedOption={setSelectedOption}
-          setIsOpen={setIsOpen}
-          isOpen={isOpen}
-          dayList={dayList}
-          setDayList={setDayList}
-          datePrice={datePrice}
-          setDatePrice={setDatePrice}
-          allPrice={allPrice}
-          setAllPrice={setAllPrice}
-          id={id}
-          content={""}
-        />
+        <PlanListResult id={id} content={""} />
         <div
           style={{
             display: "flex",

@@ -1,18 +1,18 @@
 //
-import { useContext, useEffect, useState } from "react";
-import { LoginContext } from "../../../contexts/LoginContext";
-import { API_URL } from "../../../constants/login";
 import axios from "axios";
+import { useContext, useEffect, useState } from "react";
+import { API_URL } from "../../../constants/login";
+import { LoginContext } from "../../../contexts/LoginContext";
 // comp
-import MypageTop from "../../../components/mypage/MypageTop";
-import MypageTab from "../../../components/mypage/MypageTab";
-import MyplanlistItem from "../../../components/mypage/MyplanlistItem";
 import Popup from "../../../components/common/Popup";
+import MypageTab from "../../../components/mypage/MypageTab";
+import MypageTop from "../../../components/mypage/MypageTop";
+import MyplanlistItem from "../../../components/mypage/MyplanlistItem";
 // styled
 import { MyPageWrapDiv } from "../my-info/myinfo";
 import { MyplanlistDiv, TitleAreaDiv } from "./myplan";
 
-function MyPlanListPage({ setPlanMasterId }) {
+function MyPlanListPage() {
   const { user } = useContext(LoginContext);
   const [myScheduleList, setMyScheduleList] = useState([]);
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
@@ -52,7 +52,6 @@ function MyPlanListPage({ setPlanMasterId }) {
                   key={item.planMasterId}
                   item={item}
                   setMyScheduleList={setMyScheduleList}
-                  setPlanMasterId={setPlanMasterId}
                   setIsDeletePopupOpen={setIsDeletePopupOpen}
                 />
               ) : null,

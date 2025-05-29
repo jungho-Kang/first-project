@@ -2,11 +2,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TitleDiv, WrapDiv } from "../../components/common";
+import { IMAGE_URL } from "../../constants/api";
 import { API_URL } from "../../constants/login";
-import { ImgLi, ImgUl } from "./plan";
 import { AboutTopDiv } from "../about/about";
+import { ImgLi, ImgUl } from "./plan";
 
-function CityPage({ setCityName }) {
+function CityPage() {
   const navigate = useNavigate();
 
   const [cityData, setCityData] = useState([]);
@@ -39,14 +40,13 @@ function CityPage({ setCityName }) {
         </TitleDiv>
         <ImgUl>
           {cityData.map(item => {
-            const imgUrl = `http://112.222.157.157:5212/pic/city/${item.cityId}/${item.cityPic}`;
+            const imgUrl = `${IMAGE_URL}/pic/city/${item.cityId}/${item.cityPic}`;
             if (item.cityId <= 3) {
               return (
                 <ImgLi
                   key={item.cityId}
                   onClick={() => {
                     navigate(`/planning/schedule/${item.cityId}`);
-                    setCityName(item.cityKorName);
                   }}
                 >
                   <img src={imgUrl} alt="지역 이미지" />
@@ -58,14 +58,13 @@ function CityPage({ setCityName }) {
         </ImgUl>
         <ImgUl>
           {cityData.map(item => {
-            const imgUrl = `http://112.222.157.157:5212/pic/city/${item.cityId}/${item.cityPic}`;
+            const imgUrl = `${IMAGE_URL}/pic/city/${item.cityId}/${item.cityPic}`;
             if (item.cityId > 3) {
               return (
                 <ImgLi
                   key={item.cityId}
                   onClick={() => {
                     navigate(`/planning/schedule/${item.cityId}`);
-                    setCityName(item.cityKorName);
                   }}
                 >
                   <img src={imgUrl} alt="지역 이미지" />

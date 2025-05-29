@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { TiArrowSortedDown } from "react-icons/ti";
+import { useRecoilState } from "recoil";
+import { dayListState, selectedOptionState } from "../../atoms/planDetailAtom";
 
 const Wrapper = styled.div`
   position: relative;
@@ -58,16 +60,15 @@ const PlanDateDiv = styled.div`
   color: #777;
 `;
 
-const PlanTop = ({
-  resData,
-  cityName,
-  selectedOption,
-  setSelectedOption,
-  setIsOpen,
-  isOpen,
-  dayList,
-  setDayList,
-}) => {
+const PlanTop = ({ cityName }) => {
+  const planInfo = JSON.parse(sessionStorage.getItem("plan_info"));
+  // 선택된 일차
+  const [selectedOption, setSelectedOption] =
+    useRecoilState(selectedOptionState);
+  // 일차 정보 저장 (1일차, 2일차 ...)
+  const [dayList, setDayList] = useRecoilState(dayListState);
+  // 일차 선택 state
+  const [isOpen, setIsOpen] = useState(false);
   const handleOptionClick = option => {
     setSelectedOption(option);
     setIsOpen(false);
@@ -75,7 +76,7 @@ const PlanTop = ({
 
   useEffect(() => {
     setDayList(
-      Array.from({ length: resData.planDate + 1 }, (_, i) => `${i + 1}일차`),
+      Array.from({ length: planInfo.planDate + 1 }, (_, i) => `${i + 1}일차`),
     );
   }, []);
 
@@ -99,7 +100,7 @@ const PlanTop = ({
           </OptionsList>
         )}
       </div>
-      <PlanDateDiv>{`${resData.startDate} - ${resData.endDate}`}</PlanDateDiv>
+      <PlanDateDiv>{`${planInfo.startDate} - ${planInfo.endDate}`}</PlanDateDiv>
     </Wrapper>
   );
 };

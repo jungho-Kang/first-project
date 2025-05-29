@@ -6,11 +6,19 @@ import Header from "./header/Header";
 // style
 import { MainDiv } from "./common";
 
-const Layout = ({ children, paramPath, planMasterId }) => {
+const Layout = ({ children }) => {
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // 스크롤 이벤트
+  const { pathname } = useLocation();
 
+  // 헤더와 푸터 숨기기
+  const hideLayoutRoutes = [
+    "/auth",
+    "/planning/makeplanner",
+    "/myplanlist/editplanner",
+  ];
+
+  // 스크롤 이벤트
   useEffect(() => {
     // console.log("컴포넌트 마운트 시 스크롤 위치:");
     window.addEventListener(
@@ -20,29 +28,21 @@ const Layout = ({ children, paramPath, planMasterId }) => {
       },
       true,
     );
-    // console.log("planMasterID 이거다!!!!!!!!", planMasterId);
   }, []);
 
-  const { pathname } = useLocation();
+  useEffect(() => {
+    if (!pathname.startsWith("/planning/makeplanner")) {
+      sessionStorage.removeItem("plan_info");
+    }
+  }, [pathname]);
 
+  const hideLayout = hideLayoutRoutes.some(route => pathname.startsWith(route));
   // console.log(pathname);
   return (
     <div>
-      {pathname === "/auth" ||
-      pathname === "/auth/findpw" ||
-      pathname === "/auth/signup" ||
-      pathname === `/planning/makeplanner/${paramPath}` ||
-      pathname === `/myplanlist/editplanner/${planMasterId}` ? null : (
-        <Header isScrolled={isScrolled} />
-      )}
+      {!hideLayout && <Header isScrolled={isScrolled} />}
       <MainDiv>{children}</MainDiv>
-      {pathname === "/auth" ||
-      pathname === "/auth/findpw" ||
-      pathname === "/auth/signup" ||
-      pathname === `/planning/makeplanner/${paramPath}` ||
-      pathname === `/myplanlist/editplanner/${planMasterId}` ? null : (
-        <Footer />
-      )}
+      {!hideLayout && <Footer />}
     </div>
   );
 };

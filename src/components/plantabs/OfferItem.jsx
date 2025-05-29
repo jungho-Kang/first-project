@@ -2,6 +2,9 @@ import styled from "@emotion/styled";
 import axios from "axios";
 import { useEffect } from "react";
 import { FaCheck, FaPlus, FaStar } from "react-icons/fa";
+import { useRecoilValue } from "recoil";
+import { cityIdState } from "../../atoms/planAtom";
+import { IMAGE_URL } from "../../constants/api";
 import { API_URL } from "../../constants/login";
 const OfferItemA = styled.a`
   display: flex;
@@ -73,7 +76,6 @@ const OfferItemA = styled.a`
 
 const OfferItem = ({
   setSelectedItem,
-  cityId,
   selectedCate,
   setIsClick,
   isClick,
@@ -82,6 +84,8 @@ const OfferItem = ({
   placeData,
   setItemLatLng,
 }) => {
+  // cityId
+  const cityId = useRecoilValue(cityIdState);
   const getPlace = async () => {
     try {
       // http://192.168.0.144:5212/api/city/selsight?cityId=1&category=place
@@ -112,7 +116,7 @@ const OfferItem = ({
   return (
     <>
       {placeData.map(item => {
-        const imgUrl = `http://112.222.157.157:5212/pic/city/${cityId}/${selectedCate}/${item.placePic}`;
+        const imgUrl = `${IMAGE_URL}/pic/city/${cityId}/${selectedCate}/${item.placePic}`;
         return (
           <OfferItemA key={item.placeId}>
             <div className="img-box">

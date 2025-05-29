@@ -4,8 +4,8 @@ import { Map, MapMarker } from "react-kakao-maps-sdk";
 import FocusMap from "./FocusMap";
 
 const MapLayoutDiv = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background-color: rebeccapurple;
 `;
 
@@ -48,7 +48,6 @@ const TravelMap = ({ setMapResultList, searchWord, itemLatLng, isClick }) => {
           setMapResultList(data);
 
           const newMarkers = data.map(place => {
-            console.log(place);
             const position = {
               lat: place.y,
               lng: place.x,
@@ -89,8 +88,8 @@ const TravelMap = ({ setMapResultList, searchWord, itemLatLng, isClick }) => {
             lng: 126.9786567,
           }}
           style={{
-            width: "100%",
-            height: "100%",
+            width: "100vw",
+            height: "100vh",
           }}
           level={3}
           onCreate={setMap}

@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 // comp
 import Logo from "../../components/Logo";
+import AddPlace from "../../components/plantabs/AddPlace";
 import PlanTop from "../../components/plantabs/PlanTop";
 import RecommendItem from "../../components/plantabs/RecommendItem";
 import SchedulePush from "../../components/plantabs/SchedulePush";
-import AddPlace from "../../components/plantabs/AddPlace";
 import TravelMap from "../../components/plantabs/TravelMap";
 //styled
 import styled from "@emotion/styled";
@@ -13,6 +13,9 @@ import { LayoutDiv } from "./plan";
 
 // icon
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+import { useRecoilState } from "recoil";
+import { cityIdState } from "../../atoms/planAtom";
+import { selectedOptionState } from "../../atoms/planDetailAtom";
 import PlanListInput from "../../components/list-result/PlanListInput";
 
 const PlanTabsUl = styled.ul`
@@ -116,24 +119,34 @@ const AddScheduleDiv = styled.div`
   }
 `;
 
-function MakePlannerPage({
-  resData,
-  cityName,
-  resDetailData,
-  planMasterId,
-  peopleCnt,
-  selectedOption,
-  setSelectedOption,
-  isOpen,
-  setIsOpen,
-  dayList,
-  setDayList,
-  datePrice,
-  setDatePrice,
-  allPrice,
-  setAllPrice,
-}) {
+function MakePlannerPage() {
+  // 인원수
+  const { peopleCnt } = JSON.parse(sessionStorage.getItem("plan_info"));
+  const [_, setSelectedOption] = useRecoilState(selectedOptionState);
   const { id } = useParams();
+
+  // cityId
+  const [_cityId, setCityId] = useRecoilState(cityIdState);
+  const getCityName = () => {
+    switch (Number(id)) {
+      case 1:
+        return "서울";
+      case 2:
+        return "인천";
+      case 3:
+        return "부산";
+      case 4:
+        return "포항";
+      case 5:
+        return "경주";
+      case 6:
+        return "제주";
+      default:
+        return "알 수 없는 도시";
+    }
+  };
+
+  const cityName = getCityName();
 
   // 보낼 Plan 데이터 초기 값
   const initDetailData = {
@@ -195,17 +208,17 @@ function MakePlannerPage({
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log("planMasterId : ", planMasterId);
-  }, [planMasterId]);
-
   const handleTabClick = tab => {
     setActiveTab(tab);
   };
 
   useEffect(() => {
-    console.log("플랜 리스트 데이터다", planListData);
-  }, [planListData]);
+    setSelectedOption("1일차");
+  }, []);
+
+  useEffect(() => {
+    setCityId(id);
+  }, [id]);
 
   return (
     <div
@@ -256,6 +269,7 @@ function MakePlannerPage({
                 style={{ backgroundColor: "#D1373A", color: "#fff" }}
                 onClick={() => {
                   alert("저장되었습니다.");
+                  sessionStorage.removeItem("plan_info");
                   navigate("/");
                 }}
               >
@@ -265,16 +279,7 @@ function MakePlannerPage({
           </MenuDiv>
           <AddScheduleDiv isSlide={isSlide}>
             <div className="inner">
-              <PlanTop
-                resData={resData}
-                cityName={cityName}
-                selectedOption={selectedOption}
-                setSelectedOption={setSelectedOption}
-                isOpen={isOpen}
-                setIsOpen={setIsOpen}
-                setDayList={setDayList}
-                dayList={dayList}
-              />
+              <PlanTop cityName={cityName} />
               <div>
                 <PlanTabsUl>
                   <li
@@ -299,7 +304,6 @@ function MakePlannerPage({
                   selectedCate={selectedCate}
                   setSelectedCate={setSelectedCate}
                   setSelectedItem={setSelectedItem}
-                  cityId={id}
                   setPlaceData={setPlaceData}
                   setInitData={setInitData}
                   placeData={placeData}
@@ -342,22 +346,15 @@ function MakePlannerPage({
           />
         ) : (
           <PlanListInput
+            peopleCnt={peopleCnt}
             planListData={planListData}
             setPlanListData={setPlanListData}
-            selectedOption={selectedOption}
-            datePrice={datePrice}
-            setDatePrice={setDatePrice}
-            planMasterId={planMasterId}
-            peopleCnt={peopleCnt}
             isSlide={isSlide}
-            allPrice={allPrice}
-            setAllPrice={setAllPrice}
           />
         )}
       </LayoutDiv>
       {isClick ? (
         <SchedulePush
-          resDetailData={resDetailData}
           selectedItem={selectedItem}
           setIsClick={setIsClick}
           selectedCate={selectedCate}
@@ -365,7 +362,6 @@ function MakePlannerPage({
           initData={initData}
           setPlaceData={setPlaceData}
           itemLatLng={itemLatLng}
-          selectedOption={selectedOption}
           detailData={detailData}
           setDetailData={setDetailData}
           setPlanListData={setPlanListData}

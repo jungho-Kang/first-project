@@ -7,16 +7,16 @@ import { DeleteBtn } from "../../pages/mypage/plan-list/myplan";
 // icon
 import { IoClose } from "react-icons/io5";
 import Popup from "../common/Popup";
+import { IMAGE_URL } from "../../constants/api";
+import { useRecoilState } from "recoil";
+import { planMasterIdState } from "../../atoms/planAtom";
 
-const MyplanlistItem = ({
-  item,
-  setMyScheduleList,
-  setPlanMasterId,
-  setIsDeletePopupOpen,
-}) => {
+const MyplanlistItem = ({ item, setMyScheduleList, setIsDeletePopupOpen }) => {
+  // 플랜 마스터 아이디
+  const [_, setPlanMasterId] = useRecoilState(planMasterIdState);
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
   const planDateAddOne = parseInt(item?.planDate) + 1;
-  const imgUrl = `http://112.222.157.157:5212/pic/city/${item?.cityId}/${item?.cityPic}`;
+  const imgUrl = `${IMAGE_URL}/pic/city/${item?.cityId}/${item?.cityPic}`;
   const { user } = useContext(LoginContext);
 
   const deleteItem = _Id => {
